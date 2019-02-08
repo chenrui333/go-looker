@@ -25,33 +25,33 @@ type Client struct {
 }
 
 /*
-AllContentMetadataAccesss gets all content metadata accesss
+AllContentMetadataAccesses gets all content metadata accesses
 
 ### All content metadata access records for a content metadata item.
 
 */
-func (a *Client) AllContentMetadataAccesss(params *AllContentMetadataAccesssParams) (*AllContentMetadataAccesssOK, error) {
+func (a *Client) AllContentMetadataAccesses(params *AllContentMetadataAccessesParams) (*AllContentMetadataAccessesOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewAllContentMetadataAccesssParams()
+		params = NewAllContentMetadataAccessesParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "all_content_metadata_accesss",
+		ID:                 "all_content_metadata_accesses",
 		Method:             "GET",
 		PathPattern:        "/content_metadata_access",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},
 		Params:             params,
-		Reader:             &AllContentMetadataAccesssReader{formats: a.formats},
+		Reader:             &AllContentMetadataAccessesReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
-	return result.(*AllContentMetadataAccesssOK), nil
+	return result.(*AllContentMetadataAccessesOK), nil
 
 }
 
@@ -144,6 +144,41 @@ func (a *Client) ContentMetadata(params *ContentMetadataParams) (*ContentMetadat
 		return nil, err
 	}
 	return result.(*ContentMetadataOK), nil
+
+}
+
+/*
+ContentValidation validates content
+
+### Validate All Content
+Requires Content Validation Labs Feature be enabled
+
+Performs validation of all looks and dashboards
+Returns a list of errors found as well as metadata about the content validation run.
+
+*/
+func (a *Client) ContentValidation(params *ContentValidationParams) (*ContentValidationOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewContentValidationParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "content_validation",
+		Method:             "GET",
+		PathPattern:        "/content_validation",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &ContentValidationReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*ContentValidationOK), nil
 
 }
 

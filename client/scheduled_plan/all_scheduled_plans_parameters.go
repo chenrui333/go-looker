@@ -63,13 +63,18 @@ for the all scheduled plans operation typically these are written to a http.Requ
 */
 type AllScheduledPlansParams struct {
 
+	/*AllUsers
+	  Return scheduled plans belonging to all users (caller needs see_schedules permission)
+
+	*/
+	AllUsers *bool
 	/*Fields
-	  Requested fields.
+	  Comma delimited list of field names. If provided, only the fields specified will be included in the response
 
 	*/
 	Fields *string
 	/*UserID
-	  User Id (default is requesting user if not specified)
+	  Return scheduled plans belonging to this user_id. If not provided, returns scheduled plans owned by the caller.
 
 	*/
 	UserID *int64
@@ -112,6 +117,17 @@ func (o *AllScheduledPlansParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithAllUsers adds the allUsers to the all scheduled plans params
+func (o *AllScheduledPlansParams) WithAllUsers(allUsers *bool) *AllScheduledPlansParams {
+	o.SetAllUsers(allUsers)
+	return o
+}
+
+// SetAllUsers adds the allUsers to the all scheduled plans params
+func (o *AllScheduledPlansParams) SetAllUsers(allUsers *bool) {
+	o.AllUsers = allUsers
+}
+
 // WithFields adds the fields to the all scheduled plans params
 func (o *AllScheduledPlansParams) WithFields(fields *string) *AllScheduledPlansParams {
 	o.SetFields(fields)
@@ -141,6 +157,22 @@ func (o *AllScheduledPlansParams) WriteToRequest(r runtime.ClientRequest, reg st
 		return err
 	}
 	var res []error
+
+	if o.AllUsers != nil {
+
+		// query param all_users
+		var qrAllUsers bool
+		if o.AllUsers != nil {
+			qrAllUsers = *o.AllUsers
+		}
+		qAllUsers := swag.FormatBool(qrAllUsers)
+		if qAllUsers != "" {
+			if err := r.SetQueryParam("all_users", qAllUsers); err != nil {
+				return err
+			}
+		}
+
+	}
 
 	if o.Fields != nil {
 

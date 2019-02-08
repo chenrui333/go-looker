@@ -63,6 +63,11 @@ for the scheduled plans for look operation typically these are written to a http
 */
 type ScheduledPlansForLookParams struct {
 
+	/*AllUsers
+	  Return scheduled plans belonging to all users for the look
+
+	*/
+	AllUsers *bool
 	/*Fields
 	  Requested fields.
 
@@ -117,6 +122,17 @@ func (o *ScheduledPlansForLookParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithAllUsers adds the allUsers to the scheduled plans for look params
+func (o *ScheduledPlansForLookParams) WithAllUsers(allUsers *bool) *ScheduledPlansForLookParams {
+	o.SetAllUsers(allUsers)
+	return o
+}
+
+// SetAllUsers adds the allUsers to the scheduled plans for look params
+func (o *ScheduledPlansForLookParams) SetAllUsers(allUsers *bool) {
+	o.AllUsers = allUsers
+}
+
 // WithFields adds the fields to the scheduled plans for look params
 func (o *ScheduledPlansForLookParams) WithFields(fields *string) *ScheduledPlansForLookParams {
 	o.SetFields(fields)
@@ -157,6 +173,22 @@ func (o *ScheduledPlansForLookParams) WriteToRequest(r runtime.ClientRequest, re
 		return err
 	}
 	var res []error
+
+	if o.AllUsers != nil {
+
+		// query param all_users
+		var qrAllUsers bool
+		if o.AllUsers != nil {
+			qrAllUsers = *o.AllUsers
+		}
+		qAllUsers := swag.FormatBool(qrAllUsers)
+		if qAllUsers != "" {
+			if err := r.SetQueryParam("all_users", qAllUsers); err != nil {
+				return err
+			}
+		}
+
+	}
 
 	if o.Fields != nil {
 

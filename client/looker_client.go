@@ -33,6 +33,7 @@ import (
 	"github.com/chenrui333/go-looker/client/session"
 	"github.com/chenrui333/go-looker/client/space"
 	"github.com/chenrui333/go-looker/client/sql_query"
+	"github.com/chenrui333/go-looker/client/theme"
 	"github.com/chenrui333/go-looker/client/user"
 	"github.com/chenrui333/go-looker/client/user_attribute"
 	"github.com/chenrui333/go-looker/client/workspace"
@@ -47,7 +48,7 @@ const (
 	DefaultHost string = "meetup.looker.com:19999"
 	// DefaultBasePath is the default BasePath
 	// found in Meta (info) section of spec file
-	DefaultBasePath string = "/api/3.0"
+	DefaultBasePath string = "/api/3.1"
 )
 
 // DefaultSchemes are the default schemes found in Meta (info) section of spec file
@@ -124,6 +125,8 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *Looker {
 	cli.Space = space.New(transport, formats)
 
 	cli.SQLQuery = sql_query.New(transport, formats)
+
+	cli.Theme = theme.New(transport, formats)
 
 	cli.User = user.New(transport, formats)
 
@@ -219,6 +222,8 @@ type Looker struct {
 
 	SQLQuery *sql_query.Client
 
+	Theme *theme.Client
+
 	User *user.Client
 
 	UserAttribute *user_attribute.Client
@@ -275,6 +280,8 @@ func (c *Looker) SetTransport(transport runtime.ClientTransport) {
 	c.Space.SetTransport(transport)
 
 	c.SQLQuery.SetTransport(transport)
+
+	c.Theme.SetTransport(transport)
 
 	c.User.SetTransport(transport)
 

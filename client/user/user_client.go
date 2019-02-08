@@ -25,36 +25,6 @@ type Client struct {
 }
 
 /*
-AllUserAccessFilters gets all access filters
-
-### NOTE: this feature is completely end of life and has been removed from the product.
-*/
-func (a *Client) AllUserAccessFilters(params *AllUserAccessFiltersParams) (*AllUserAccessFiltersOK, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewAllUserAccessFiltersParams()
-	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "all_user_access_filters",
-		Method:             "GET",
-		PathPattern:        "/users/{user_id}/access_filters",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"https"},
-		Params:             params,
-		Reader:             &AllUserAccessFiltersReader{formats: a.formats},
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, err
-	}
-	return result.(*AllUserAccessFiltersOK), nil
-
-}
-
-/*
 AllUserCredentialsAPI3S gets all API 3 credentials
 
 ### API 3 login information for the specified user. This is for the newer API keys that can be added for any user.
@@ -203,36 +173,6 @@ func (a *Client) CreateUser(params *CreateUserParams) (*CreateUserOK, error) {
 		return nil, err
 	}
 	return result.(*CreateUserOK), nil
-
-}
-
-/*
-CreateUserAccessFilter creates access filter
-
-### NOTE: this feature is completely end of life and has been removed from the product.
-*/
-func (a *Client) CreateUserAccessFilter(params *CreateUserAccessFilterParams) (*CreateUserAccessFilterOK, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewCreateUserAccessFilterParams()
-	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "create_user_access_filter",
-		Method:             "POST",
-		PathPattern:        "/users/{user_id}/access_filters",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"https"},
-		Params:             params,
-		Reader:             &CreateUserAccessFilterReader{formats: a.formats},
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, err
-	}
-	return result.(*CreateUserAccessFilterOK), nil
 
 }
 
@@ -427,36 +367,6 @@ func (a *Client) DeleteUser(params *DeleteUserParams) (*DeleteUserNoContent, err
 		return nil, err
 	}
 	return result.(*DeleteUserNoContent), nil
-
-}
-
-/*
-DeleteUserAccessFilter deletes access filter
-
-### NOTE: this feature is completely end of life and has been removed from the product.
-*/
-func (a *Client) DeleteUserAccessFilter(params *DeleteUserAccessFilterParams) (*DeleteUserAccessFilterNoContent, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewDeleteUserAccessFilterParams()
-	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "delete_user_access_filter",
-		Method:             "DELETE",
-		PathPattern:        "/users/{user_id}/access_filters/{access_filter_id}",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"https"},
-		Params:             params,
-		Reader:             &DeleteUserAccessFilterReader{formats: a.formats},
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, err
-	}
-	return result.(*DeleteUserAccessFilterNoContent), nil
 
 }
 
@@ -1017,36 +927,6 @@ func (a *Client) UpdateUser(params *UpdateUserParams) (*UpdateUserOK, error) {
 }
 
 /*
-UpdateUserAccessFilter updates access filter
-
-### NOTE: this feature is completely end of life and has been removed from the product.
-*/
-func (a *Client) UpdateUserAccessFilter(params *UpdateUserAccessFilterParams) (*UpdateUserAccessFilterOK, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewUpdateUserAccessFilterParams()
-	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "update_user_access_filter",
-		Method:             "PATCH",
-		PathPattern:        "/users/{user_id}/access_filters/{access_filter_id}",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"https"},
-		Params:             params,
-		Reader:             &UpdateUserAccessFilterReader{formats: a.formats},
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, err
-	}
-	return result.(*UpdateUserAccessFilterOK), nil
-
-}
-
-/*
 UpdateUserCredentialsEmail updates email password credential
 
 ### Email/password login information for the specified user.
@@ -1108,36 +988,6 @@ func (a *Client) User(params *UserParams) (*UserOK, error) {
 		return nil, err
 	}
 	return result.(*UserOK), nil
-
-}
-
-/*
-UserAccessFilter gets access filter
-
-### NOTE: this feature is completely end of life and has been removed from the product.
-*/
-func (a *Client) UserAccessFilter(params *UserAccessFilterParams) (*UserAccessFilterOK, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewUserAccessFilterParams()
-	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "user_access_filter",
-		Method:             "GET",
-		PathPattern:        "/users/{user_id}/access_filters/{access_filter_id}",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"https"},
-		Params:             params,
-		Reader:             &UserAccessFilterReader{formats: a.formats},
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, err
-	}
-	return result.(*UserAccessFilterOK), nil
 
 }
 

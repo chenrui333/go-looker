@@ -87,6 +87,68 @@ func (a *Client) AllHomepageSections(params *AllHomepageSectionsParams) (*AllHom
 }
 
 /*
+AllHomepages gets all homepages
+
+### Get information about all homepages.
+
+*/
+func (a *Client) AllHomepages(params *AllHomepagesParams) (*AllHomepagesOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewAllHomepagesParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "all_homepages",
+		Method:             "GET",
+		PathPattern:        "/homepages",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &AllHomepagesReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*AllHomepagesOK), nil
+
+}
+
+/*
+CreateHomepage creates homepage
+
+### Create a new homepage.
+
+*/
+func (a *Client) CreateHomepage(params *CreateHomepageParams) (*CreateHomepageOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewCreateHomepageParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "create_homepage",
+		Method:             "POST",
+		PathPattern:        "/homepages",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &CreateHomepageReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*CreateHomepageOK), nil
+
+}
+
+/*
 CreateHomepageItem creates homepage item
 
 ### Create a new homepage item.
@@ -145,6 +207,37 @@ func (a *Client) CreateHomepageSection(params *CreateHomepageSectionParams) (*Cr
 		return nil, err
 	}
 	return result.(*CreateHomepageSectionOK), nil
+
+}
+
+/*
+DeleteHomepage deletes homepage
+
+### Delete a homepage.
+
+*/
+func (a *Client) DeleteHomepage(params *DeleteHomepageParams) (*DeleteHomepageNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewDeleteHomepageParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "delete_homepage",
+		Method:             "DELETE",
+		PathPattern:        "/homepages/{homepage_id}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &DeleteHomepageReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*DeleteHomepageNoContent), nil
 
 }
 
@@ -211,6 +304,37 @@ func (a *Client) DeleteHomepageSection(params *DeleteHomepageSectionParams) (*De
 }
 
 /*
+Homepage gets homepage
+
+### Get information about a homepage.
+
+*/
+func (a *Client) Homepage(params *HomepageParams) (*HomepageOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewHomepageParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "homepage",
+		Method:             "GET",
+		PathPattern:        "/homepages/{homepage_id}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &HomepageReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*HomepageOK), nil
+
+}
+
+/*
 HomepageItem gets homepage item
 
 ### Get information about a homepage item.
@@ -269,6 +393,37 @@ func (a *Client) HomepageSection(params *HomepageSectionParams) (*HomepageSectio
 		return nil, err
 	}
 	return result.(*HomepageSectionOK), nil
+
+}
+
+/*
+UpdateHomepage updates homepage
+
+### Update a homepage definition.
+
+*/
+func (a *Client) UpdateHomepage(params *UpdateHomepageParams) (*UpdateHomepageOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUpdateHomepageParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "update_homepage",
+		Method:             "PATCH",
+		PathPattern:        "/homepages/{homepage_id}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &UpdateHomepageReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*UpdateHomepageOK), nil
 
 }
 

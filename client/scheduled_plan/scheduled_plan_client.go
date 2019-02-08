@@ -27,11 +27,14 @@ type Client struct {
 /*
 AllScheduledPlans gets all scheduled plans
 
-### Get All Scheduled Plans
+### List All Scheduled Plans
 
-Returns all scheduled plans owned by the caller or given user.
+Returns all scheduled plans which belong to the caller or given user.
 
 If no user_id is provided, this function returns the scheduled plans owned by the caller.
+
+
+To list all schedules for all users, pass `all_users=true`.
 
 
 The caller must have `see_schedules` permission to see other users' scheduled plans.
@@ -254,9 +257,12 @@ ScheduledPlansForDashboard scheduleds plans for dashboard
 
 ### Get Scheduled Plans for a Dashboard
 
-Returns all scheduled plans owned by the caller or given user, for a given dashboard.
+Returns all scheduled plans for a dashboard which belong to the caller or given user.
 
 If no user_id is provided, this function returns the scheduled plans owned by the caller.
+
+
+To list all schedules for all users, pass `all_users=true`.
 
 
 The caller must have `see_schedules` permission to see other users' scheduled plans.
@@ -294,9 +300,12 @@ ScheduledPlansForLook scheduleds plans for look
 
 ### Get Scheduled Plans for a Look
 
-Returns all scheduled plans owned by the caller or given user, for a given look.
+Returns all scheduled plans for a look which belong to the caller or given user.
 
 If no user_id is provided, this function returns the scheduled plans owned by the caller.
+
+
+To list all schedules for all users, pass `all_users=true`.
 
 
 The caller must have `see_schedules` permission to see other users' scheduled plans.
@@ -334,9 +343,12 @@ ScheduledPlansForLookmlDashboard scheduleds plans for look m l dashboard
 
 ### Get Scheduled Plans for a LookML Dashboard
 
-Returns all scheduled plans owned by the caller or given user, for a given LookML dashboard.
+Returns all scheduled plans for a LookML Dashboard which belong to the caller or given user.
 
 If no user_id is provided, this function returns the scheduled plans owned by the caller.
+
+
+To list all schedules for all users, pass `all_users=true`.
 
 
 The caller must have `see_schedules` permission to see other users' scheduled plans.

@@ -55,6 +55,36 @@ func (a *Client) CreateSQLQuery(params *CreateSQLQueryParams) (*CreateSQLQueryOK
 }
 
 /*
+RunSQLQuery runs SQL runner query
+
+Execute a SQL Runner query in a given result_format.
+*/
+func (a *Client) RunSQLQuery(params *RunSQLQueryParams) (*RunSQLQueryOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewRunSQLQueryParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "run_sql_query",
+		Method:             "POST",
+		PathPattern:        "/sql_queries/{slug}/run/{result_format}",
+		ProducesMediaTypes: []string{"application/json", "image/jpg", "image/png", "text"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &RunSQLQueryReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*RunSQLQueryOK), nil
+
+}
+
+/*
 SQLQuery gets SQL runner query
 
 Get a SQL Runner query.

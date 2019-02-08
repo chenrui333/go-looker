@@ -99,6 +99,96 @@ func (a *Client) CreateDashboard(params *CreateDashboardParams) (*CreateDashboar
 }
 
 /*
+CreateDashboardElement creates dashboard element
+
+### Create a dashboard element on the dashboard with a specific id.
+*/
+func (a *Client) CreateDashboardElement(params *CreateDashboardElementParams) (*CreateDashboardElementOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewCreateDashboardElementParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "create_dashboard_element",
+		Method:             "POST",
+		PathPattern:        "/dashboard_elements",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &CreateDashboardElementReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*CreateDashboardElementOK), nil
+
+}
+
+/*
+CreateDashboardFilter creates dashboard filter
+
+### Create a dashboard filter on the dashboard with a specific id.
+*/
+func (a *Client) CreateDashboardFilter(params *CreateDashboardFilterParams) (*CreateDashboardFilterOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewCreateDashboardFilterParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "create_dashboard_filter",
+		Method:             "POST",
+		PathPattern:        "/dashboard_filters",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &CreateDashboardFilterReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*CreateDashboardFilterOK), nil
+
+}
+
+/*
+CreateDashboardLayout creates dashboard layout
+
+### Create a dashboard layout on the dashboard with a specific id.
+*/
+func (a *Client) CreateDashboardLayout(params *CreateDashboardLayoutParams) (*CreateDashboardLayoutOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewCreateDashboardLayoutParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "create_dashboard_layout",
+		Method:             "POST",
+		PathPattern:        "/dashboard_layouts",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &CreateDashboardLayoutReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*CreateDashboardLayoutOK), nil
+
+}
+
+/*
 Dashboard gets dashboard
 
 ### Get information about the dashboard with the specified id
@@ -136,6 +226,246 @@ func (a *Client) Dashboard(params *DashboardParams) (*DashboardOK, error) {
 }
 
 /*
+DashboardDashboardElements gets all dashboard elements
+
+### Get information about all the dashboard elements on a dashboard with a specific id.
+*/
+func (a *Client) DashboardDashboardElements(params *DashboardDashboardElementsParams) (*DashboardDashboardElementsOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewDashboardDashboardElementsParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "dashboard_dashboard_elements",
+		Method:             "GET",
+		PathPattern:        "/dashboards/{dashboard_id}/dashboard_elements",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &DashboardDashboardElementsReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*DashboardDashboardElementsOK), nil
+
+}
+
+/*
+DashboardDashboardFilters gets all dashboard filters
+
+### Get information about all the dashboard filters on a dashboard with a specific id.
+*/
+func (a *Client) DashboardDashboardFilters(params *DashboardDashboardFiltersParams) (*DashboardDashboardFiltersOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewDashboardDashboardFiltersParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "dashboard_dashboard_filters",
+		Method:             "GET",
+		PathPattern:        "/dashboards/{dashboard_id}/dashboard_filters",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &DashboardDashboardFiltersReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*DashboardDashboardFiltersOK), nil
+
+}
+
+/*
+DashboardDashboardLayouts gets all dashboard layouts
+
+### Get information about all the dashboard elemnts on a dashboard with a specific id.
+*/
+func (a *Client) DashboardDashboardLayouts(params *DashboardDashboardLayoutsParams) (*DashboardDashboardLayoutsOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewDashboardDashboardLayoutsParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "dashboard_dashboard_layouts",
+		Method:             "GET",
+		PathPattern:        "/dashboards/{dashboard_id}/dashboard_layouts",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &DashboardDashboardLayoutsReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*DashboardDashboardLayoutsOK), nil
+
+}
+
+/*
+DashboardElement gets dashboard element
+
+### Get information about the dashboard element with a specific id.
+*/
+func (a *Client) DashboardElement(params *DashboardElementParams) (*DashboardElementOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewDashboardElementParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "dashboard_element",
+		Method:             "GET",
+		PathPattern:        "/dashboard_elements/{dashboard_element_id}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &DashboardElementReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*DashboardElementOK), nil
+
+}
+
+/*
+DashboardFilter gets dashboard filter
+
+### Get information about the dashboard filters with a specific id.
+*/
+func (a *Client) DashboardFilter(params *DashboardFilterParams) (*DashboardFilterOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewDashboardFilterParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "dashboard_filter",
+		Method:             "GET",
+		PathPattern:        "/dashboard_filters/{dashboard_filter_id}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &DashboardFilterReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*DashboardFilterOK), nil
+
+}
+
+/*
+DashboardLayout gets dashboard layout
+
+### Get information about the dashboard layouts with a specific id.
+*/
+func (a *Client) DashboardLayout(params *DashboardLayoutParams) (*DashboardLayoutOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewDashboardLayoutParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "dashboard_layout",
+		Method:             "GET",
+		PathPattern:        "/dashboard_layouts/{dashboard_layout_id}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &DashboardLayoutReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*DashboardLayoutOK), nil
+
+}
+
+/*
+DashboardLayoutComponent gets dashboard layout component
+
+### Get information about the dashboard elements with a specific id.
+*/
+func (a *Client) DashboardLayoutComponent(params *DashboardLayoutComponentParams) (*DashboardLayoutComponentOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewDashboardLayoutComponentParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "dashboard_layout_component",
+		Method:             "GET",
+		PathPattern:        "/dashboard_layout_components/{dashboard_layout_component_id}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &DashboardLayoutComponentReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*DashboardLayoutComponentOK), nil
+
+}
+
+/*
+DashboardLayoutDashboardLayoutComponents gets all dashboard layout components
+
+### Get information about all the dashboard layout components for a dashboard layout with a specific id.
+*/
+func (a *Client) DashboardLayoutDashboardLayoutComponents(params *DashboardLayoutDashboardLayoutComponentsParams) (*DashboardLayoutDashboardLayoutComponentsOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewDashboardLayoutDashboardLayoutComponentsParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "dashboard_layout_dashboard_layout_components",
+		Method:             "GET",
+		PathPattern:        "/dashboard_layouts/{dashboard_layout_id}/dashboard_layout_components",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &DashboardLayoutDashboardLayoutComponentsReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*DashboardLayoutDashboardLayoutComponentsOK), nil
+
+}
+
+/*
 DeleteDashboard deletes dashboard
 
 ### Delete the dashboard with the specified id
@@ -169,6 +499,96 @@ func (a *Client) DeleteDashboard(params *DeleteDashboardParams) (*DeleteDashboar
 		return nil, err
 	}
 	return result.(*DeleteDashboardNoContent), nil
+
+}
+
+/*
+DeleteDashboardElement deletes dashboard element
+
+### Delete a dashboard element with a specific id.
+*/
+func (a *Client) DeleteDashboardElement(params *DeleteDashboardElementParams) (*DeleteDashboardElementNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewDeleteDashboardElementParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "delete_dashboard_element",
+		Method:             "DELETE",
+		PathPattern:        "/dashboard_elements/{dashboard_element_id}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &DeleteDashboardElementReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*DeleteDashboardElementNoContent), nil
+
+}
+
+/*
+DeleteDashboardFilter deletes dashboard filter
+
+### Delete a dashboard filter with a specific id.
+*/
+func (a *Client) DeleteDashboardFilter(params *DeleteDashboardFilterParams) (*DeleteDashboardFilterNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewDeleteDashboardFilterParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "delete_dashboard_filter",
+		Method:             "DELETE",
+		PathPattern:        "/dashboard_filters/{dashboard_filter_id}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &DeleteDashboardFilterReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*DeleteDashboardFilterNoContent), nil
+
+}
+
+/*
+DeleteDashboardLayout deletes dashboard layout
+
+### Delete a dashboard layout with a specific id.
+*/
+func (a *Client) DeleteDashboardLayout(params *DeleteDashboardLayoutParams) (*DeleteDashboardLayoutNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewDeleteDashboardLayoutParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "delete_dashboard_layout",
+		Method:             "DELETE",
+		PathPattern:        "/dashboard_layouts/{dashboard_layout_id}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &DeleteDashboardLayoutReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*DeleteDashboardLayoutNoContent), nil
 
 }
 
@@ -217,6 +637,36 @@ func (a *Client) ImportLookmlDashboard(params *ImportLookmlDashboardParams) (*Im
 		return nil, value, nil
 	}
 	return nil, nil, nil
+
+}
+
+/*
+SearchDashboardElements gets dashboard element
+
+### Get information on dashboard look relations for a set of look ids.
+*/
+func (a *Client) SearchDashboardElements(params *SearchDashboardElementsParams) (*SearchDashboardElementsOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewSearchDashboardElementsParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "search_dashboard_elements",
+		Method:             "GET",
+		PathPattern:        "/dashboard_elements/search",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &SearchDashboardElementsReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*SearchDashboardElementsOK), nil
 
 }
 
@@ -326,6 +776,126 @@ func (a *Client) UpdateDashboard(params *UpdateDashboardParams) (*UpdateDashboar
 		return nil, err
 	}
 	return result.(*UpdateDashboardOK), nil
+
+}
+
+/*
+UpdateDashboardElement updates dashboard element
+
+### Update the dashboard element with a specific id.
+*/
+func (a *Client) UpdateDashboardElement(params *UpdateDashboardElementParams) (*UpdateDashboardElementOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUpdateDashboardElementParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "update_dashboard_element",
+		Method:             "PATCH",
+		PathPattern:        "/dashboard_elements/{dashboard_element_id}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &UpdateDashboardElementReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*UpdateDashboardElementOK), nil
+
+}
+
+/*
+UpdateDashboardFilter updates dashboard filter
+
+### Update the dashboard filter with a specific id.
+*/
+func (a *Client) UpdateDashboardFilter(params *UpdateDashboardFilterParams) (*UpdateDashboardFilterOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUpdateDashboardFilterParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "update_dashboard_filter",
+		Method:             "PATCH",
+		PathPattern:        "/dashboard_filters/{dashboard_filter_id}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &UpdateDashboardFilterReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*UpdateDashboardFilterOK), nil
+
+}
+
+/*
+UpdateDashboardLayout updates dashboard layout
+
+### Update the dashboard layout with a specific id.
+*/
+func (a *Client) UpdateDashboardLayout(params *UpdateDashboardLayoutParams) (*UpdateDashboardLayoutOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUpdateDashboardLayoutParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "update_dashboard_layout",
+		Method:             "PATCH",
+		PathPattern:        "/dashboard_layouts/{dashboard_layout_id}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &UpdateDashboardLayoutReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*UpdateDashboardLayoutOK), nil
+
+}
+
+/*
+UpdateDashboardLayoutComponent updates dashboard layout component
+
+### Update the dashboard element with a specific id.
+*/
+func (a *Client) UpdateDashboardLayoutComponent(params *UpdateDashboardLayoutComponentParams) (*UpdateDashboardLayoutComponentOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUpdateDashboardLayoutComponentParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "update_dashboard_layout_component",
+		Method:             "PATCH",
+		PathPattern:        "/dashboard_layout_components/{dashboard_layout_component_id}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &UpdateDashboardLayoutComponentReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*UpdateDashboardLayoutComponentOK), nil
 
 }
 

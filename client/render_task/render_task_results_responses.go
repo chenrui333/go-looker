@@ -25,15 +25,15 @@ type RenderTaskResultsReader struct {
 func (o *RenderTaskResultsReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
 
-	case 102:
-		result := NewRenderTaskResultsProcessing()
+	case 200:
+		result := NewRenderTaskResultsOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
-		return nil, result
+		return result, nil
 
-	case 200:
-		result := NewRenderTaskResultsOK()
+	case 202:
+		result := NewRenderTaskResultsAccepted()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
@@ -49,27 +49,6 @@ func (o *RenderTaskResultsReader) ReadResponse(response runtime.ClientResponse, 
 	default:
 		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
-}
-
-// NewRenderTaskResultsProcessing creates a RenderTaskResultsProcessing with default headers values
-func NewRenderTaskResultsProcessing() *RenderTaskResultsProcessing {
-	return &RenderTaskResultsProcessing{}
-}
-
-/*RenderTaskResultsProcessing handles this case with default header values.
-
-Processing
-*/
-type RenderTaskResultsProcessing struct {
-}
-
-func (o *RenderTaskResultsProcessing) Error() string {
-	return fmt.Sprintf("[GET /render_tasks/{render_task_id}/results][%d] renderTaskResultsProcessing ", 102)
-}
-
-func (o *RenderTaskResultsProcessing) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
-
-	return nil
 }
 
 // NewRenderTaskResultsOK creates a RenderTaskResultsOK with default headers values
@@ -95,6 +74,27 @@ func (o *RenderTaskResultsOK) readResponse(response runtime.ClientResponse, cons
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
 		return err
 	}
+
+	return nil
+}
+
+// NewRenderTaskResultsAccepted creates a RenderTaskResultsAccepted with default headers values
+func NewRenderTaskResultsAccepted() *RenderTaskResultsAccepted {
+	return &RenderTaskResultsAccepted{}
+}
+
+/*RenderTaskResultsAccepted handles this case with default header values.
+
+Accepted
+*/
+type RenderTaskResultsAccepted struct {
+}
+
+func (o *RenderTaskResultsAccepted) Error() string {
+	return fmt.Sprintf("[GET /render_tasks/{render_task_id}/results][%d] renderTaskResultsAccepted ", 202)
+}
+
+func (o *RenderTaskResultsAccepted) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	return nil
 }

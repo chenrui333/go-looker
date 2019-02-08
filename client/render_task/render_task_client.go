@@ -209,10 +209,24 @@ RenderTaskResults renders task results
 
 ### Get the document or image produced by a completed render task.
 
-Returns `102 Processing` if the render task has not completed.
+Note that the PDF or image result will be a binary blob in the HTTP response, as indicated by the
+Content-Type in the response headers. This may require specialized (or at least different) handling than text
+responses such as JSON. You may need to tell your HTTP client that the response is binary so that it does not
+attempt to parse the binary data as text.
+
+If the render task exists but has not finished rendering the results, the response HTTP status will be
+**202 Accepted**, the response body will be empty, and the response will have a Retry-After header indicating
+that the caller should repeat the request at a later time.
+
+Returns 404 if the render task cannot be found, if the cached result has expired, or if the caller
+does not have permission to view the results.
+
+For detailed information about the status of the render task, use [Render Task](#!/RenderTask/render_task).
+Polling loops waiting for completion of a render task would be better served by polling **render_task(id)** until
+the task status reaches completion (or error) instead of polling **render_task_results(id)** alone.
 
 */
-func (a *Client) RenderTaskResults(params *RenderTaskResultsParams) (*RenderTaskResultsOK, error) {
+func (a *Client) RenderTaskResults(params *RenderTaskResultsParams) (*RenderTaskResultsOK, *RenderTaskResultsAccepted, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewRenderTaskResultsParams()
@@ -231,9 +245,15 @@ func (a *Client) RenderTaskResults(params *RenderTaskResultsParams) (*RenderTask
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	return result.(*RenderTaskResultsOK), nil
+	switch value := result.(type) {
+	case *RenderTaskResultsOK:
+		return value, nil, nil
+	case *RenderTaskResultsAccepted:
+		return nil, value, nil
+	}
+	return nil, nil, nil
 
 }
 

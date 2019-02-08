@@ -25,6 +25,53 @@ type Client struct {
 }
 
 /*
+CreateMergeQuery creates merge query
+
+### Create Merge Query
+
+Creates a new merge query object.
+
+A merge query takes the results of one or more queries and combines (merges) the results
+according to field mapping definitions. The result is similar to a SQL left outer join.
+
+A merge query can merge results of queries from different SQL databases.
+
+The order that queries are defined in the source_queries array property is significant. The
+first query in the array defines the primary key into which the results of subsequent
+queries will be merged.
+
+Like model/view query objects, merge queries are immutable and have structural identity - if
+you make a request to create a new merge query that is identical to an existing merge query,
+the existing merge query will be returned instead of creating a duplicate. Conversely, any
+change to the contents of a merge query will produce a new object with a new id.
+
+*/
+func (a *Client) CreateMergeQuery(params *CreateMergeQueryParams) (*CreateMergeQueryOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewCreateMergeQueryParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "create_merge_query",
+		Method:             "POST",
+		PathPattern:        "/merge_queries",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &CreateMergeQueryReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*CreateMergeQueryOK), nil
+
+}
+
+/*
 CreateQuery creates query
 
 ### Create a query.
@@ -94,6 +141,39 @@ func (a *Client) CreateQueryTask(params *CreateQueryTaskParams) (*CreateQueryTas
 		return nil, err
 	}
 	return result.(*CreateQueryTaskOK), nil
+
+}
+
+/*
+MergeQuery gets merge query
+
+### Get Merge Query
+
+Returns a merge query object given its id.
+
+*/
+func (a *Client) MergeQuery(params *MergeQueryParams) (*MergeQueryOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewMergeQueryParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "merge_query",
+		Method:             "GET",
+		PathPattern:        "/merge_queries/{merge_query_id}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &MergeQueryReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*MergeQueryOK), nil
 
 }
 

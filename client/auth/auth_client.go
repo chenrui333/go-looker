@@ -182,6 +182,37 @@ func (a *Client) FetchAndParseSamlIdpMetadata(params *FetchAndParseSamlIdpMetada
 }
 
 /*
+ForcePasswordResetAtNextLoginForAllUsers forces password reset
+
+### Force all credentials_email users to reset their login passwords upon their next login.
+
+*/
+func (a *Client) ForcePasswordResetAtNextLoginForAllUsers(params *ForcePasswordResetAtNextLoginForAllUsersParams) (*ForcePasswordResetAtNextLoginForAllUsersOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewForcePasswordResetAtNextLoginForAllUsersParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "force_password_reset_at_next_login_for_all_users",
+		Method:             "PUT",
+		PathPattern:        "/password_config/force_password_reset_at_next_login_for_all_users",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &ForcePasswordResetAtNextLoginForAllUsersReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*ForcePasswordResetAtNextLoginForAllUsersOK), nil
+
+}
+
+/*
 LdapConfig gets l d a p configuration
 
 ### Get the LDAP configuration.
@@ -332,6 +363,37 @@ func (a *Client) ParseSamlIdpMetadata(params *ParseSamlIdpMetadataParams) (*Pars
 }
 
 /*
+PasswordConfig gets password config
+
+### Get password config.
+
+*/
+func (a *Client) PasswordConfig(params *PasswordConfigParams) (*PasswordConfigOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewPasswordConfigParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "password_config",
+		Method:             "GET",
+		PathPattern:        "/password_config",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &PasswordConfigReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*PasswordConfigOK), nil
+
+}
+
+/*
 SamlConfig gets s a m l configuration
 
 ### Get the SAML configuration.
@@ -401,6 +463,37 @@ func (a *Client) SamlTestConfig(params *SamlTestConfigParams) (*SamlTestConfigOK
 		return nil, err
 	}
 	return result.(*SamlTestConfigOK), nil
+
+}
+
+/*
+SessionConfig gets session config
+
+### Get session config.
+
+*/
+func (a *Client) SessionConfig(params *SessionConfigParams) (*SessionConfigOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewSessionConfigParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "session_config",
+		Method:             "GET",
+		PathPattern:        "/session_config",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &SessionConfigReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*SessionConfigOK), nil
 
 }
 
@@ -664,6 +757,37 @@ func (a *Client) UpdateOidcConfig(params *UpdateOidcConfigParams) (*UpdateOidcCo
 }
 
 /*
+UpdatePasswordConfig updates password config
+
+### Update password config.
+
+*/
+func (a *Client) UpdatePasswordConfig(params *UpdatePasswordConfigParams) (*UpdatePasswordConfigOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUpdatePasswordConfigParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "update_password_config",
+		Method:             "PATCH",
+		PathPattern:        "/password_config",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &UpdatePasswordConfigReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*UpdatePasswordConfigOK), nil
+
+}
+
+/*
 UpdateSamlConfig updates s a m l configuration
 
 ### Update the SAML configuration.
@@ -699,6 +823,37 @@ func (a *Client) UpdateSamlConfig(params *UpdateSamlConfigParams) (*UpdateSamlCo
 		return nil, err
 	}
 	return result.(*UpdateSamlConfigOK), nil
+
+}
+
+/*
+UpdateSessionConfig updates session config
+
+### Update session config.
+
+*/
+func (a *Client) UpdateSessionConfig(params *UpdateSessionConfigParams) (*UpdateSessionConfigOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUpdateSessionConfigParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "update_session_config",
+		Method:             "PATCH",
+		PathPattern:        "/session_config",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &UpdateSessionConfigReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*UpdateSessionConfigOK), nil
 
 }
 
