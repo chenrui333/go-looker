@@ -24,28 +24,24 @@ type CreateSamlTestConfigReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *CreateSamlTestConfigReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewCreateSamlTestConfigOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewCreateSamlTestConfigBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewCreateSamlTestConfigNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewCreateSamlTestConfigUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -73,6 +69,10 @@ type CreateSamlTestConfigOK struct {
 
 func (o *CreateSamlTestConfigOK) Error() string {
 	return fmt.Sprintf("[POST /saml_test_configs][%d] createSamlTestConfigOK  %+v", 200, o.Payload)
+}
+
+func (o *CreateSamlTestConfigOK) GetPayload() *models.SamlConfig {
+	return o.Payload
 }
 
 func (o *CreateSamlTestConfigOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -104,6 +104,10 @@ func (o *CreateSamlTestConfigBadRequest) Error() string {
 	return fmt.Sprintf("[POST /saml_test_configs][%d] createSamlTestConfigBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *CreateSamlTestConfigBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreateSamlTestConfigBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -133,6 +137,10 @@ func (o *CreateSamlTestConfigNotFound) Error() string {
 	return fmt.Sprintf("[POST /saml_test_configs][%d] createSamlTestConfigNotFound  %+v", 404, o.Payload)
 }
 
+func (o *CreateSamlTestConfigNotFound) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreateSamlTestConfigNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -160,6 +168,10 @@ type CreateSamlTestConfigUnprocessableEntity struct {
 
 func (o *CreateSamlTestConfigUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[POST /saml_test_configs][%d] createSamlTestConfigUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *CreateSamlTestConfigUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *CreateSamlTestConfigUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

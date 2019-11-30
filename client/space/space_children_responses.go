@@ -24,21 +24,18 @@ type SpaceChildrenReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *SpaceChildrenReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewSpaceChildrenOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewSpaceChildrenBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewSpaceChildrenNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *SpaceChildrenOK) Error() string {
 	return fmt.Sprintf("[GET /spaces/{space_id}/children][%d] spaceChildrenOK  %+v", 200, o.Payload)
 }
 
+func (o *SpaceChildrenOK) GetPayload() []*models.Space {
+	return o.Payload
+}
+
 func (o *SpaceChildrenOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type SpaceChildrenBadRequest struct {
 
 func (o *SpaceChildrenBadRequest) Error() string {
 	return fmt.Sprintf("[GET /spaces/{space_id}/children][%d] spaceChildrenBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *SpaceChildrenBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *SpaceChildrenBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type SpaceChildrenNotFound struct {
 
 func (o *SpaceChildrenNotFound) Error() string {
 	return fmt.Sprintf("[GET /spaces/{space_id}/children][%d] spaceChildrenNotFound  %+v", 404, o.Payload)
+}
+
+func (o *SpaceChildrenNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *SpaceChildrenNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

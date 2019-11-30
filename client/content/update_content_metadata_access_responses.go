@@ -24,28 +24,24 @@ type UpdateContentMetadataAccessReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *UpdateContentMetadataAccessReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewUpdateContentMetadataAccessOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewUpdateContentMetadataAccessBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewUpdateContentMetadataAccessNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewUpdateContentMetadataAccessUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -73,6 +69,10 @@ type UpdateContentMetadataAccessOK struct {
 
 func (o *UpdateContentMetadataAccessOK) Error() string {
 	return fmt.Sprintf("[PUT /content_metadata_access/{content_metadata_access_id}][%d] updateContentMetadataAccessOK  %+v", 200, o.Payload)
+}
+
+func (o *UpdateContentMetadataAccessOK) GetPayload() *models.ContentMetaGroupUser {
+	return o.Payload
 }
 
 func (o *UpdateContentMetadataAccessOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -104,6 +104,10 @@ func (o *UpdateContentMetadataAccessBadRequest) Error() string {
 	return fmt.Sprintf("[PUT /content_metadata_access/{content_metadata_access_id}][%d] updateContentMetadataAccessBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *UpdateContentMetadataAccessBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UpdateContentMetadataAccessBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -133,6 +137,10 @@ func (o *UpdateContentMetadataAccessNotFound) Error() string {
 	return fmt.Sprintf("[PUT /content_metadata_access/{content_metadata_access_id}][%d] updateContentMetadataAccessNotFound  %+v", 404, o.Payload)
 }
 
+func (o *UpdateContentMetadataAccessNotFound) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UpdateContentMetadataAccessNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -160,6 +168,10 @@ type UpdateContentMetadataAccessUnprocessableEntity struct {
 
 func (o *UpdateContentMetadataAccessUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[PUT /content_metadata_access/{content_metadata_access_id}][%d] updateContentMetadataAccessUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *UpdateContentMetadataAccessUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *UpdateContentMetadataAccessUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

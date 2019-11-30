@@ -24,21 +24,18 @@ type DeleteUserAttributeUserValueReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *DeleteUserAttributeUserValueReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 204:
 		result := NewDeleteUserAttributeUserValueNoContent()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewDeleteUserAttributeUserValueBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewDeleteUserAttributeUserValueNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -89,6 +86,10 @@ func (o *DeleteUserAttributeUserValueBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /users/{user_id}/attribute_values/{user_attribute_id}][%d] deleteUserAttributeUserValueBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *DeleteUserAttributeUserValueBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *DeleteUserAttributeUserValueBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -116,6 +117,10 @@ type DeleteUserAttributeUserValueNotFound struct {
 
 func (o *DeleteUserAttributeUserValueNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /users/{user_id}/attribute_values/{user_attribute_id}][%d] deleteUserAttributeUserValueNotFound  %+v", 404, o.Payload)
+}
+
+func (o *DeleteUserAttributeUserValueNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteUserAttributeUserValueNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

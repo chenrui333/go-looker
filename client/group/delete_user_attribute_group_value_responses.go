@@ -24,21 +24,18 @@ type DeleteUserAttributeGroupValueReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *DeleteUserAttributeGroupValueReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 204:
 		result := NewDeleteUserAttributeGroupValueNoContent()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewDeleteUserAttributeGroupValueBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewDeleteUserAttributeGroupValueNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -89,6 +86,10 @@ func (o *DeleteUserAttributeGroupValueBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /groups/{group_id}/attribute_values/{user_attribute_id}][%d] deleteUserAttributeGroupValueBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *DeleteUserAttributeGroupValueBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *DeleteUserAttributeGroupValueBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -116,6 +117,10 @@ type DeleteUserAttributeGroupValueNotFound struct {
 
 func (o *DeleteUserAttributeGroupValueNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /groups/{group_id}/attribute_values/{user_attribute_id}][%d] deleteUserAttributeGroupValueNotFound  %+v", 404, o.Payload)
+}
+
+func (o *DeleteUserAttributeGroupValueNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteUserAttributeGroupValueNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

@@ -24,21 +24,18 @@ type DashboardReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *DashboardReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewDashboardOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewDashboardBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewDashboardNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -66,6 +63,10 @@ type DashboardOK struct {
 
 func (o *DashboardOK) Error() string {
 	return fmt.Sprintf("[GET /dashboards/{dashboard_id}][%d] dashboardOK  %+v", 200, o.Payload)
+}
+
+func (o *DashboardOK) GetPayload() *models.Dashboard {
+	return o.Payload
 }
 
 func (o *DashboardOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -97,6 +98,10 @@ func (o *DashboardBadRequest) Error() string {
 	return fmt.Sprintf("[GET /dashboards/{dashboard_id}][%d] dashboardBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *DashboardBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *DashboardBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -124,6 +129,10 @@ type DashboardNotFound struct {
 
 func (o *DashboardNotFound) Error() string {
 	return fmt.Sprintf("[GET /dashboards/{dashboard_id}][%d] dashboardNotFound  %+v", 404, o.Payload)
+}
+
+func (o *DashboardNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DashboardNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

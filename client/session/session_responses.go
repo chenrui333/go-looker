@@ -24,21 +24,18 @@ type SessionReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *SessionReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewSessionOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewSessionBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewSessionNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -66,6 +63,10 @@ type SessionOK struct {
 
 func (o *SessionOK) Error() string {
 	return fmt.Sprintf("[GET /session][%d] sessionOK  %+v", 200, o.Payload)
+}
+
+func (o *SessionOK) GetPayload() *models.APISession {
+	return o.Payload
 }
 
 func (o *SessionOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -97,6 +98,10 @@ func (o *SessionBadRequest) Error() string {
 	return fmt.Sprintf("[GET /session][%d] sessionBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *SessionBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *SessionBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -124,6 +129,10 @@ type SessionNotFound struct {
 
 func (o *SessionNotFound) Error() string {
 	return fmt.Sprintf("[GET /session][%d] sessionNotFound  %+v", 404, o.Payload)
+}
+
+func (o *SessionNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *SessionNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

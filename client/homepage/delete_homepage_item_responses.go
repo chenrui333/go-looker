@@ -24,21 +24,18 @@ type DeleteHomepageItemReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *DeleteHomepageItemReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 204:
 		result := NewDeleteHomepageItemNoContent()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewDeleteHomepageItemBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewDeleteHomepageItemNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *DeleteHomepageItemNoContent) Error() string {
 	return fmt.Sprintf("[DELETE /homepage_items/{homepage_item_id}][%d] deleteHomepageItemNoContent  %+v", 204, o.Payload)
 }
 
+func (o *DeleteHomepageItemNoContent) GetPayload() string {
+	return o.Payload
+}
+
 func (o *DeleteHomepageItemNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type DeleteHomepageItemBadRequest struct {
 
 func (o *DeleteHomepageItemBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /homepage_items/{homepage_item_id}][%d] deleteHomepageItemBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *DeleteHomepageItemBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteHomepageItemBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type DeleteHomepageItemNotFound struct {
 
 func (o *DeleteHomepageItemNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /homepage_items/{homepage_item_id}][%d] deleteHomepageItemNotFound  %+v", 404, o.Payload)
+}
+
+func (o *DeleteHomepageItemNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteHomepageItemNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

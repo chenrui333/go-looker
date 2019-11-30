@@ -24,28 +24,24 @@ type RunGitConnectionTestReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *RunGitConnectionTestReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewRunGitConnectionTestOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewRunGitConnectionTestBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewRunGitConnectionTestNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewRunGitConnectionTestUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -73,6 +69,10 @@ type RunGitConnectionTestOK struct {
 
 func (o *RunGitConnectionTestOK) Error() string {
 	return fmt.Sprintf("[GET /projects/{project_id}/git_connection_tests/{test_id}][%d] runGitConnectionTestOK  %+v", 200, o.Payload)
+}
+
+func (o *RunGitConnectionTestOK) GetPayload() *models.GitConnectionTestResult {
+	return o.Payload
 }
 
 func (o *RunGitConnectionTestOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -104,6 +104,10 @@ func (o *RunGitConnectionTestBadRequest) Error() string {
 	return fmt.Sprintf("[GET /projects/{project_id}/git_connection_tests/{test_id}][%d] runGitConnectionTestBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *RunGitConnectionTestBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *RunGitConnectionTestBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -133,6 +137,10 @@ func (o *RunGitConnectionTestNotFound) Error() string {
 	return fmt.Sprintf("[GET /projects/{project_id}/git_connection_tests/{test_id}][%d] runGitConnectionTestNotFound  %+v", 404, o.Payload)
 }
 
+func (o *RunGitConnectionTestNotFound) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *RunGitConnectionTestNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -160,6 +168,10 @@ type RunGitConnectionTestUnprocessableEntity struct {
 
 func (o *RunGitConnectionTestUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[GET /projects/{project_id}/git_connection_tests/{test_id}][%d] runGitConnectionTestUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *RunGitConnectionTestUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *RunGitConnectionTestUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

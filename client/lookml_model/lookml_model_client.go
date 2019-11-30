@@ -6,6 +6,8 @@ package lookml_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"fmt"
+
 	"github.com/go-openapi/runtime"
 
 	strfmt "github.com/go-openapi/strfmt"
@@ -51,8 +53,14 @@ func (a *Client) AllLookmlModels(params *AllLookmlModelsParams) (*AllLookmlModel
 	if err != nil {
 		return nil, err
 	}
-	return result.(*AllLookmlModelsOK), nil
-
+	success, ok := result.(*AllLookmlModelsOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for all_lookml_models: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -82,8 +90,14 @@ func (a *Client) CreateLookmlModel(params *CreateLookmlModelParams) (*CreateLook
 	if err != nil {
 		return nil, err
 	}
-	return result.(*CreateLookmlModelOK), nil
-
+	success, ok := result.(*CreateLookmlModelOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for create_lookml_model: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -113,8 +127,14 @@ func (a *Client) DeleteLookmlModel(params *DeleteLookmlModelParams) (*DeleteLook
 	if err != nil {
 		return nil, err
 	}
-	return result.(*DeleteLookmlModelNoContent), nil
-
+	success, ok := result.(*DeleteLookmlModelNoContent)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for delete_lookml_model: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -144,8 +164,14 @@ func (a *Client) LookmlModel(params *LookmlModelParams) (*LookmlModelOK, error) 
 	if err != nil {
 		return nil, err
 	}
-	return result.(*LookmlModelOK), nil
-
+	success, ok := result.(*LookmlModelOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for lookml_model: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -175,8 +201,14 @@ func (a *Client) LookmlModelExplore(params *LookmlModelExploreParams) (*LookmlMo
 	if err != nil {
 		return nil, err
 	}
-	return result.(*LookmlModelExploreOK), nil
-
+	success, ok := result.(*LookmlModelExploreOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for lookml_model_explore: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -206,8 +238,14 @@ func (a *Client) UpdateLookmlModel(params *UpdateLookmlModelParams) (*UpdateLook
 	if err != nil {
 		return nil, err
 	}
-	return result.(*UpdateLookmlModelOK), nil
-
+	success, ok := result.(*UpdateLookmlModelOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for update_lookml_model: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 // SetTransport changes the transport on the client

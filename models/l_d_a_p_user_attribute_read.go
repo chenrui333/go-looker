@@ -19,10 +19,6 @@ import (
 // swagger:model LDAPUserAttributeRead
 type LDAPUserAttributeRead struct {
 
-	// Operations the current user is able to perform on this object
-	// Read Only: true
-	Can map[string]bool `json:"can,omitempty"`
-
 	// Name of User Attribute in LDAP
 	// Read Only: true
 	Name string `json:"name,omitempty"`
@@ -31,7 +27,7 @@ type LDAPUserAttributeRead struct {
 	// Read Only: true
 	Required *bool `json:"required,omitempty"`
 
-	// Link to LDAP config
+	// Link to ldap config
 	// Read Only: true
 	// Format: uri
 	URL strfmt.URI `json:"url,omitempty"`

@@ -24,21 +24,18 @@ type DeleteUserAttributeReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *DeleteUserAttributeReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 204:
 		result := NewDeleteUserAttributeNoContent()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewDeleteUserAttributeBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewDeleteUserAttributeNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *DeleteUserAttributeNoContent) Error() string {
 	return fmt.Sprintf("[DELETE /user_attributes/{user_attribute_id}][%d] deleteUserAttributeNoContent  %+v", 204, o.Payload)
 }
 
+func (o *DeleteUserAttributeNoContent) GetPayload() string {
+	return o.Payload
+}
+
 func (o *DeleteUserAttributeNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type DeleteUserAttributeBadRequest struct {
 
 func (o *DeleteUserAttributeBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /user_attributes/{user_attribute_id}][%d] deleteUserAttributeBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *DeleteUserAttributeBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteUserAttributeBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type DeleteUserAttributeNotFound struct {
 
 func (o *DeleteUserAttributeNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /user_attributes/{user_attribute_id}][%d] deleteUserAttributeNotFound  %+v", 404, o.Payload)
+}
+
+func (o *DeleteUserAttributeNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteUserAttributeNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

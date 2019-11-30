@@ -24,21 +24,18 @@ type ModelSetReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *ModelSetReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewModelSetOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewModelSetBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewModelSetNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -66,6 +63,10 @@ type ModelSetOK struct {
 
 func (o *ModelSetOK) Error() string {
 	return fmt.Sprintf("[GET /model_sets/{model_set_id}][%d] modelSetOK  %+v", 200, o.Payload)
+}
+
+func (o *ModelSetOK) GetPayload() *models.ModelSet {
+	return o.Payload
 }
 
 func (o *ModelSetOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -97,6 +98,10 @@ func (o *ModelSetBadRequest) Error() string {
 	return fmt.Sprintf("[GET /model_sets/{model_set_id}][%d] modelSetBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *ModelSetBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *ModelSetBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -124,6 +129,10 @@ type ModelSetNotFound struct {
 
 func (o *ModelSetNotFound) Error() string {
 	return fmt.Sprintf("[GET /model_sets/{model_set_id}][%d] modelSetNotFound  %+v", 404, o.Payload)
+}
+
+func (o *ModelSetNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *ModelSetNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

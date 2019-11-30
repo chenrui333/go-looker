@@ -24,21 +24,18 @@ type AllUserAttributeGroupValuesReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *AllUserAttributeGroupValuesReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewAllUserAttributeGroupValuesOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewAllUserAttributeGroupValuesBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewAllUserAttributeGroupValuesNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *AllUserAttributeGroupValuesOK) Error() string {
 	return fmt.Sprintf("[GET /user_attributes/{user_attribute_id}/group_values][%d] allUserAttributeGroupValuesOK  %+v", 200, o.Payload)
 }
 
+func (o *AllUserAttributeGroupValuesOK) GetPayload() []*models.UserAttributeGroupValue {
+	return o.Payload
+}
+
 func (o *AllUserAttributeGroupValuesOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type AllUserAttributeGroupValuesBadRequest struct {
 
 func (o *AllUserAttributeGroupValuesBadRequest) Error() string {
 	return fmt.Sprintf("[GET /user_attributes/{user_attribute_id}/group_values][%d] allUserAttributeGroupValuesBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *AllUserAttributeGroupValuesBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *AllUserAttributeGroupValuesBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type AllUserAttributeGroupValuesNotFound struct {
 
 func (o *AllUserAttributeGroupValuesNotFound) Error() string {
 	return fmt.Sprintf("[GET /user_attributes/{user_attribute_id}/group_values][%d] allUserAttributeGroupValuesNotFound  %+v", 404, o.Payload)
+}
+
+func (o *AllUserAttributeGroupValuesNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *AllUserAttributeGroupValuesNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

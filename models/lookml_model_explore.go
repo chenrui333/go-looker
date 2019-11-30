@@ -146,6 +146,10 @@ type LookmlModelExplore struct {
 	// Read Only: true
 	SupportsCostEstimate *bool `json:"supports_cost_estimate,omitempty"`
 
+	// An array of arbitrary string tags provided in the model for this explore.
+	// Read Only: true
+	Tags []string `json:"tags"`
+
 	// Name of view
 	// Read Only: true
 	ViewName string `json:"view_name,omitempty"`

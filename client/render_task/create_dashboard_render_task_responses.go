@@ -24,35 +24,30 @@ type CreateDashboardRenderTaskReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *CreateDashboardRenderTaskReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewCreateDashboardRenderTaskOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewCreateDashboardRenderTaskBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewCreateDashboardRenderTaskNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 409:
 		result := NewCreateDashboardRenderTaskConflict()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewCreateDashboardRenderTaskUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -80,6 +75,10 @@ type CreateDashboardRenderTaskOK struct {
 
 func (o *CreateDashboardRenderTaskOK) Error() string {
 	return fmt.Sprintf("[POST /render_tasks/dashboards/{dashboard_id}/{result_format}][%d] createDashboardRenderTaskOK  %+v", 200, o.Payload)
+}
+
+func (o *CreateDashboardRenderTaskOK) GetPayload() *models.RenderTask {
+	return o.Payload
 }
 
 func (o *CreateDashboardRenderTaskOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -111,6 +110,10 @@ func (o *CreateDashboardRenderTaskBadRequest) Error() string {
 	return fmt.Sprintf("[POST /render_tasks/dashboards/{dashboard_id}/{result_format}][%d] createDashboardRenderTaskBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *CreateDashboardRenderTaskBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreateDashboardRenderTaskBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -138,6 +141,10 @@ type CreateDashboardRenderTaskNotFound struct {
 
 func (o *CreateDashboardRenderTaskNotFound) Error() string {
 	return fmt.Sprintf("[POST /render_tasks/dashboards/{dashboard_id}/{result_format}][%d] createDashboardRenderTaskNotFound  %+v", 404, o.Payload)
+}
+
+func (o *CreateDashboardRenderTaskNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *CreateDashboardRenderTaskNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -169,6 +176,10 @@ func (o *CreateDashboardRenderTaskConflict) Error() string {
 	return fmt.Sprintf("[POST /render_tasks/dashboards/{dashboard_id}/{result_format}][%d] createDashboardRenderTaskConflict  %+v", 409, o.Payload)
 }
 
+func (o *CreateDashboardRenderTaskConflict) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreateDashboardRenderTaskConflict) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -196,6 +207,10 @@ type CreateDashboardRenderTaskUnprocessableEntity struct {
 
 func (o *CreateDashboardRenderTaskUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[POST /render_tasks/dashboards/{dashboard_id}/{result_format}][%d] createDashboardRenderTaskUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *CreateDashboardRenderTaskUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *CreateDashboardRenderTaskUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

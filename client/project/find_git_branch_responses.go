@@ -24,21 +24,18 @@ type FindGitBranchReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *FindGitBranchReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewFindGitBranchOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewFindGitBranchBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewFindGitBranchNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -66,6 +63,10 @@ type FindGitBranchOK struct {
 
 func (o *FindGitBranchOK) Error() string {
 	return fmt.Sprintf("[GET /projects/{project_id}/git_branch/{branch_name}][%d] findGitBranchOK  %+v", 200, o.Payload)
+}
+
+func (o *FindGitBranchOK) GetPayload() *models.GitBranch {
+	return o.Payload
 }
 
 func (o *FindGitBranchOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -97,6 +98,10 @@ func (o *FindGitBranchBadRequest) Error() string {
 	return fmt.Sprintf("[GET /projects/{project_id}/git_branch/{branch_name}][%d] findGitBranchBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *FindGitBranchBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *FindGitBranchBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -124,6 +129,10 @@ type FindGitBranchNotFound struct {
 
 func (o *FindGitBranchNotFound) Error() string {
 	return fmt.Sprintf("[GET /projects/{project_id}/git_branch/{branch_name}][%d] findGitBranchNotFound  %+v", 404, o.Payload)
+}
+
+func (o *FindGitBranchNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *FindGitBranchNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

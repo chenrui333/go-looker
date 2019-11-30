@@ -6,6 +6,8 @@ package user_attribute
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"fmt"
+
 	"github.com/go-openapi/runtime"
 
 	strfmt "github.com/go-openapi/strfmt"
@@ -57,8 +59,14 @@ func (a *Client) AllUserAttributeGroupValues(params *AllUserAttributeGroupValues
 	if err != nil {
 		return nil, err
 	}
-	return result.(*AllUserAttributeGroupValuesOK), nil
-
+	success, ok := result.(*AllUserAttributeGroupValuesOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for all_user_attribute_group_values: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -88,14 +96,29 @@ func (a *Client) AllUserAttributes(params *AllUserAttributesParams) (*AllUserAtt
 	if err != nil {
 		return nil, err
 	}
-	return result.(*AllUserAttributesOK), nil
-
+	success, ok := result.(*AllUserAttributesOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for all_user_attributes: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
 CreateUserAttribute creates user attribute
 
-### Create a new user attribute.
+### Create a new user attribute
+
+Permission information for a user attribute is conveyed through the `can` and `user_can_edit` fields.
+The `user_can_edit` field indicates whether an attribute is user-editable _anywhere_ in the application.
+The `can` field gives more granular access information, with the `set_value` child field indicating whether
+an attribute's value can be set by [Setting the User Attribute User Value](#!/User/set_user_attribute_user_value).
+
+Note: `name` and `label` fields must be unique across all user attributes in the Looker instance.
+Attempting to create a new user attribute with a name or label that duplicates an existing
+user attribute will fail with a 422 error.
 
 */
 func (a *Client) CreateUserAttribute(params *CreateUserAttributeParams) (*CreateUserAttributeOK, error) {
@@ -119,8 +142,14 @@ func (a *Client) CreateUserAttribute(params *CreateUserAttributeParams) (*Create
 	if err != nil {
 		return nil, err
 	}
-	return result.(*CreateUserAttributeOK), nil
-
+	success, ok := result.(*CreateUserAttributeOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for create_user_attribute: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -150,8 +179,14 @@ func (a *Client) DeleteUserAttribute(params *DeleteUserAttributeParams) (*Delete
 	if err != nil {
 		return nil, err
 	}
-	return result.(*DeleteUserAttributeNoContent), nil
-
+	success, ok := result.(*DeleteUserAttributeNoContent)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for delete_user_attribute: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -175,7 +210,7 @@ An alternate method to indicate the selection precedence of group-values is to a
 group-value object in the array. Lowest 'rank' value wins. If you use this technique, you must assign a
 rank value to every group-value object in the array.
 
-To set a user attribute value for a single user, see [Set User Attribute User Value](#!/User/set_user_attribute_user_value).
+  To set a user attribute value for a single user, see [Set User Attribute User Value](#!/User/set_user_attribute_user_value).
 To set a user attribute value for all members of a group, see [Set User Attribute Group Value](#!/Group/update_user_attribute_group_value).
 
 */
@@ -200,8 +235,14 @@ func (a *Client) SetUserAttributeGroupValues(params *SetUserAttributeGroupValues
 	if err != nil {
 		return nil, err
 	}
-	return result.(*SetUserAttributeGroupValuesOK), nil
-
+	success, ok := result.(*SetUserAttributeGroupValuesOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for set_user_attribute_group_values: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -231,8 +272,14 @@ func (a *Client) UpdateUserAttribute(params *UpdateUserAttributeParams) (*Update
 	if err != nil {
 		return nil, err
 	}
-	return result.(*UpdateUserAttributeOK), nil
-
+	success, ok := result.(*UpdateUserAttributeOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for update_user_attribute: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -262,8 +309,14 @@ func (a *Client) UserAttribute(params *UserAttributeParams) (*UserAttributeOK, e
 	if err != nil {
 		return nil, err
 	}
-	return result.(*UserAttributeOK), nil
-
+	success, ok := result.(*UserAttributeOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for user_attribute: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 // SetTransport changes the transport on the client

@@ -24,35 +24,30 @@ type SetUserAttributeGroupValuesReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *SetUserAttributeGroupValuesReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewSetUserAttributeGroupValuesOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewSetUserAttributeGroupValuesBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewSetUserAttributeGroupValuesNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 409:
 		result := NewSetUserAttributeGroupValuesConflict()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewSetUserAttributeGroupValuesUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -82,6 +77,10 @@ func (o *SetUserAttributeGroupValuesOK) Error() string {
 	return fmt.Sprintf("[POST /user_attributes/{user_attribute_id}/group_values][%d] setUserAttributeGroupValuesOK  %+v", 200, o.Payload)
 }
 
+func (o *SetUserAttributeGroupValuesOK) GetPayload() []*models.UserAttributeGroupValue {
+	return o.Payload
+}
+
 func (o *SetUserAttributeGroupValuesOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -107,6 +106,10 @@ type SetUserAttributeGroupValuesBadRequest struct {
 
 func (o *SetUserAttributeGroupValuesBadRequest) Error() string {
 	return fmt.Sprintf("[POST /user_attributes/{user_attribute_id}/group_values][%d] setUserAttributeGroupValuesBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *SetUserAttributeGroupValuesBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *SetUserAttributeGroupValuesBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -138,6 +141,10 @@ func (o *SetUserAttributeGroupValuesNotFound) Error() string {
 	return fmt.Sprintf("[POST /user_attributes/{user_attribute_id}/group_values][%d] setUserAttributeGroupValuesNotFound  %+v", 404, o.Payload)
 }
 
+func (o *SetUserAttributeGroupValuesNotFound) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *SetUserAttributeGroupValuesNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -167,6 +174,10 @@ func (o *SetUserAttributeGroupValuesConflict) Error() string {
 	return fmt.Sprintf("[POST /user_attributes/{user_attribute_id}/group_values][%d] setUserAttributeGroupValuesConflict  %+v", 409, o.Payload)
 }
 
+func (o *SetUserAttributeGroupValuesConflict) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *SetUserAttributeGroupValuesConflict) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -194,6 +205,10 @@ type SetUserAttributeGroupValuesUnprocessableEntity struct {
 
 func (o *SetUserAttributeGroupValuesUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[POST /user_attributes/{user_attribute_id}/group_values][%d] setUserAttributeGroupValuesUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *SetUserAttributeGroupValuesUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *SetUserAttributeGroupValuesUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

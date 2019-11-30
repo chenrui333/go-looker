@@ -32,6 +32,10 @@ type DashboardBase struct {
 	// Read Only: true
 	Description string `json:"description,omitempty"`
 
+	// Folder
+	// Read Only: true
+	Folder *FolderBase `json:"folder,omitempty"`
+
 	// Is Hidden
 	// Read Only: true
 	Hidden *bool `json:"hidden,omitempty"`
@@ -52,23 +56,19 @@ type DashboardBase struct {
 	// Read Only: true
 	Readonly *bool `json:"readonly,omitempty"`
 
-	// Refresh Interval
+	// Refresh Interval, as a time duration phrase like "2 hours 30 minutes". A number with no time units will be interpreted as whole seconds.
 	// Read Only: true
 	RefreshInterval string `json:"refresh_interval,omitempty"`
 
-	// Refresh Interval as Integer
+	// Refresh Interval in milliseconds
 	// Read Only: true
-	RefreshIntervalToI int64 `json:"refresh_interval_to_i,omitempty"`
-
-	// ScheduledPlan
-	// Read Only: true
-	ScheduledPlan *ScheduledPlan `json:"scheduled_plan,omitempty"`
+	RefreshIntervalToi int64 `json:"refresh_interval_to_i,omitempty"`
 
 	// Space
 	// Read Only: true
 	Space *SpaceBase `json:"space,omitempty"`
 
-	// Look Title
+	// Dashboard Title
 	// Read Only: true
 	Title string `json:"title,omitempty"`
 
@@ -81,11 +81,11 @@ type DashboardBase struct {
 func (m *DashboardBase) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateModel(formats); err != nil {
+	if err := m.validateFolder(formats); err != nil {
 		res = append(res, err)
 	}
 
-	if err := m.validateScheduledPlan(formats); err != nil {
+	if err := m.validateModel(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -99,6 +99,24 @@ func (m *DashboardBase) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
+func (m *DashboardBase) validateFolder(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Folder) { // not required
+		return nil
+	}
+
+	if m.Folder != nil {
+		if err := m.Folder.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("folder")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (m *DashboardBase) validateModel(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Model) { // not required
@@ -109,24 +127,6 @@ func (m *DashboardBase) validateModel(formats strfmt.Registry) error {
 		if err := m.Model.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("model")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *DashboardBase) validateScheduledPlan(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.ScheduledPlan) { // not required
-		return nil
-	}
-
-	if m.ScheduledPlan != nil {
-		if err := m.ScheduledPlan.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("scheduled_plan")
 			}
 			return err
 		}

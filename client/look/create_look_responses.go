@@ -24,35 +24,30 @@ type CreateLookReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *CreateLookReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewCreateLookOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewCreateLookBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewCreateLookNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 409:
 		result := NewCreateLookConflict()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewCreateLookUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -80,6 +75,10 @@ type CreateLookOK struct {
 
 func (o *CreateLookOK) Error() string {
 	return fmt.Sprintf("[POST /looks][%d] createLookOK  %+v", 200, o.Payload)
+}
+
+func (o *CreateLookOK) GetPayload() *models.LookWithQuery {
+	return o.Payload
 }
 
 func (o *CreateLookOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -111,6 +110,10 @@ func (o *CreateLookBadRequest) Error() string {
 	return fmt.Sprintf("[POST /looks][%d] createLookBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *CreateLookBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreateLookBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -138,6 +141,10 @@ type CreateLookNotFound struct {
 
 func (o *CreateLookNotFound) Error() string {
 	return fmt.Sprintf("[POST /looks][%d] createLookNotFound  %+v", 404, o.Payload)
+}
+
+func (o *CreateLookNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *CreateLookNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -169,6 +176,10 @@ func (o *CreateLookConflict) Error() string {
 	return fmt.Sprintf("[POST /looks][%d] createLookConflict  %+v", 409, o.Payload)
 }
 
+func (o *CreateLookConflict) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreateLookConflict) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -196,6 +207,10 @@ type CreateLookUnprocessableEntity struct {
 
 func (o *CreateLookUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[POST /looks][%d] createLookUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *CreateLookUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *CreateLookUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

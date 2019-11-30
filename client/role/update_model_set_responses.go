@@ -24,35 +24,30 @@ type UpdateModelSetReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *UpdateModelSetReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewUpdateModelSetOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewUpdateModelSetBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewUpdateModelSetNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 405:
 		result := NewUpdateModelSetMethodNotAllowed()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewUpdateModelSetUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -80,6 +75,10 @@ type UpdateModelSetOK struct {
 
 func (o *UpdateModelSetOK) Error() string {
 	return fmt.Sprintf("[PATCH /model_sets/{model_set_id}][%d] updateModelSetOK  %+v", 200, o.Payload)
+}
+
+func (o *UpdateModelSetOK) GetPayload() *models.ModelSet {
+	return o.Payload
 }
 
 func (o *UpdateModelSetOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -111,6 +110,10 @@ func (o *UpdateModelSetBadRequest) Error() string {
 	return fmt.Sprintf("[PATCH /model_sets/{model_set_id}][%d] updateModelSetBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *UpdateModelSetBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UpdateModelSetBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -138,6 +141,10 @@ type UpdateModelSetNotFound struct {
 
 func (o *UpdateModelSetNotFound) Error() string {
 	return fmt.Sprintf("[PATCH /model_sets/{model_set_id}][%d] updateModelSetNotFound  %+v", 404, o.Payload)
+}
+
+func (o *UpdateModelSetNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *UpdateModelSetNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -169,6 +176,10 @@ func (o *UpdateModelSetMethodNotAllowed) Error() string {
 	return fmt.Sprintf("[PATCH /model_sets/{model_set_id}][%d] updateModelSetMethodNotAllowed  %+v", 405, o.Payload)
 }
 
+func (o *UpdateModelSetMethodNotAllowed) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UpdateModelSetMethodNotAllowed) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -196,6 +207,10 @@ type UpdateModelSetUnprocessableEntity struct {
 
 func (o *UpdateModelSetUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[PATCH /model_sets/{model_set_id}][%d] updateModelSetUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *UpdateModelSetUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *UpdateModelSetUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

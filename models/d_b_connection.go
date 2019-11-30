@@ -122,6 +122,10 @@ type DBConnection struct {
 	// Username for server authentication
 	Username string `json:"username,omitempty"`
 
+	// Whether the connection uses OAuth for authentication.
+	// Read Only: true
+	UsesOauth *bool `json:"uses_oauth,omitempty"`
+
 	// Verify the SSL
 	VerifySsl bool `json:"verify_ssl,omitempty"`
 }

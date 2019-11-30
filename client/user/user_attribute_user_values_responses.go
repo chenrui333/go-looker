@@ -24,14 +24,12 @@ type UserAttributeUserValuesReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *UserAttributeUserValuesReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewUserAttributeUserValuesOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 404:
 		result := NewUserAttributeUserValuesNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -61,6 +59,10 @@ func (o *UserAttributeUserValuesOK) Error() string {
 	return fmt.Sprintf("[GET /users/{user_id}/attribute_values][%d] userAttributeUserValuesOK  %+v", 200, o.Payload)
 }
 
+func (o *UserAttributeUserValuesOK) GetPayload() []*models.UserAttributeWithValue {
+	return o.Payload
+}
+
 func (o *UserAttributeUserValuesOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -86,6 +88,10 @@ type UserAttributeUserValuesNotFound struct {
 
 func (o *UserAttributeUserValuesNotFound) Error() string {
 	return fmt.Sprintf("[GET /users/{user_id}/attribute_values][%d] userAttributeUserValuesNotFound  %+v", 404, o.Payload)
+}
+
+func (o *UserAttributeUserValuesNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *UserAttributeUserValuesNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

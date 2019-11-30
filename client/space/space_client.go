@@ -6,6 +6,8 @@ package space
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"fmt"
+
 	"github.com/go-openapi/runtime"
 
 	strfmt "github.com/go-openapi/strfmt"
@@ -50,8 +52,14 @@ func (a *Client) AllSpaces(params *AllSpacesParams) (*AllSpacesOK, error) {
 	if err != nil {
 		return nil, err
 	}
-	return result.(*AllSpacesOK), nil
-
+	success, ok := result.(*AllSpacesOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for all_spaces: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -84,8 +92,14 @@ func (a *Client) CreateSpace(params *CreateSpaceParams) (*CreateSpaceOK, error) 
 	if err != nil {
 		return nil, err
 	}
-	return result.(*CreateSpaceOK), nil
-
+	success, ok := result.(*CreateSpaceOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for create_space: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -116,14 +130,49 @@ func (a *Client) DeleteSpace(params *DeleteSpaceParams) (*DeleteSpaceNoContent, 
 	if err != nil {
 		return nil, err
 	}
-	return result.(*DeleteSpaceNoContent), nil
-
+	success, ok := result.(*DeleteSpaceNoContent)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for delete_space: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
 SearchSpaces searches spaces
 
-Search for spaces by creator id, parent id, name, etc
+### Search Spaces
+
+  Returns an **array of space objects** that match the given search criteria.
+
+  If multiple search params are given and `filter_or` is FALSE or not specified,
+search params are combined in a logical AND operation.
+Only rows that match *all* search param criteria will be returned.
+
+If `filter_or` is TRUE, multiple search params are combined in a logical OR operation.
+Results will include rows that match **any** of the search criteria.
+
+String search params use case-insensitive matching.
+String search params can contain `%` and '_' as SQL LIKE pattern match wildcard expressions.
+example="dan%" will match "danger" and "Danzig" but not "David"
+example="D_m%" will match "Damage" and "dump"
+
+Integer search params can accept a single value or a comma separated list of values. The multiple
+values will be combined under a logical OR operation - results will match at least one of
+the given values.
+
+Most search params can accept "IS NULL" and "NOT NULL" as special expressions to match
+or exclude (respectively) rows where the column is null.
+
+Boolean search params accept only "true" and "false" as values.
+
+
+  The parameters `limit`, and `offset` are recommended for fetching results in page-size chunks.
+
+  Get a **single space** by id with [Space](#!/Space/space)
+
 */
 func (a *Client) SearchSpaces(params *SearchSpacesParams) (*SearchSpacesOK, error) {
 	// TODO: Validate the params before sending
@@ -146,8 +195,14 @@ func (a *Client) SearchSpaces(params *SearchSpacesParams) (*SearchSpacesOK, erro
 	if err != nil {
 		return nil, err
 	}
-	return result.(*SearchSpacesOK), nil
-
+	success, ok := result.(*SearchSpacesOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for search_spaces: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -176,8 +231,14 @@ func (a *Client) Space(params *SpaceParams) (*SpaceOK, error) {
 	if err != nil {
 		return nil, err
 	}
-	return result.(*SpaceOK), nil
-
+	success, ok := result.(*SpaceOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for space: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -206,8 +267,14 @@ func (a *Client) SpaceAncestors(params *SpaceAncestorsParams) (*SpaceAncestorsOK
 	if err != nil {
 		return nil, err
 	}
-	return result.(*SpaceAncestorsOK), nil
-
+	success, ok := result.(*SpaceAncestorsOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for space_ancestors: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -236,8 +303,14 @@ func (a *Client) SpaceChildren(params *SpaceChildrenParams) (*SpaceChildrenOK, e
 	if err != nil {
 		return nil, err
 	}
-	return result.(*SpaceChildrenOK), nil
-
+	success, ok := result.(*SpaceChildrenOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for space_children: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -266,8 +339,14 @@ func (a *Client) SpaceChildrenSearch(params *SpaceChildrenSearchParams) (*SpaceC
 	if err != nil {
 		return nil, err
 	}
-	return result.(*SpaceChildrenSearchOK), nil
-
+	success, ok := result.(*SpaceChildrenSearchOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for space_children_search: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -296,8 +375,14 @@ func (a *Client) SpaceDashboards(params *SpaceDashboardsParams) (*SpaceDashboard
 	if err != nil {
 		return nil, err
 	}
-	return result.(*SpaceDashboardsOK), nil
-
+	success, ok := result.(*SpaceDashboardsOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for space_dashboards: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -326,8 +411,14 @@ func (a *Client) SpaceLooks(params *SpaceLooksParams) (*SpaceLooksOK, error) {
 	if err != nil {
 		return nil, err
 	}
-	return result.(*SpaceLooksOK), nil
-
+	success, ok := result.(*SpaceLooksOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for space_looks: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -356,8 +447,14 @@ func (a *Client) SpaceParent(params *SpaceParentParams) (*SpaceParentOK, error) 
 	if err != nil {
 		return nil, err
 	}
-	return result.(*SpaceParentOK), nil
-
+	success, ok := result.(*SpaceParentOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for space_parent: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -386,8 +483,14 @@ func (a *Client) UpdateSpace(params *UpdateSpaceParams) (*UpdateSpaceOK, error) 
 	if err != nil {
 		return nil, err
 	}
-	return result.(*UpdateSpaceOK), nil
-
+	success, ok := result.(*UpdateSpaceOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for update_space: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 // SetTransport changes the transport on the client

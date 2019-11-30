@@ -24,21 +24,18 @@ type ProjectWorkspaceReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *ProjectWorkspaceReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewProjectWorkspaceOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewProjectWorkspaceBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewProjectWorkspaceNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -66,6 +63,10 @@ type ProjectWorkspaceOK struct {
 
 func (o *ProjectWorkspaceOK) Error() string {
 	return fmt.Sprintf("[GET /projects/{project_id}/current_workspace][%d] projectWorkspaceOK  %+v", 200, o.Payload)
+}
+
+func (o *ProjectWorkspaceOK) GetPayload() *models.ProjectWorkspace {
+	return o.Payload
 }
 
 func (o *ProjectWorkspaceOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -97,6 +98,10 @@ func (o *ProjectWorkspaceBadRequest) Error() string {
 	return fmt.Sprintf("[GET /projects/{project_id}/current_workspace][%d] projectWorkspaceBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *ProjectWorkspaceBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *ProjectWorkspaceBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -124,6 +129,10 @@ type ProjectWorkspaceNotFound struct {
 
 func (o *ProjectWorkspaceNotFound) Error() string {
 	return fmt.Sprintf("[GET /projects/{project_id}/current_workspace][%d] projectWorkspaceNotFound  %+v", 404, o.Payload)
+}
+
+func (o *ProjectWorkspaceNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *ProjectWorkspaceNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

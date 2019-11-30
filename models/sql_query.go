@@ -63,6 +63,9 @@ type SQLQuery struct {
 	// SQL query text
 	// Read Only: true
 	SQL string `json:"sql,omitempty"`
+
+	// Visualization configuration properties. These properties are typically opaque and differ based on the type of visualization used. There is no specified set of allowed keys. The values can be any type supported by JSON. A "type" key with a string value is often present, and is used by Looker to determine which visualization to present. Visualizations ignore unknown vis_config properties.
+	VisConfig map[string]string `json:"vis_config,omitempty"`
 }
 
 // Validate validates this Sql query

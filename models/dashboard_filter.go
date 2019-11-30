@@ -68,6 +68,9 @@ type DashboardFilter struct {
 	// Type of filter: one of date, number, string, or field
 	// Required: true
 	Type *string `json:"type"`
+
+	// The visual configuration for this filter. Used to set up how the UI for this filter should appear.
+	UIConfig map[string]string `json:"ui_config,omitempty"`
 }
 
 // Validate validates this dashboard filter

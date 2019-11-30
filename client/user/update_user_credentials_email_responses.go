@@ -24,28 +24,24 @@ type UpdateUserCredentialsEmailReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *UpdateUserCredentialsEmailReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewUpdateUserCredentialsEmailOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewUpdateUserCredentialsEmailBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewUpdateUserCredentialsEmailNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewUpdateUserCredentialsEmailUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -73,6 +69,10 @@ type UpdateUserCredentialsEmailOK struct {
 
 func (o *UpdateUserCredentialsEmailOK) Error() string {
 	return fmt.Sprintf("[PATCH /users/{user_id}/credentials_email][%d] updateUserCredentialsEmailOK  %+v", 200, o.Payload)
+}
+
+func (o *UpdateUserCredentialsEmailOK) GetPayload() *models.CredentialsEmail {
+	return o.Payload
 }
 
 func (o *UpdateUserCredentialsEmailOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -104,6 +104,10 @@ func (o *UpdateUserCredentialsEmailBadRequest) Error() string {
 	return fmt.Sprintf("[PATCH /users/{user_id}/credentials_email][%d] updateUserCredentialsEmailBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *UpdateUserCredentialsEmailBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UpdateUserCredentialsEmailBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -133,6 +137,10 @@ func (o *UpdateUserCredentialsEmailNotFound) Error() string {
 	return fmt.Sprintf("[PATCH /users/{user_id}/credentials_email][%d] updateUserCredentialsEmailNotFound  %+v", 404, o.Payload)
 }
 
+func (o *UpdateUserCredentialsEmailNotFound) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UpdateUserCredentialsEmailNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -160,6 +168,10 @@ type UpdateUserCredentialsEmailUnprocessableEntity struct {
 
 func (o *UpdateUserCredentialsEmailUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[PATCH /users/{user_id}/credentials_email][%d] updateUserCredentialsEmailUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *UpdateUserCredentialsEmailUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *UpdateUserCredentialsEmailUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

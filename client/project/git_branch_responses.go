@@ -24,21 +24,18 @@ type GitBranchReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *GitBranchReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewGitBranchOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewGitBranchBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewGitBranchNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -66,6 +63,10 @@ type GitBranchOK struct {
 
 func (o *GitBranchOK) Error() string {
 	return fmt.Sprintf("[GET /projects/{project_id}/git_branch][%d] gitBranchOK  %+v", 200, o.Payload)
+}
+
+func (o *GitBranchOK) GetPayload() *models.GitBranch {
+	return o.Payload
 }
 
 func (o *GitBranchOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -97,6 +98,10 @@ func (o *GitBranchBadRequest) Error() string {
 	return fmt.Sprintf("[GET /projects/{project_id}/git_branch][%d] gitBranchBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *GitBranchBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *GitBranchBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -124,6 +129,10 @@ type GitBranchNotFound struct {
 
 func (o *GitBranchNotFound) Error() string {
 	return fmt.Sprintf("[GET /projects/{project_id}/git_branch][%d] gitBranchNotFound  %+v", 404, o.Payload)
+}
+
+func (o *GitBranchNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *GitBranchNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

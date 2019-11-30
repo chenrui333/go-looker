@@ -24,21 +24,18 @@ type LoginUserReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *LoginUserReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewLoginUserOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewLoginUserBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewLoginUserNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -66,6 +63,10 @@ type LoginUserOK struct {
 
 func (o *LoginUserOK) Error() string {
 	return fmt.Sprintf("[POST /login/{user_id}][%d] loginUserOK  %+v", 200, o.Payload)
+}
+
+func (o *LoginUserOK) GetPayload() *models.AccessToken {
+	return o.Payload
 }
 
 func (o *LoginUserOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -97,6 +98,10 @@ func (o *LoginUserBadRequest) Error() string {
 	return fmt.Sprintf("[POST /login/{user_id}][%d] loginUserBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *LoginUserBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *LoginUserBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -124,6 +129,10 @@ type LoginUserNotFound struct {
 
 func (o *LoginUserNotFound) Error() string {
 	return fmt.Sprintf("[POST /login/{user_id}][%d] loginUserNotFound  %+v", 404, o.Payload)
+}
+
+func (o *LoginUserNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *LoginUserNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

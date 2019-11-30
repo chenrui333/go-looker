@@ -6,10 +6,9 @@ package space
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"net/http"
 	"time"
-
-	"golang.org/x/net/context"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
@@ -64,7 +63,7 @@ for the search spaces operation typically these are written to a http.Request
 type SearchSpacesParams struct {
 
 	/*CreatorID
-	  Filter on dashboards created by a particular user.
+	  Filter on spaces created by a particular user.
 
 	*/
 	CreatorID *string
@@ -73,6 +72,11 @@ type SearchSpacesParams struct {
 
 	*/
 	Fields *string
+	/*FilterOr
+	  Combine given search criteria in a boolean OR expression
+
+	*/
+	FilterOr *bool
 	/*ID
 	  Match Space id
 
@@ -172,6 +176,17 @@ func (o *SearchSpacesParams) WithFields(fields *string) *SearchSpacesParams {
 // SetFields adds the fields to the search spaces params
 func (o *SearchSpacesParams) SetFields(fields *string) {
 	o.Fields = fields
+}
+
+// WithFilterOr adds the filterOr to the search spaces params
+func (o *SearchSpacesParams) WithFilterOr(filterOr *bool) *SearchSpacesParams {
+	o.SetFilterOr(filterOr)
+	return o
+}
+
+// SetFilterOr adds the filterOr to the search spaces params
+func (o *SearchSpacesParams) SetFilterOr(filterOr *bool) {
+	o.FilterOr = filterOr
 }
 
 // WithID adds the id to the search spaces params
@@ -296,6 +311,22 @@ func (o *SearchSpacesParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.
 		qFields := qrFields
 		if qFields != "" {
 			if err := r.SetQueryParam("fields", qFields); err != nil {
+				return err
+			}
+		}
+
+	}
+
+	if o.FilterOr != nil {
+
+		// query param filter_or
+		var qrFilterOr bool
+		if o.FilterOr != nil {
+			qrFilterOr = *o.FilterOr
+		}
+		qFilterOr := swag.FormatBool(qrFilterOr)
+		if qFilterOr != "" {
+			if err := r.SetQueryParam("filter_or", qFilterOr); err != nil {
 				return err
 			}
 		}

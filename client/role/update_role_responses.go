@@ -24,35 +24,30 @@ type UpdateRoleReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *UpdateRoleReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewUpdateRoleOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewUpdateRoleBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewUpdateRoleNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 405:
 		result := NewUpdateRoleMethodNotAllowed()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewUpdateRoleUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -80,6 +75,10 @@ type UpdateRoleOK struct {
 
 func (o *UpdateRoleOK) Error() string {
 	return fmt.Sprintf("[PATCH /roles/{role_id}][%d] updateRoleOK  %+v", 200, o.Payload)
+}
+
+func (o *UpdateRoleOK) GetPayload() *models.Role {
+	return o.Payload
 }
 
 func (o *UpdateRoleOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -111,6 +110,10 @@ func (o *UpdateRoleBadRequest) Error() string {
 	return fmt.Sprintf("[PATCH /roles/{role_id}][%d] updateRoleBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *UpdateRoleBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UpdateRoleBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -138,6 +141,10 @@ type UpdateRoleNotFound struct {
 
 func (o *UpdateRoleNotFound) Error() string {
 	return fmt.Sprintf("[PATCH /roles/{role_id}][%d] updateRoleNotFound  %+v", 404, o.Payload)
+}
+
+func (o *UpdateRoleNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *UpdateRoleNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -169,6 +176,10 @@ func (o *UpdateRoleMethodNotAllowed) Error() string {
 	return fmt.Sprintf("[PATCH /roles/{role_id}][%d] updateRoleMethodNotAllowed  %+v", 405, o.Payload)
 }
 
+func (o *UpdateRoleMethodNotAllowed) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UpdateRoleMethodNotAllowed) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -196,6 +207,10 @@ type UpdateRoleUnprocessableEntity struct {
 
 func (o *UpdateRoleUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[PATCH /roles/{role_id}][%d] updateRoleUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *UpdateRoleUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *UpdateRoleUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

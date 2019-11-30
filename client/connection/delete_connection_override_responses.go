@@ -24,28 +24,24 @@ type DeleteConnectionOverrideReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *DeleteConnectionOverrideReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 204:
 		result := NewDeleteConnectionOverrideNoContent()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewDeleteConnectionOverrideBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewDeleteConnectionOverrideNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewDeleteConnectionOverrideUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -75,6 +71,10 @@ func (o *DeleteConnectionOverrideNoContent) Error() string {
 	return fmt.Sprintf("[DELETE /connections/{connection_name}/connection_override/{override_context}][%d] deleteConnectionOverrideNoContent  %+v", 204, o.Payload)
 }
 
+func (o *DeleteConnectionOverrideNoContent) GetPayload() string {
+	return o.Payload
+}
+
 func (o *DeleteConnectionOverrideNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -100,6 +100,10 @@ type DeleteConnectionOverrideBadRequest struct {
 
 func (o *DeleteConnectionOverrideBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /connections/{connection_name}/connection_override/{override_context}][%d] deleteConnectionOverrideBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *DeleteConnectionOverrideBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteConnectionOverrideBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -131,6 +135,10 @@ func (o *DeleteConnectionOverrideNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /connections/{connection_name}/connection_override/{override_context}][%d] deleteConnectionOverrideNotFound  %+v", 404, o.Payload)
 }
 
+func (o *DeleteConnectionOverrideNotFound) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *DeleteConnectionOverrideNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -158,6 +166,10 @@ type DeleteConnectionOverrideUnprocessableEntity struct {
 
 func (o *DeleteConnectionOverrideUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[DELETE /connections/{connection_name}/connection_override/{override_context}][%d] deleteConnectionOverrideUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *DeleteConnectionOverrideUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *DeleteConnectionOverrideUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

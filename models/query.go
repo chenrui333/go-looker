@@ -28,7 +28,7 @@ type Query struct {
 	ColumnLimit string `json:"column_limit,omitempty"`
 
 	// Dynamic Fields
-	DynamicFields []string `json:"dynamic_fields"`
+	DynamicFields string `json:"dynamic_fields,omitempty"`
 
 	// Expanded Share Url
 	// Read Only: true

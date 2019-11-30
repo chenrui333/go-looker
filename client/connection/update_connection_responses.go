@@ -24,28 +24,24 @@ type UpdateConnectionReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *UpdateConnectionReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewUpdateConnectionOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewUpdateConnectionBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewUpdateConnectionNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewUpdateConnectionUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -73,6 +69,10 @@ type UpdateConnectionOK struct {
 
 func (o *UpdateConnectionOK) Error() string {
 	return fmt.Sprintf("[PATCH /connections/{connection_name}][%d] updateConnectionOK  %+v", 200, o.Payload)
+}
+
+func (o *UpdateConnectionOK) GetPayload() *models.DBConnection {
+	return o.Payload
 }
 
 func (o *UpdateConnectionOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -104,6 +104,10 @@ func (o *UpdateConnectionBadRequest) Error() string {
 	return fmt.Sprintf("[PATCH /connections/{connection_name}][%d] updateConnectionBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *UpdateConnectionBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UpdateConnectionBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -133,6 +137,10 @@ func (o *UpdateConnectionNotFound) Error() string {
 	return fmt.Sprintf("[PATCH /connections/{connection_name}][%d] updateConnectionNotFound  %+v", 404, o.Payload)
 }
 
+func (o *UpdateConnectionNotFound) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UpdateConnectionNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -160,6 +168,10 @@ type UpdateConnectionUnprocessableEntity struct {
 
 func (o *UpdateConnectionUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[PATCH /connections/{connection_name}][%d] updateConnectionUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *UpdateConnectionUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *UpdateConnectionUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

@@ -24,21 +24,18 @@ type UserCredentialsSamlReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *UserCredentialsSamlReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewUserCredentialsSamlOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewUserCredentialsSamlBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewUserCredentialsSamlNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -66,6 +63,10 @@ type UserCredentialsSamlOK struct {
 
 func (o *UserCredentialsSamlOK) Error() string {
 	return fmt.Sprintf("[GET /users/{user_id}/credentials_saml][%d] userCredentialsSamlOK  %+v", 200, o.Payload)
+}
+
+func (o *UserCredentialsSamlOK) GetPayload() *models.CredentialsSaml {
+	return o.Payload
 }
 
 func (o *UserCredentialsSamlOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -97,6 +98,10 @@ func (o *UserCredentialsSamlBadRequest) Error() string {
 	return fmt.Sprintf("[GET /users/{user_id}/credentials_saml][%d] userCredentialsSamlBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *UserCredentialsSamlBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UserCredentialsSamlBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -124,6 +129,10 @@ type UserCredentialsSamlNotFound struct {
 
 func (o *UserCredentialsSamlNotFound) Error() string {
 	return fmt.Sprintf("[GET /users/{user_id}/credentials_saml][%d] userCredentialsSamlNotFound  %+v", 404, o.Payload)
+}
+
+func (o *UserCredentialsSamlNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *UserCredentialsSamlNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

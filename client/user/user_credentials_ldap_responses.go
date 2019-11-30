@@ -24,21 +24,18 @@ type UserCredentialsLdapReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *UserCredentialsLdapReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewUserCredentialsLdapOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewUserCredentialsLdapBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewUserCredentialsLdapNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -66,6 +63,10 @@ type UserCredentialsLdapOK struct {
 
 func (o *UserCredentialsLdapOK) Error() string {
 	return fmt.Sprintf("[GET /users/{user_id}/credentials_ldap][%d] userCredentialsLdapOK  %+v", 200, o.Payload)
+}
+
+func (o *UserCredentialsLdapOK) GetPayload() *models.CredentialsLDAP {
+	return o.Payload
 }
 
 func (o *UserCredentialsLdapOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -97,6 +98,10 @@ func (o *UserCredentialsLdapBadRequest) Error() string {
 	return fmt.Sprintf("[GET /users/{user_id}/credentials_ldap][%d] userCredentialsLdapBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *UserCredentialsLdapBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UserCredentialsLdapBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -124,6 +129,10 @@ type UserCredentialsLdapNotFound struct {
 
 func (o *UserCredentialsLdapNotFound) Error() string {
 	return fmt.Sprintf("[GET /users/{user_id}/credentials_ldap][%d] userCredentialsLdapNotFound  %+v", 404, o.Payload)
+}
+
+func (o *UserCredentialsLdapNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *UserCredentialsLdapNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

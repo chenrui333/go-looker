@@ -24,14 +24,12 @@ type LdapConfigReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *LdapConfigReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewLdapConfigOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 404:
 		result := NewLdapConfigNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -61,6 +59,10 @@ func (o *LdapConfigOK) Error() string {
 	return fmt.Sprintf("[GET /ldap_config][%d] ldapConfigOK  %+v", 200, o.Payload)
 }
 
+func (o *LdapConfigOK) GetPayload() *models.LDAPConfig {
+	return o.Payload
+}
+
 func (o *LdapConfigOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.LDAPConfig)
@@ -88,6 +90,10 @@ type LdapConfigNotFound struct {
 
 func (o *LdapConfigNotFound) Error() string {
 	return fmt.Sprintf("[GET /ldap_config][%d] ldapConfigNotFound  %+v", 404, o.Payload)
+}
+
+func (o *LdapConfigNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *LdapConfigNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

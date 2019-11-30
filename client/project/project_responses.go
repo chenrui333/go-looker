@@ -24,21 +24,18 @@ type ProjectReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *ProjectReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewProjectOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewProjectBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewProjectNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -66,6 +63,10 @@ type ProjectOK struct {
 
 func (o *ProjectOK) Error() string {
 	return fmt.Sprintf("[GET /projects/{project_id}][%d] projectOK  %+v", 200, o.Payload)
+}
+
+func (o *ProjectOK) GetPayload() *models.Project {
+	return o.Payload
 }
 
 func (o *ProjectOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -97,6 +98,10 @@ func (o *ProjectBadRequest) Error() string {
 	return fmt.Sprintf("[GET /projects/{project_id}][%d] projectBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *ProjectBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *ProjectBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -124,6 +129,10 @@ type ProjectNotFound struct {
 
 func (o *ProjectNotFound) Error() string {
 	return fmt.Sprintf("[GET /projects/{project_id}][%d] projectNotFound  %+v", 404, o.Payload)
+}
+
+func (o *ProjectNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *ProjectNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

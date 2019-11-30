@@ -24,35 +24,30 @@ type CreateUserCredentialsApi3Reader struct {
 // ReadResponse reads a server response into the received o.
 func (o *CreateUserCredentialsApi3Reader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewCreateUserCredentialsApi3OK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewCreateUserCredentialsApi3BadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewCreateUserCredentialsApi3NotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 409:
 		result := NewCreateUserCredentialsApi3Conflict()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewCreateUserCredentialsApi3UnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -80,6 +75,10 @@ type CreateUserCredentialsApi3OK struct {
 
 func (o *CreateUserCredentialsApi3OK) Error() string {
 	return fmt.Sprintf("[POST /users/{user_id}/credentials_api3][%d] createUserCredentialsApi3OK  %+v", 200, o.Payload)
+}
+
+func (o *CreateUserCredentialsApi3OK) GetPayload() *models.CredentialsApi3 {
+	return o.Payload
 }
 
 func (o *CreateUserCredentialsApi3OK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -111,6 +110,10 @@ func (o *CreateUserCredentialsApi3BadRequest) Error() string {
 	return fmt.Sprintf("[POST /users/{user_id}/credentials_api3][%d] createUserCredentialsApi3BadRequest  %+v", 400, o.Payload)
 }
 
+func (o *CreateUserCredentialsApi3BadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreateUserCredentialsApi3BadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -138,6 +141,10 @@ type CreateUserCredentialsApi3NotFound struct {
 
 func (o *CreateUserCredentialsApi3NotFound) Error() string {
 	return fmt.Sprintf("[POST /users/{user_id}/credentials_api3][%d] createUserCredentialsApi3NotFound  %+v", 404, o.Payload)
+}
+
+func (o *CreateUserCredentialsApi3NotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *CreateUserCredentialsApi3NotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -169,6 +176,10 @@ func (o *CreateUserCredentialsApi3Conflict) Error() string {
 	return fmt.Sprintf("[POST /users/{user_id}/credentials_api3][%d] createUserCredentialsApi3Conflict  %+v", 409, o.Payload)
 }
 
+func (o *CreateUserCredentialsApi3Conflict) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreateUserCredentialsApi3Conflict) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -196,6 +207,10 @@ type CreateUserCredentialsApi3UnprocessableEntity struct {
 
 func (o *CreateUserCredentialsApi3UnprocessableEntity) Error() string {
 	return fmt.Sprintf("[POST /users/{user_id}/credentials_api3][%d] createUserCredentialsApi3UnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *CreateUserCredentialsApi3UnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *CreateUserCredentialsApi3UnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

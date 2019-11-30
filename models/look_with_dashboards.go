@@ -40,7 +40,7 @@ type LookWithDashboards struct {
 	// Read Only: true
 	Dashboards []*DashboardBase `json:"dashboards"`
 
-	// Whether or not the look is deleted
+	// Whether or not a look is 'soft' deleted.
 	Deleted bool `json:"deleted,omitempty"`
 
 	// Time that the Look was deleted.
@@ -67,6 +67,13 @@ type LookWithDashboards struct {
 	// Read Only: true
 	FavoriteCount int64 `json:"favorite_count,omitempty"`
 
+	// Folder of this Look
+	// Read Only: true
+	Folder *FolderBase `json:"folder,omitempty"`
+
+	// Folder Id
+	FolderID string `json:"folder_id,omitempty"`
+
 	// Google Spreadsheet Formula
 	// Read Only: true
 	GoogleSpreadsheetFormula string `json:"google_spreadsheet_formula,omitempty"`
@@ -74,6 +81,10 @@ type LookWithDashboards struct {
 	// Unique Id
 	// Read Only: true
 	ID int64 `json:"id,omitempty"`
+
+	// Image Embed Url
+	// Read Only: true
+	ImageEmbedURL string `json:"image_embed_url,omitempty"`
 
 	// auto-run query when Look viewed
 	IsRunOnLoad bool `json:"is_run_on_load,omitempty"`
@@ -83,7 +94,8 @@ type LookWithDashboards struct {
 	// Format: date-time
 	LastAccessedAt strfmt.DateTime `json:"last_accessed_at,omitempty"`
 
-	// (Write-Only) Id of User that last updated the look.
+	// Id of User that last updated the look.
+	// Read Only: true
 	LastUpdaterID int64 `json:"last_updater_id,omitempty"`
 
 	// Time last viewed in the Looker web UI
@@ -96,8 +108,7 @@ type LookWithDashboards struct {
 	Model *LookModel `json:"model,omitempty"`
 
 	// Is Public
-	// Read Only: true
-	Public *bool `json:"public,omitempty"`
+	Public bool `json:"public,omitempty"`
 
 	// Public Slug
 	// Read Only: true
@@ -118,7 +129,7 @@ type LookWithDashboards struct {
 	// Read Only: true
 	Space *SpaceBase `json:"space,omitempty"`
 
-	// (Write-Only) Space Id
+	// Space Id
 	SpaceID string `json:"space_id,omitempty"`
 
 	// Look Title
@@ -133,7 +144,7 @@ type LookWithDashboards struct {
 	// Read Only: true
 	User *UserIDOnly `json:"user,omitempty"`
 
-	// (Write-Only) User Id
+	// User Id
 	UserID int64 `json:"user_id,omitempty"`
 
 	// Number of times viewed in the Looker web UI
@@ -154,6 +165,10 @@ func (m *LookWithDashboards) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateDeletedAt(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateFolder(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -233,6 +248,24 @@ func (m *LookWithDashboards) validateDeletedAt(formats strfmt.Registry) error {
 
 	if err := validate.FormatOf("deleted_at", "body", "date-time", m.DeletedAt.String(), formats); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+func (m *LookWithDashboards) validateFolder(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Folder) { // not required
+		return nil
+	}
+
+	if m.Folder != nil {
+		if err := m.Folder.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("folder")
+			}
+			return err
+		}
 	}
 
 	return nil

@@ -24,28 +24,24 @@ type ResetProjectToRemoteReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *ResetProjectToRemoteReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewResetProjectToRemoteOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 204:
 		result := NewResetProjectToRemoteNoContent()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewResetProjectToRemoteBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewResetProjectToRemoteNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -73,6 +69,10 @@ type ResetProjectToRemoteOK struct {
 
 func (o *ResetProjectToRemoteOK) Error() string {
 	return fmt.Sprintf("[POST /projects/{project_id}/reset_to_remote][%d] resetProjectToRemoteOK  %+v", 200, o.Payload)
+}
+
+func (o *ResetProjectToRemoteOK) GetPayload() string {
+	return o.Payload
 }
 
 func (o *ResetProjectToRemoteOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -123,6 +123,10 @@ func (o *ResetProjectToRemoteBadRequest) Error() string {
 	return fmt.Sprintf("[POST /projects/{project_id}/reset_to_remote][%d] resetProjectToRemoteBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *ResetProjectToRemoteBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *ResetProjectToRemoteBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -150,6 +154,10 @@ type ResetProjectToRemoteNotFound struct {
 
 func (o *ResetProjectToRemoteNotFound) Error() string {
 	return fmt.Sprintf("[POST /projects/{project_id}/reset_to_remote][%d] resetProjectToRemoteNotFound  %+v", 404, o.Payload)
+}
+
+func (o *ResetProjectToRemoteNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *ResetProjectToRemoteNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

@@ -24,23 +24,26 @@ type TestConnectionReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *TestConnectionReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewTestConnectionOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewTestConnectionBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewTestConnectionNotFound()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
+	case 429:
+		result := NewTestConnectionTooManyRequests()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
@@ -68,6 +71,10 @@ func (o *TestConnectionOK) Error() string {
 	return fmt.Sprintf("[PUT /connections/{connection_name}/test][%d] testConnectionOK  %+v", 200, o.Payload)
 }
 
+func (o *TestConnectionOK) GetPayload() []*models.DBConnectionTestResult {
+	return o.Payload
+}
+
 func (o *TestConnectionOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +100,10 @@ type TestConnectionBadRequest struct {
 
 func (o *TestConnectionBadRequest) Error() string {
 	return fmt.Sprintf("[PUT /connections/{connection_name}/test][%d] testConnectionBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *TestConnectionBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *TestConnectionBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -124,7 +135,44 @@ func (o *TestConnectionNotFound) Error() string {
 	return fmt.Sprintf("[PUT /connections/{connection_name}/test][%d] testConnectionNotFound  %+v", 404, o.Payload)
 }
 
+func (o *TestConnectionNotFound) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *TestConnectionNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.Error)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewTestConnectionTooManyRequests creates a TestConnectionTooManyRequests with default headers values
+func NewTestConnectionTooManyRequests() *TestConnectionTooManyRequests {
+	return &TestConnectionTooManyRequests{}
+}
+
+/*TestConnectionTooManyRequests handles this case with default header values.
+
+Too Many Requests
+*/
+type TestConnectionTooManyRequests struct {
+	Payload *models.Error
+}
+
+func (o *TestConnectionTooManyRequests) Error() string {
+	return fmt.Sprintf("[PUT /connections/{connection_name}/test][%d] testConnectionTooManyRequests  %+v", 429, o.Payload)
+}
+
+func (o *TestConnectionTooManyRequests) GetPayload() *models.Error {
+	return o.Payload
+}
+
+func (o *TestConnectionTooManyRequests) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
 

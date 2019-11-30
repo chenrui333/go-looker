@@ -18,10 +18,6 @@ import (
 // swagger:model ApiVersion
 type APIVersion struct {
 
-	// Operations the current user is able to perform on this object
-	// Read Only: true
-	Can map[string]bool `json:"can,omitempty"`
-
 	// Current version for this Looker instance
 	// Read Only: true
 	CurrentVersion *APIVersionElement `json:"current_version,omitempty"`

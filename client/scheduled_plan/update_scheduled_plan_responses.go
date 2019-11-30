@@ -24,28 +24,24 @@ type UpdateScheduledPlanReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *UpdateScheduledPlanReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewUpdateScheduledPlanOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewUpdateScheduledPlanBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewUpdateScheduledPlanNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewUpdateScheduledPlanUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -73,6 +69,10 @@ type UpdateScheduledPlanOK struct {
 
 func (o *UpdateScheduledPlanOK) Error() string {
 	return fmt.Sprintf("[PATCH /scheduled_plans/{scheduled_plan_id}][%d] updateScheduledPlanOK  %+v", 200, o.Payload)
+}
+
+func (o *UpdateScheduledPlanOK) GetPayload() *models.ScheduledPlan {
+	return o.Payload
 }
 
 func (o *UpdateScheduledPlanOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -104,6 +104,10 @@ func (o *UpdateScheduledPlanBadRequest) Error() string {
 	return fmt.Sprintf("[PATCH /scheduled_plans/{scheduled_plan_id}][%d] updateScheduledPlanBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *UpdateScheduledPlanBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UpdateScheduledPlanBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -133,6 +137,10 @@ func (o *UpdateScheduledPlanNotFound) Error() string {
 	return fmt.Sprintf("[PATCH /scheduled_plans/{scheduled_plan_id}][%d] updateScheduledPlanNotFound  %+v", 404, o.Payload)
 }
 
+func (o *UpdateScheduledPlanNotFound) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UpdateScheduledPlanNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -160,6 +168,10 @@ type UpdateScheduledPlanUnprocessableEntity struct {
 
 func (o *UpdateScheduledPlanUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[PATCH /scheduled_plans/{scheduled_plan_id}][%d] updateScheduledPlanUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *UpdateScheduledPlanUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *UpdateScheduledPlanUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

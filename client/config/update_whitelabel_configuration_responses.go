@@ -24,28 +24,24 @@ type UpdateWhitelabelConfigurationReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *UpdateWhitelabelConfigurationReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewUpdateWhitelabelConfigurationOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewUpdateWhitelabelConfigurationBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewUpdateWhitelabelConfigurationNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewUpdateWhitelabelConfigurationUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -73,6 +69,10 @@ type UpdateWhitelabelConfigurationOK struct {
 
 func (o *UpdateWhitelabelConfigurationOK) Error() string {
 	return fmt.Sprintf("[PUT /whitelabel_configuration][%d] updateWhitelabelConfigurationOK  %+v", 200, o.Payload)
+}
+
+func (o *UpdateWhitelabelConfigurationOK) GetPayload() *models.WhitelabelConfiguration {
+	return o.Payload
 }
 
 func (o *UpdateWhitelabelConfigurationOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -104,6 +104,10 @@ func (o *UpdateWhitelabelConfigurationBadRequest) Error() string {
 	return fmt.Sprintf("[PUT /whitelabel_configuration][%d] updateWhitelabelConfigurationBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *UpdateWhitelabelConfigurationBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UpdateWhitelabelConfigurationBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -133,6 +137,10 @@ func (o *UpdateWhitelabelConfigurationNotFound) Error() string {
 	return fmt.Sprintf("[PUT /whitelabel_configuration][%d] updateWhitelabelConfigurationNotFound  %+v", 404, o.Payload)
 }
 
+func (o *UpdateWhitelabelConfigurationNotFound) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UpdateWhitelabelConfigurationNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -160,6 +168,10 @@ type UpdateWhitelabelConfigurationUnprocessableEntity struct {
 
 func (o *UpdateWhitelabelConfigurationUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[PUT /whitelabel_configuration][%d] updateWhitelabelConfigurationUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *UpdateWhitelabelConfigurationUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *UpdateWhitelabelConfigurationUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

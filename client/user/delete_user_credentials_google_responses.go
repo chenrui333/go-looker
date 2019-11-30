@@ -24,21 +24,18 @@ type DeleteUserCredentialsGoogleReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *DeleteUserCredentialsGoogleReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 204:
 		result := NewDeleteUserCredentialsGoogleNoContent()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewDeleteUserCredentialsGoogleBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewDeleteUserCredentialsGoogleNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *DeleteUserCredentialsGoogleNoContent) Error() string {
 	return fmt.Sprintf("[DELETE /users/{user_id}/credentials_google][%d] deleteUserCredentialsGoogleNoContent  %+v", 204, o.Payload)
 }
 
+func (o *DeleteUserCredentialsGoogleNoContent) GetPayload() string {
+	return o.Payload
+}
+
 func (o *DeleteUserCredentialsGoogleNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type DeleteUserCredentialsGoogleBadRequest struct {
 
 func (o *DeleteUserCredentialsGoogleBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /users/{user_id}/credentials_google][%d] deleteUserCredentialsGoogleBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *DeleteUserCredentialsGoogleBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteUserCredentialsGoogleBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type DeleteUserCredentialsGoogleNotFound struct {
 
 func (o *DeleteUserCredentialsGoogleNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /users/{user_id}/credentials_google][%d] deleteUserCredentialsGoogleNotFound  %+v", 404, o.Payload)
+}
+
+func (o *DeleteUserCredentialsGoogleNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteUserCredentialsGoogleNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

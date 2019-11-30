@@ -51,15 +51,15 @@ type Dashboard struct {
 	// Read Only: true
 	DashboardLayouts []*DashboardLayout `json:"dashboard_layouts"`
 
-	// Whether or not a dashboard is deleted.
+	// Whether or not a dashboard is 'soft' deleted.
 	Deleted bool `json:"deleted,omitempty"`
 
-	// Time that the Dashboard was deleted.
+	// Time that the Dashboard was 'soft' deleted.
 	// Read Only: true
 	// Format: date-time
 	DeletedAt strfmt.DateTime `json:"deleted_at,omitempty"`
 
-	// Id of User that deleted the dashboard.
+	// Id of User that 'soft' deleted the dashboard.
 	// Read Only: true
 	DeleterID int64 `json:"deleter_id,omitempty"`
 
@@ -75,6 +75,13 @@ type Dashboard struct {
 	// Read Only: true
 	FavoriteCount int64 `json:"favorite_count,omitempty"`
 
+	// Folder
+	// Read Only: true
+	Folder *FolderBase `json:"folder,omitempty"`
+
+	// Id of folder
+	FolderID string `json:"folder_id,omitempty"`
+
 	// Is Hidden
 	Hidden bool `json:"hidden,omitempty"`
 
@@ -87,10 +94,6 @@ type Dashboard struct {
 	// Format: date-time
 	LastAccessedAt strfmt.DateTime `json:"last_accessed_at,omitempty"`
 
-	// Id of User that last updated the dashboard.
-	// Read Only: true
-	LastUpdaterID int64 `json:"last_updater_id,omitempty"`
-
 	// Time last viewed in the Looker web UI
 	// Read Only: true
 	// Format: date-time
@@ -100,12 +103,14 @@ type Dashboard struct {
 	LoadConfiguration string `json:"load_configuration,omitempty"`
 
 	// Links this dashboard to a particular LookML dashboard such that calling a **sync** operation on that LookML dashboard will update this dashboard to match.
-	// Read Only: true
 	LookmlLinkID string `json:"lookml_link_id,omitempty"`
 
 	// Model
 	// Read Only: true
 	Model *LookModel `json:"model,omitempty"`
+
+	// The preferred route for viewing this dashboard (ie: dashboards or dashboards-next)
+	PreferredViewer string `json:"preferred_viewer,omitempty"`
 
 	// Timezone in which the Dashboard will run by default.
 	QueryTimezone string `json:"query_timezone,omitempty"`
@@ -114,14 +119,17 @@ type Dashboard struct {
 	// Read Only: true
 	Readonly *bool `json:"readonly,omitempty"`
 
-	// Refresh Interval
+	// Refresh Interval, as a time duration phrase like "2 hours 30 minutes". A number with no time units will be interpreted as whole seconds.
 	RefreshInterval string `json:"refresh_interval,omitempty"`
 
-	// Refresh Interval as Integer
+	// Refresh Interval in milliseconds
 	// Read Only: true
-	RefreshIntervalToI int64 `json:"refresh_interval_to_i,omitempty"`
+	RefreshIntervalToi int64 `json:"refresh_interval_to_i,omitempty"`
 
-	// Show filters bar.  **Security Note:** This property only affects the *cosmetic* appearance of the dashboard, not a user's ability to access data. Hiding the filters bar does **NOT** prevent users from changing filters by other means. For information on how to set up secure data access control policies, see [Control User Access to Data](https://docs.looker.com/admin-options/tutorials/permissions#control_user_access_to_data)
+	// Dashboard visual settings only applicable to dashboards-next (beta)
+	Settings *DashboardSettings `json:"settings,omitempty"`
+
+	// Show filters bar.  **Security Note:** This property only affects the *cosmetic* appearance of the dashboard, not a user's ability to access data. Hiding the filters bar does **NOT** prevent users from changing filters by other means. For information on how to set up secure data access control policies, see [Control User Access to Data](https://looker.com/docs/r/api/control-access)
 	ShowFiltersBar bool `json:"show_filters_bar,omitempty"`
 
 	// Show title
@@ -146,7 +154,7 @@ type Dashboard struct {
 	// Tile text color
 	TileTextColor string `json:"tile_text_color,omitempty"`
 
-	// Look Title
+	// Dashboard Title
 	Title string `json:"title,omitempty"`
 
 	// Title color
@@ -189,6 +197,10 @@ func (m *Dashboard) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateFolder(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateLastAccessedAt(formats); err != nil {
 		res = append(res, err)
 	}
@@ -198,6 +210,10 @@ func (m *Dashboard) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateModel(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateSettings(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -325,6 +341,24 @@ func (m *Dashboard) validateEditURI(formats strfmt.Registry) error {
 	return nil
 }
 
+func (m *Dashboard) validateFolder(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Folder) { // not required
+		return nil
+	}
+
+	if m.Folder != nil {
+		if err := m.Folder.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("folder")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (m *Dashboard) validateLastAccessedAt(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.LastAccessedAt) { // not required
@@ -361,6 +395,24 @@ func (m *Dashboard) validateModel(formats strfmt.Registry) error {
 		if err := m.Model.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("model")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *Dashboard) validateSettings(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Settings) { // not required
+		return nil
+	}
+
+	if m.Settings != nil {
+		if err := m.Settings.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("settings")
 			}
 			return err
 		}

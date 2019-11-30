@@ -24,28 +24,24 @@ type DeleteModelSetReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *DeleteModelSetReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 204:
 		result := NewDeleteModelSetNoContent()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewDeleteModelSetBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewDeleteModelSetNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 405:
 		result := NewDeleteModelSetMethodNotAllowed()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -75,6 +71,10 @@ func (o *DeleteModelSetNoContent) Error() string {
 	return fmt.Sprintf("[DELETE /model_sets/{model_set_id}][%d] deleteModelSetNoContent  %+v", 204, o.Payload)
 }
 
+func (o *DeleteModelSetNoContent) GetPayload() string {
+	return o.Payload
+}
+
 func (o *DeleteModelSetNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -100,6 +100,10 @@ type DeleteModelSetBadRequest struct {
 
 func (o *DeleteModelSetBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /model_sets/{model_set_id}][%d] deleteModelSetBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *DeleteModelSetBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteModelSetBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -131,6 +135,10 @@ func (o *DeleteModelSetNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /model_sets/{model_set_id}][%d] deleteModelSetNotFound  %+v", 404, o.Payload)
 }
 
+func (o *DeleteModelSetNotFound) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *DeleteModelSetNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -158,6 +166,10 @@ type DeleteModelSetMethodNotAllowed struct {
 
 func (o *DeleteModelSetMethodNotAllowed) Error() string {
 	return fmt.Sprintf("[DELETE /model_sets/{model_set_id}][%d] deleteModelSetMethodNotAllowed  %+v", 405, o.Payload)
+}
+
+func (o *DeleteModelSetMethodNotAllowed) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteModelSetMethodNotAllowed) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

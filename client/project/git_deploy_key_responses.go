@@ -24,21 +24,18 @@ type GitDeployKeyReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *GitDeployKeyReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewGitDeployKeyOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewGitDeployKeyBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewGitDeployKeyNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *GitDeployKeyOK) Error() string {
 	return fmt.Sprintf("[GET /projects/{project_id}/git/deploy_key][%d] gitDeployKeyOK  %+v", 200, o.Payload)
 }
 
+func (o *GitDeployKeyOK) GetPayload() string {
+	return o.Payload
+}
+
 func (o *GitDeployKeyOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type GitDeployKeyBadRequest struct {
 
 func (o *GitDeployKeyBadRequest) Error() string {
 	return fmt.Sprintf("[GET /projects/{project_id}/git/deploy_key][%d] gitDeployKeyBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *GitDeployKeyBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *GitDeployKeyBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type GitDeployKeyNotFound struct {
 
 func (o *GitDeployKeyNotFound) Error() string {
 	return fmt.Sprintf("[GET /projects/{project_id}/git/deploy_key][%d] gitDeployKeyNotFound  %+v", 404, o.Payload)
+}
+
+func (o *GitDeployKeyNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *GitDeployKeyNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

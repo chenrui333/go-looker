@@ -6,10 +6,9 @@ package scheduled_plan
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"net/http"
 	"time"
-
-	"golang.org/x/net/context"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
@@ -63,6 +62,11 @@ for the scheduled plans for lookml dashboard operation typically these are writt
 */
 type ScheduledPlansForLookmlDashboardParams struct {
 
+	/*AllUsers
+	  Return scheduled plans belonging to all users for the dashboard
+
+	*/
+	AllUsers *bool
 	/*Fields
 	  Requested fields.
 
@@ -117,6 +121,17 @@ func (o *ScheduledPlansForLookmlDashboardParams) SetHTTPClient(client *http.Clie
 	o.HTTPClient = client
 }
 
+// WithAllUsers adds the allUsers to the scheduled plans for lookml dashboard params
+func (o *ScheduledPlansForLookmlDashboardParams) WithAllUsers(allUsers *bool) *ScheduledPlansForLookmlDashboardParams {
+	o.SetAllUsers(allUsers)
+	return o
+}
+
+// SetAllUsers adds the allUsers to the scheduled plans for lookml dashboard params
+func (o *ScheduledPlansForLookmlDashboardParams) SetAllUsers(allUsers *bool) {
+	o.AllUsers = allUsers
+}
+
 // WithFields adds the fields to the scheduled plans for lookml dashboard params
 func (o *ScheduledPlansForLookmlDashboardParams) WithFields(fields *string) *ScheduledPlansForLookmlDashboardParams {
 	o.SetFields(fields)
@@ -157,6 +172,22 @@ func (o *ScheduledPlansForLookmlDashboardParams) WriteToRequest(r runtime.Client
 		return err
 	}
 	var res []error
+
+	if o.AllUsers != nil {
+
+		// query param all_users
+		var qrAllUsers bool
+		if o.AllUsers != nil {
+			qrAllUsers = *o.AllUsers
+		}
+		qAllUsers := swag.FormatBool(qrAllUsers)
+		if qAllUsers != "" {
+			if err := r.SetQueryParam("all_users", qAllUsers); err != nil {
+				return err
+			}
+		}
+
+	}
 
 	if o.Fields != nil {
 

@@ -24,35 +24,30 @@ type UpdateDatagroupReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *UpdateDatagroupReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewUpdateDatagroupOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewUpdateDatagroupBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewUpdateDatagroupNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 409:
 		result := NewUpdateDatagroupConflict()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewUpdateDatagroupUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -80,6 +75,10 @@ type UpdateDatagroupOK struct {
 
 func (o *UpdateDatagroupOK) Error() string {
 	return fmt.Sprintf("[PATCH /datagroups/{datagroup_id}][%d] updateDatagroupOK  %+v", 200, o.Payload)
+}
+
+func (o *UpdateDatagroupOK) GetPayload() *models.Datagroup {
+	return o.Payload
 }
 
 func (o *UpdateDatagroupOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -111,6 +110,10 @@ func (o *UpdateDatagroupBadRequest) Error() string {
 	return fmt.Sprintf("[PATCH /datagroups/{datagroup_id}][%d] updateDatagroupBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *UpdateDatagroupBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UpdateDatagroupBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -138,6 +141,10 @@ type UpdateDatagroupNotFound struct {
 
 func (o *UpdateDatagroupNotFound) Error() string {
 	return fmt.Sprintf("[PATCH /datagroups/{datagroup_id}][%d] updateDatagroupNotFound  %+v", 404, o.Payload)
+}
+
+func (o *UpdateDatagroupNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *UpdateDatagroupNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -169,6 +176,10 @@ func (o *UpdateDatagroupConflict) Error() string {
 	return fmt.Sprintf("[PATCH /datagroups/{datagroup_id}][%d] updateDatagroupConflict  %+v", 409, o.Payload)
 }
 
+func (o *UpdateDatagroupConflict) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UpdateDatagroupConflict) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -196,6 +207,10 @@ type UpdateDatagroupUnprocessableEntity struct {
 
 func (o *UpdateDatagroupUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[PATCH /datagroups/{datagroup_id}][%d] updateDatagroupUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *UpdateDatagroupUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *UpdateDatagroupUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

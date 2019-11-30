@@ -24,21 +24,18 @@ type SetUserAttributeUserValueReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *SetUserAttributeUserValueReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewSetUserAttributeUserValueOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewSetUserAttributeUserValueBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewSetUserAttributeUserValueNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -66,6 +63,10 @@ type SetUserAttributeUserValueOK struct {
 
 func (o *SetUserAttributeUserValueOK) Error() string {
 	return fmt.Sprintf("[PATCH /users/{user_id}/attribute_values/{user_attribute_id}][%d] setUserAttributeUserValueOK  %+v", 200, o.Payload)
+}
+
+func (o *SetUserAttributeUserValueOK) GetPayload() *models.UserAttributeWithValue {
+	return o.Payload
 }
 
 func (o *SetUserAttributeUserValueOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -97,6 +98,10 @@ func (o *SetUserAttributeUserValueBadRequest) Error() string {
 	return fmt.Sprintf("[PATCH /users/{user_id}/attribute_values/{user_attribute_id}][%d] setUserAttributeUserValueBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *SetUserAttributeUserValueBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *SetUserAttributeUserValueBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -124,6 +129,10 @@ type SetUserAttributeUserValueNotFound struct {
 
 func (o *SetUserAttributeUserValueNotFound) Error() string {
 	return fmt.Sprintf("[PATCH /users/{user_id}/attribute_values/{user_attribute_id}][%d] setUserAttributeUserValueNotFound  %+v", 404, o.Payload)
+}
+
+func (o *SetUserAttributeUserValueNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *SetUserAttributeUserValueNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

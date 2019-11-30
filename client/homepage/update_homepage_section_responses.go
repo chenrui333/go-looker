@@ -24,28 +24,24 @@ type UpdateHomepageSectionReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *UpdateHomepageSectionReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewUpdateHomepageSectionOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewUpdateHomepageSectionBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewUpdateHomepageSectionNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewUpdateHomepageSectionUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -73,6 +69,10 @@ type UpdateHomepageSectionOK struct {
 
 func (o *UpdateHomepageSectionOK) Error() string {
 	return fmt.Sprintf("[PATCH /homepage_sections/{homepage_section_id}][%d] updateHomepageSectionOK  %+v", 200, o.Payload)
+}
+
+func (o *UpdateHomepageSectionOK) GetPayload() *models.HomepageSection {
+	return o.Payload
 }
 
 func (o *UpdateHomepageSectionOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -104,6 +104,10 @@ func (o *UpdateHomepageSectionBadRequest) Error() string {
 	return fmt.Sprintf("[PATCH /homepage_sections/{homepage_section_id}][%d] updateHomepageSectionBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *UpdateHomepageSectionBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UpdateHomepageSectionBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -133,6 +137,10 @@ func (o *UpdateHomepageSectionNotFound) Error() string {
 	return fmt.Sprintf("[PATCH /homepage_sections/{homepage_section_id}][%d] updateHomepageSectionNotFound  %+v", 404, o.Payload)
 }
 
+func (o *UpdateHomepageSectionNotFound) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UpdateHomepageSectionNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -160,6 +168,10 @@ type UpdateHomepageSectionUnprocessableEntity struct {
 
 func (o *UpdateHomepageSectionUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[PATCH /homepage_sections/{homepage_section_id}][%d] updateHomepageSectionUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *UpdateHomepageSectionUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *UpdateHomepageSectionUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

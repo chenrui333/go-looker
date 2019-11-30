@@ -24,35 +24,30 @@ type CreateModelSetReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *CreateModelSetReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewCreateModelSetOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewCreateModelSetBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewCreateModelSetNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 409:
 		result := NewCreateModelSetConflict()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewCreateModelSetUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -80,6 +75,10 @@ type CreateModelSetOK struct {
 
 func (o *CreateModelSetOK) Error() string {
 	return fmt.Sprintf("[POST /model_sets][%d] createModelSetOK  %+v", 200, o.Payload)
+}
+
+func (o *CreateModelSetOK) GetPayload() *models.ModelSet {
+	return o.Payload
 }
 
 func (o *CreateModelSetOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -111,6 +110,10 @@ func (o *CreateModelSetBadRequest) Error() string {
 	return fmt.Sprintf("[POST /model_sets][%d] createModelSetBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *CreateModelSetBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreateModelSetBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -138,6 +141,10 @@ type CreateModelSetNotFound struct {
 
 func (o *CreateModelSetNotFound) Error() string {
 	return fmt.Sprintf("[POST /model_sets][%d] createModelSetNotFound  %+v", 404, o.Payload)
+}
+
+func (o *CreateModelSetNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *CreateModelSetNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -169,6 +176,10 @@ func (o *CreateModelSetConflict) Error() string {
 	return fmt.Sprintf("[POST /model_sets][%d] createModelSetConflict  %+v", 409, o.Payload)
 }
 
+func (o *CreateModelSetConflict) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreateModelSetConflict) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -196,6 +207,10 @@ type CreateModelSetUnprocessableEntity struct {
 
 func (o *CreateModelSetUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[POST /model_sets][%d] createModelSetUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *CreateModelSetUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *CreateModelSetUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

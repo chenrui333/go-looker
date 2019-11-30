@@ -29,8 +29,7 @@ type CredentialsEmail struct {
 	Email string `json:"email,omitempty"`
 
 	// Force the user to change their password upon their next login
-	// Read Only: true
-	ForcedPasswordResetAtNextLogin *bool `json:"forced_password_reset_at_next_login,omitempty"`
+	ForcedPasswordResetAtNextLogin bool `json:"forced_password_reset_at_next_login,omitempty"`
 
 	// Has this credential been disabled?
 	// Read Only: true

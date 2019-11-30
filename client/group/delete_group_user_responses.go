@@ -24,28 +24,24 @@ type DeleteGroupUserReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *DeleteGroupUserReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 204:
 		result := NewDeleteGroupUserNoContent()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewDeleteGroupUserBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 403:
 		result := NewDeleteGroupUserForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewDeleteGroupUserNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -96,6 +92,10 @@ func (o *DeleteGroupUserBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /groups/{group_id}/users/{user_id}][%d] deleteGroupUserBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *DeleteGroupUserBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *DeleteGroupUserBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -125,6 +125,10 @@ func (o *DeleteGroupUserForbidden) Error() string {
 	return fmt.Sprintf("[DELETE /groups/{group_id}/users/{user_id}][%d] deleteGroupUserForbidden  %+v", 403, o.Payload)
 }
 
+func (o *DeleteGroupUserForbidden) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *DeleteGroupUserForbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -152,6 +156,10 @@ type DeleteGroupUserNotFound struct {
 
 func (o *DeleteGroupUserNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /groups/{group_id}/users/{user_id}][%d] deleteGroupUserNotFound  %+v", 404, o.Payload)
+}
+
+func (o *DeleteGroupUserNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteGroupUserNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

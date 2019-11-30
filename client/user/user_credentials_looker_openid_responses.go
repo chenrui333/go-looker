@@ -24,21 +24,18 @@ type UserCredentialsLookerOpenidReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *UserCredentialsLookerOpenidReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewUserCredentialsLookerOpenidOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewUserCredentialsLookerOpenidBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewUserCredentialsLookerOpenidNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -66,6 +63,10 @@ type UserCredentialsLookerOpenidOK struct {
 
 func (o *UserCredentialsLookerOpenidOK) Error() string {
 	return fmt.Sprintf("[GET /users/{user_id}/credentials_looker_openid][%d] userCredentialsLookerOpenidOK  %+v", 200, o.Payload)
+}
+
+func (o *UserCredentialsLookerOpenidOK) GetPayload() *models.CredentialsLookerOpenid {
+	return o.Payload
 }
 
 func (o *UserCredentialsLookerOpenidOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -97,6 +98,10 @@ func (o *UserCredentialsLookerOpenidBadRequest) Error() string {
 	return fmt.Sprintf("[GET /users/{user_id}/credentials_looker_openid][%d] userCredentialsLookerOpenidBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *UserCredentialsLookerOpenidBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UserCredentialsLookerOpenidBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -124,6 +129,10 @@ type UserCredentialsLookerOpenidNotFound struct {
 
 func (o *UserCredentialsLookerOpenidNotFound) Error() string {
 	return fmt.Sprintf("[GET /users/{user_id}/credentials_looker_openid][%d] userCredentialsLookerOpenidNotFound  %+v", 404, o.Payload)
+}
+
+func (o *UserCredentialsLookerOpenidNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *UserCredentialsLookerOpenidNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

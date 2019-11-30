@@ -24,21 +24,18 @@ type AllProjectFilesReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *AllProjectFilesReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewAllProjectFilesOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewAllProjectFilesBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewAllProjectFilesNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *AllProjectFilesOK) Error() string {
 	return fmt.Sprintf("[GET /projects/{project_id}/files][%d] allProjectFilesOK  %+v", 200, o.Payload)
 }
 
+func (o *AllProjectFilesOK) GetPayload() []*models.ProjectFile {
+	return o.Payload
+}
+
 func (o *AllProjectFilesOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type AllProjectFilesBadRequest struct {
 
 func (o *AllProjectFilesBadRequest) Error() string {
 	return fmt.Sprintf("[GET /projects/{project_id}/files][%d] allProjectFilesBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *AllProjectFilesBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *AllProjectFilesBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type AllProjectFilesNotFound struct {
 
 func (o *AllProjectFilesNotFound) Error() string {
 	return fmt.Sprintf("[GET /projects/{project_id}/files][%d] allProjectFilesNotFound  %+v", 404, o.Payload)
+}
+
+func (o *AllProjectFilesNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *AllProjectFilesNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

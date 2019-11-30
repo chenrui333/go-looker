@@ -6,14 +6,14 @@ package content
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"net/http"
 	"time"
-
-	"golang.org/x/net/context"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	cr "github.com/go-openapi/runtime/client"
+	"github.com/go-openapi/swag"
 
 	strfmt "github.com/go-openapi/strfmt"
 
@@ -69,6 +69,11 @@ type CreateContentMetadataAccessParams struct {
 
 	*/
 	Body *models.ContentMetaGroupUser
+	/*SendBoardsNotificationEmail
+	  Optionally sends notification email when granting access to a board.
+
+	*/
+	SendBoardsNotificationEmail *bool
 
 	timeout    time.Duration
 	Context    context.Context
@@ -119,6 +124,17 @@ func (o *CreateContentMetadataAccessParams) SetBody(body *models.ContentMetaGrou
 	o.Body = body
 }
 
+// WithSendBoardsNotificationEmail adds the sendBoardsNotificationEmail to the create content metadata access params
+func (o *CreateContentMetadataAccessParams) WithSendBoardsNotificationEmail(sendBoardsNotificationEmail *bool) *CreateContentMetadataAccessParams {
+	o.SetSendBoardsNotificationEmail(sendBoardsNotificationEmail)
+	return o
+}
+
+// SetSendBoardsNotificationEmail adds the sendBoardsNotificationEmail to the create content metadata access params
+func (o *CreateContentMetadataAccessParams) SetSendBoardsNotificationEmail(sendBoardsNotificationEmail *bool) {
+	o.SendBoardsNotificationEmail = sendBoardsNotificationEmail
+}
+
 // WriteToRequest writes these params to a swagger request
 func (o *CreateContentMetadataAccessParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
@@ -131,6 +147,22 @@ func (o *CreateContentMetadataAccessParams) WriteToRequest(r runtime.ClientReque
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err
 		}
+	}
+
+	if o.SendBoardsNotificationEmail != nil {
+
+		// query param send_boards_notification_email
+		var qrSendBoardsNotificationEmail bool
+		if o.SendBoardsNotificationEmail != nil {
+			qrSendBoardsNotificationEmail = *o.SendBoardsNotificationEmail
+		}
+		qSendBoardsNotificationEmail := swag.FormatBool(qrSendBoardsNotificationEmail)
+		if qSendBoardsNotificationEmail != "" {
+			if err := r.SetQueryParam("send_boards_notification_email", qSendBoardsNotificationEmail); err != nil {
+				return err
+			}
+		}
+
 	}
 
 	if len(res) > 0 {

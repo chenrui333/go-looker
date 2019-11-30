@@ -24,28 +24,24 @@ type UpdateSessionReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *UpdateSessionReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewUpdateSessionOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewUpdateSessionBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewUpdateSessionNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewUpdateSessionUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -73,6 +69,10 @@ type UpdateSessionOK struct {
 
 func (o *UpdateSessionOK) Error() string {
 	return fmt.Sprintf("[PATCH /session][%d] updateSessionOK  %+v", 200, o.Payload)
+}
+
+func (o *UpdateSessionOK) GetPayload() *models.APISession {
+	return o.Payload
 }
 
 func (o *UpdateSessionOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -104,6 +104,10 @@ func (o *UpdateSessionBadRequest) Error() string {
 	return fmt.Sprintf("[PATCH /session][%d] updateSessionBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *UpdateSessionBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UpdateSessionBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -133,6 +137,10 @@ func (o *UpdateSessionNotFound) Error() string {
 	return fmt.Sprintf("[PATCH /session][%d] updateSessionNotFound  %+v", 404, o.Payload)
 }
 
+func (o *UpdateSessionNotFound) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UpdateSessionNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -160,6 +168,10 @@ type UpdateSessionUnprocessableEntity struct {
 
 func (o *UpdateSessionUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[PATCH /session][%d] updateSessionUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *UpdateSessionUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *UpdateSessionUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

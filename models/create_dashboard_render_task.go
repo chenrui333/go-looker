@@ -15,10 +15,6 @@ import (
 // swagger:model CreateDashboardRenderTask
 type CreateDashboardRenderTask struct {
 
-	// Operations the current user is able to perform on this object
-	// Read Only: true
-	Can map[string]bool `json:"can,omitempty"`
-
 	// Filter values to apply to the dashboard queries, in URL query format
 	DashboardFilters string `json:"dashboard_filters,omitempty"`
 

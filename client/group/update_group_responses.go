@@ -24,28 +24,24 @@ type UpdateGroupReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *UpdateGroupReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewUpdateGroupOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewUpdateGroupBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewUpdateGroupNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewUpdateGroupUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -73,6 +69,10 @@ type UpdateGroupOK struct {
 
 func (o *UpdateGroupOK) Error() string {
 	return fmt.Sprintf("[PATCH /groups/{group_id}][%d] updateGroupOK  %+v", 200, o.Payload)
+}
+
+func (o *UpdateGroupOK) GetPayload() *models.Group {
+	return o.Payload
 }
 
 func (o *UpdateGroupOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -104,6 +104,10 @@ func (o *UpdateGroupBadRequest) Error() string {
 	return fmt.Sprintf("[PATCH /groups/{group_id}][%d] updateGroupBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *UpdateGroupBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UpdateGroupBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -133,6 +137,10 @@ func (o *UpdateGroupNotFound) Error() string {
 	return fmt.Sprintf("[PATCH /groups/{group_id}][%d] updateGroupNotFound  %+v", 404, o.Payload)
 }
 
+func (o *UpdateGroupNotFound) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UpdateGroupNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -160,6 +168,10 @@ type UpdateGroupUnprocessableEntity struct {
 
 func (o *UpdateGroupUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[PATCH /groups/{group_id}][%d] updateGroupUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *UpdateGroupUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *UpdateGroupUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

@@ -24,28 +24,24 @@ type UpdateSpaceReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *UpdateSpaceReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewUpdateSpaceOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewUpdateSpaceBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewUpdateSpaceNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewUpdateSpaceUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -73,6 +69,10 @@ type UpdateSpaceOK struct {
 
 func (o *UpdateSpaceOK) Error() string {
 	return fmt.Sprintf("[PATCH /spaces/{space_id}][%d] updateSpaceOK  %+v", 200, o.Payload)
+}
+
+func (o *UpdateSpaceOK) GetPayload() *models.Space {
+	return o.Payload
 }
 
 func (o *UpdateSpaceOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -104,6 +104,10 @@ func (o *UpdateSpaceBadRequest) Error() string {
 	return fmt.Sprintf("[PATCH /spaces/{space_id}][%d] updateSpaceBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *UpdateSpaceBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UpdateSpaceBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -133,6 +137,10 @@ func (o *UpdateSpaceNotFound) Error() string {
 	return fmt.Sprintf("[PATCH /spaces/{space_id}][%d] updateSpaceNotFound  %+v", 404, o.Payload)
 }
 
+func (o *UpdateSpaceNotFound) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UpdateSpaceNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -160,6 +168,10 @@ type UpdateSpaceUnprocessableEntity struct {
 
 func (o *UpdateSpaceUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[PATCH /spaces/{space_id}][%d] updateSpaceUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *UpdateSpaceUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *UpdateSpaceUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

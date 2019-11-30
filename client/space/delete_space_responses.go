@@ -24,21 +24,18 @@ type DeleteSpaceReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *DeleteSpaceReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 204:
 		result := NewDeleteSpaceNoContent()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewDeleteSpaceBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewDeleteSpaceNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *DeleteSpaceNoContent) Error() string {
 	return fmt.Sprintf("[DELETE /spaces/{space_id}][%d] deleteSpaceNoContent  %+v", 204, o.Payload)
 }
 
+func (o *DeleteSpaceNoContent) GetPayload() string {
+	return o.Payload
+}
+
 func (o *DeleteSpaceNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type DeleteSpaceBadRequest struct {
 
 func (o *DeleteSpaceBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /spaces/{space_id}][%d] deleteSpaceBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *DeleteSpaceBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteSpaceBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type DeleteSpaceNotFound struct {
 
 func (o *DeleteSpaceNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /spaces/{space_id}][%d] deleteSpaceNotFound  %+v", 404, o.Payload)
+}
+
+func (o *DeleteSpaceNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteSpaceNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

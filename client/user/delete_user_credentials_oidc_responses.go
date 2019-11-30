@@ -24,21 +24,18 @@ type DeleteUserCredentialsOidcReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *DeleteUserCredentialsOidcReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 204:
 		result := NewDeleteUserCredentialsOidcNoContent()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewDeleteUserCredentialsOidcBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewDeleteUserCredentialsOidcNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *DeleteUserCredentialsOidcNoContent) Error() string {
 	return fmt.Sprintf("[DELETE /users/{user_id}/credentials_oidc][%d] deleteUserCredentialsOidcNoContent  %+v", 204, o.Payload)
 }
 
+func (o *DeleteUserCredentialsOidcNoContent) GetPayload() string {
+	return o.Payload
+}
+
 func (o *DeleteUserCredentialsOidcNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type DeleteUserCredentialsOidcBadRequest struct {
 
 func (o *DeleteUserCredentialsOidcBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /users/{user_id}/credentials_oidc][%d] deleteUserCredentialsOidcBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *DeleteUserCredentialsOidcBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteUserCredentialsOidcBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type DeleteUserCredentialsOidcNotFound struct {
 
 func (o *DeleteUserCredentialsOidcNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /users/{user_id}/credentials_oidc][%d] deleteUserCredentialsOidcNotFound  %+v", 404, o.Payload)
+}
+
+func (o *DeleteUserCredentialsOidcNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteUserCredentialsOidcNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

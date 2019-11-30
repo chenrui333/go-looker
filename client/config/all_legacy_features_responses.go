@@ -24,21 +24,18 @@ type AllLegacyFeaturesReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *AllLegacyFeaturesReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewAllLegacyFeaturesOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewAllLegacyFeaturesBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewAllLegacyFeaturesNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *AllLegacyFeaturesOK) Error() string {
 	return fmt.Sprintf("[GET /legacy_features][%d] allLegacyFeaturesOK  %+v", 200, o.Payload)
 }
 
+func (o *AllLegacyFeaturesOK) GetPayload() []*models.LegacyFeature {
+	return o.Payload
+}
+
 func (o *AllLegacyFeaturesOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type AllLegacyFeaturesBadRequest struct {
 
 func (o *AllLegacyFeaturesBadRequest) Error() string {
 	return fmt.Sprintf("[GET /legacy_features][%d] allLegacyFeaturesBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *AllLegacyFeaturesBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *AllLegacyFeaturesBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type AllLegacyFeaturesNotFound struct {
 
 func (o *AllLegacyFeaturesNotFound) Error() string {
 	return fmt.Sprintf("[GET /legacy_features][%d] allLegacyFeaturesNotFound  %+v", 404, o.Payload)
+}
+
+func (o *AllLegacyFeaturesNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *AllLegacyFeaturesNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

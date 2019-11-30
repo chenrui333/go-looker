@@ -18,10 +18,6 @@ import (
 // swagger:model ResultMakerFilterables
 type ResultMakerFilterables struct {
 
-	// Operations the current user is able to perform on this object
-	// Read Only: true
-	Can map[string]bool `json:"can,omitempty"`
-
 	// array of dashboard_filter_name: and field: objects.
 	// Read Only: true
 	Listen []*ResultMakerFilterablesListen `json:"listen"`

@@ -34,7 +34,7 @@ type Look struct {
 	// Format: date-time
 	CreatedAt strfmt.DateTime `json:"created_at,omitempty"`
 
-	// Whether or not a look is deleted.
+	// Whether or not a look is 'soft' deleted.
 	Deleted bool `json:"deleted,omitempty"`
 
 	// Time that the Look was deleted.
@@ -60,6 +60,13 @@ type Look struct {
 	// Number of times favorited
 	// Read Only: true
 	FavoriteCount int64 `json:"favorite_count,omitempty"`
+
+	// Folder of this Look
+	// Read Only: true
+	Folder *FolderBase `json:"folder,omitempty"`
+
+	// Folder Id
+	FolderID string `json:"folder_id,omitempty"`
 
 	// Google Spreadsheet Formula
 	// Read Only: true
@@ -95,8 +102,7 @@ type Look struct {
 	Model *LookModel `json:"model,omitempty"`
 
 	// Is Public
-	// Read Only: true
-	Public *bool `json:"public,omitempty"`
+	Public bool `json:"public,omitempty"`
 
 	// Public Slug
 	// Read Only: true
@@ -152,6 +158,10 @@ func (m *Look) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateFolder(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateLastAccessedAt(formats); err != nil {
 		res = append(res, err)
 	}
@@ -203,6 +213,24 @@ func (m *Look) validateDeletedAt(formats strfmt.Registry) error {
 
 	if err := validate.FormatOf("deleted_at", "body", "date-time", m.DeletedAt.String(), formats); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+func (m *Look) validateFolder(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Folder) { // not required
+		return nil
+	}
+
+	if m.Folder != nil {
+		if err := m.Folder.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("folder")
+			}
+			return err
+		}
 	}
 
 	return nil

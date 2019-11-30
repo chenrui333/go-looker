@@ -24,21 +24,18 @@ type SpaceChildrenSearchReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *SpaceChildrenSearchReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewSpaceChildrenSearchOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewSpaceChildrenSearchBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewSpaceChildrenSearchNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *SpaceChildrenSearchOK) Error() string {
 	return fmt.Sprintf("[GET /spaces/{space_id}/children/search][%d] spaceChildrenSearchOK  %+v", 200, o.Payload)
 }
 
+func (o *SpaceChildrenSearchOK) GetPayload() []*models.Space {
+	return o.Payload
+}
+
 func (o *SpaceChildrenSearchOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type SpaceChildrenSearchBadRequest struct {
 
 func (o *SpaceChildrenSearchBadRequest) Error() string {
 	return fmt.Sprintf("[GET /spaces/{space_id}/children/search][%d] spaceChildrenSearchBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *SpaceChildrenSearchBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *SpaceChildrenSearchBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type SpaceChildrenSearchNotFound struct {
 
 func (o *SpaceChildrenSearchNotFound) Error() string {
 	return fmt.Sprintf("[GET /spaces/{space_id}/children/search][%d] spaceChildrenSearchNotFound  %+v", 404, o.Payload)
+}
+
+func (o *SpaceChildrenSearchNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *SpaceChildrenSearchNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

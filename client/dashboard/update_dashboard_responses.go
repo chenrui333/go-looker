@@ -24,35 +24,30 @@ type UpdateDashboardReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *UpdateDashboardReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewUpdateDashboardOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewUpdateDashboardBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewUpdateDashboardNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 405:
 		result := NewUpdateDashboardMethodNotAllowed()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewUpdateDashboardUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -80,6 +75,10 @@ type UpdateDashboardOK struct {
 
 func (o *UpdateDashboardOK) Error() string {
 	return fmt.Sprintf("[PATCH /dashboards/{dashboard_id}][%d] updateDashboardOK  %+v", 200, o.Payload)
+}
+
+func (o *UpdateDashboardOK) GetPayload() *models.Dashboard {
+	return o.Payload
 }
 
 func (o *UpdateDashboardOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -111,6 +110,10 @@ func (o *UpdateDashboardBadRequest) Error() string {
 	return fmt.Sprintf("[PATCH /dashboards/{dashboard_id}][%d] updateDashboardBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *UpdateDashboardBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UpdateDashboardBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -138,6 +141,10 @@ type UpdateDashboardNotFound struct {
 
 func (o *UpdateDashboardNotFound) Error() string {
 	return fmt.Sprintf("[PATCH /dashboards/{dashboard_id}][%d] updateDashboardNotFound  %+v", 404, o.Payload)
+}
+
+func (o *UpdateDashboardNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *UpdateDashboardNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -169,6 +176,10 @@ func (o *UpdateDashboardMethodNotAllowed) Error() string {
 	return fmt.Sprintf("[PATCH /dashboards/{dashboard_id}][%d] updateDashboardMethodNotAllowed  %+v", 405, o.Payload)
 }
 
+func (o *UpdateDashboardMethodNotAllowed) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UpdateDashboardMethodNotAllowed) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -196,6 +207,10 @@ type UpdateDashboardUnprocessableEntity struct {
 
 func (o *UpdateDashboardUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[PATCH /dashboards/{dashboard_id}][%d] updateDashboardUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *UpdateDashboardUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *UpdateDashboardUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

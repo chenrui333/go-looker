@@ -24,35 +24,30 @@ type CreateLookmlModelReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *CreateLookmlModelReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewCreateLookmlModelOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewCreateLookmlModelBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewCreateLookmlModelNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 409:
 		result := NewCreateLookmlModelConflict()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewCreateLookmlModelUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -80,6 +75,10 @@ type CreateLookmlModelOK struct {
 
 func (o *CreateLookmlModelOK) Error() string {
 	return fmt.Sprintf("[POST /lookml_models][%d] createLookmlModelOK  %+v", 200, o.Payload)
+}
+
+func (o *CreateLookmlModelOK) GetPayload() *models.LookmlModel {
+	return o.Payload
 }
 
 func (o *CreateLookmlModelOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -111,6 +110,10 @@ func (o *CreateLookmlModelBadRequest) Error() string {
 	return fmt.Sprintf("[POST /lookml_models][%d] createLookmlModelBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *CreateLookmlModelBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreateLookmlModelBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -138,6 +141,10 @@ type CreateLookmlModelNotFound struct {
 
 func (o *CreateLookmlModelNotFound) Error() string {
 	return fmt.Sprintf("[POST /lookml_models][%d] createLookmlModelNotFound  %+v", 404, o.Payload)
+}
+
+func (o *CreateLookmlModelNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *CreateLookmlModelNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -169,6 +176,10 @@ func (o *CreateLookmlModelConflict) Error() string {
 	return fmt.Sprintf("[POST /lookml_models][%d] createLookmlModelConflict  %+v", 409, o.Payload)
 }
 
+func (o *CreateLookmlModelConflict) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreateLookmlModelConflict) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -196,6 +207,10 @@ type CreateLookmlModelUnprocessableEntity struct {
 
 func (o *CreateLookmlModelUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[POST /lookml_models][%d] createLookmlModelUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *CreateLookmlModelUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *CreateLookmlModelUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

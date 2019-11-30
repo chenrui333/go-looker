@@ -24,35 +24,30 @@ type CreateUserCredentialsTotpReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *CreateUserCredentialsTotpReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewCreateUserCredentialsTotpOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewCreateUserCredentialsTotpBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewCreateUserCredentialsTotpNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 409:
 		result := NewCreateUserCredentialsTotpConflict()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewCreateUserCredentialsTotpUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -80,6 +75,10 @@ type CreateUserCredentialsTotpOK struct {
 
 func (o *CreateUserCredentialsTotpOK) Error() string {
 	return fmt.Sprintf("[POST /users/{user_id}/credentials_totp][%d] createUserCredentialsTotpOK  %+v", 200, o.Payload)
+}
+
+func (o *CreateUserCredentialsTotpOK) GetPayload() *models.CredentialsTotp {
+	return o.Payload
 }
 
 func (o *CreateUserCredentialsTotpOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -111,6 +110,10 @@ func (o *CreateUserCredentialsTotpBadRequest) Error() string {
 	return fmt.Sprintf("[POST /users/{user_id}/credentials_totp][%d] createUserCredentialsTotpBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *CreateUserCredentialsTotpBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreateUserCredentialsTotpBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -138,6 +141,10 @@ type CreateUserCredentialsTotpNotFound struct {
 
 func (o *CreateUserCredentialsTotpNotFound) Error() string {
 	return fmt.Sprintf("[POST /users/{user_id}/credentials_totp][%d] createUserCredentialsTotpNotFound  %+v", 404, o.Payload)
+}
+
+func (o *CreateUserCredentialsTotpNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *CreateUserCredentialsTotpNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -169,6 +176,10 @@ func (o *CreateUserCredentialsTotpConflict) Error() string {
 	return fmt.Sprintf("[POST /users/{user_id}/credentials_totp][%d] createUserCredentialsTotpConflict  %+v", 409, o.Payload)
 }
 
+func (o *CreateUserCredentialsTotpConflict) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreateUserCredentialsTotpConflict) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -196,6 +207,10 @@ type CreateUserCredentialsTotpUnprocessableEntity struct {
 
 func (o *CreateUserCredentialsTotpUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[POST /users/{user_id}/credentials_totp][%d] createUserCredentialsTotpUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *CreateUserCredentialsTotpUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *CreateUserCredentialsTotpUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

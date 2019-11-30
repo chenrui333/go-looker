@@ -24,21 +24,18 @@ type DeleteContentMetadataAccessReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *DeleteContentMetadataAccessReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 204:
 		result := NewDeleteContentMetadataAccessNoContent()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewDeleteContentMetadataAccessBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewDeleteContentMetadataAccessNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *DeleteContentMetadataAccessNoContent) Error() string {
 	return fmt.Sprintf("[DELETE /content_metadata_access/{content_metadata_access_id}][%d] deleteContentMetadataAccessNoContent  %+v", 204, o.Payload)
 }
 
+func (o *DeleteContentMetadataAccessNoContent) GetPayload() string {
+	return o.Payload
+}
+
 func (o *DeleteContentMetadataAccessNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type DeleteContentMetadataAccessBadRequest struct {
 
 func (o *DeleteContentMetadataAccessBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /content_metadata_access/{content_metadata_access_id}][%d] deleteContentMetadataAccessBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *DeleteContentMetadataAccessBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteContentMetadataAccessBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type DeleteContentMetadataAccessNotFound struct {
 
 func (o *DeleteContentMetadataAccessNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /content_metadata_access/{content_metadata_access_id}][%d] deleteContentMetadataAccessNotFound  %+v", 404, o.Payload)
+}
+
+func (o *DeleteContentMetadataAccessNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteContentMetadataAccessNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

@@ -24,21 +24,18 @@ type DeleteGitBranchReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *DeleteGitBranchReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 204:
 		result := NewDeleteGitBranchNoContent()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewDeleteGitBranchBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewDeleteGitBranchNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *DeleteGitBranchNoContent) Error() string {
 	return fmt.Sprintf("[DELETE /projects/{project_id}/git_branch/{branch_name}][%d] deleteGitBranchNoContent  %+v", 204, o.Payload)
 }
 
+func (o *DeleteGitBranchNoContent) GetPayload() string {
+	return o.Payload
+}
+
 func (o *DeleteGitBranchNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type DeleteGitBranchBadRequest struct {
 
 func (o *DeleteGitBranchBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /projects/{project_id}/git_branch/{branch_name}][%d] deleteGitBranchBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *DeleteGitBranchBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteGitBranchBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type DeleteGitBranchNotFound struct {
 
 func (o *DeleteGitBranchNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /projects/{project_id}/git_branch/{branch_name}][%d] deleteGitBranchNotFound  %+v", 404, o.Payload)
+}
+
+func (o *DeleteGitBranchNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteGitBranchNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

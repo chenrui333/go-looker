@@ -24,35 +24,30 @@ type CreateContentFavoriteReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *CreateContentFavoriteReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewCreateContentFavoriteOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewCreateContentFavoriteBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewCreateContentFavoriteNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 409:
 		result := NewCreateContentFavoriteConflict()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewCreateContentFavoriteUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -80,6 +75,10 @@ type CreateContentFavoriteOK struct {
 
 func (o *CreateContentFavoriteOK) Error() string {
 	return fmt.Sprintf("[POST /content_favorite][%d] createContentFavoriteOK  %+v", 200, o.Payload)
+}
+
+func (o *CreateContentFavoriteOK) GetPayload() *models.ContentFavorite {
+	return o.Payload
 }
 
 func (o *CreateContentFavoriteOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -111,6 +110,10 @@ func (o *CreateContentFavoriteBadRequest) Error() string {
 	return fmt.Sprintf("[POST /content_favorite][%d] createContentFavoriteBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *CreateContentFavoriteBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreateContentFavoriteBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -138,6 +141,10 @@ type CreateContentFavoriteNotFound struct {
 
 func (o *CreateContentFavoriteNotFound) Error() string {
 	return fmt.Sprintf("[POST /content_favorite][%d] createContentFavoriteNotFound  %+v", 404, o.Payload)
+}
+
+func (o *CreateContentFavoriteNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *CreateContentFavoriteNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -169,6 +176,10 @@ func (o *CreateContentFavoriteConflict) Error() string {
 	return fmt.Sprintf("[POST /content_favorite][%d] createContentFavoriteConflict  %+v", 409, o.Payload)
 }
 
+func (o *CreateContentFavoriteConflict) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreateContentFavoriteConflict) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -196,6 +207,10 @@ type CreateContentFavoriteUnprocessableEntity struct {
 
 func (o *CreateContentFavoriteUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[POST /content_favorite][%d] createContentFavoriteUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *CreateContentFavoriteUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *CreateContentFavoriteUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

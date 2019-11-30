@@ -24,21 +24,18 @@ type DeleteUserCredentialsSamlReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *DeleteUserCredentialsSamlReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 204:
 		result := NewDeleteUserCredentialsSamlNoContent()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewDeleteUserCredentialsSamlBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewDeleteUserCredentialsSamlNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *DeleteUserCredentialsSamlNoContent) Error() string {
 	return fmt.Sprintf("[DELETE /users/{user_id}/credentials_saml][%d] deleteUserCredentialsSamlNoContent  %+v", 204, o.Payload)
 }
 
+func (o *DeleteUserCredentialsSamlNoContent) GetPayload() string {
+	return o.Payload
+}
+
 func (o *DeleteUserCredentialsSamlNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type DeleteUserCredentialsSamlBadRequest struct {
 
 func (o *DeleteUserCredentialsSamlBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /users/{user_id}/credentials_saml][%d] deleteUserCredentialsSamlBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *DeleteUserCredentialsSamlBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteUserCredentialsSamlBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type DeleteUserCredentialsSamlNotFound struct {
 
 func (o *DeleteUserCredentialsSamlNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /users/{user_id}/credentials_saml][%d] deleteUserCredentialsSamlNotFound  %+v", 404, o.Payload)
+}
+
+func (o *DeleteUserCredentialsSamlNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteUserCredentialsSamlNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

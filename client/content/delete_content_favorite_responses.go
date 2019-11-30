@@ -24,21 +24,18 @@ type DeleteContentFavoriteReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *DeleteContentFavoriteReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 204:
 		result := NewDeleteContentFavoriteNoContent()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewDeleteContentFavoriteBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewDeleteContentFavoriteNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *DeleteContentFavoriteNoContent) Error() string {
 	return fmt.Sprintf("[DELETE /content_favorite/{content_favorite_id}][%d] deleteContentFavoriteNoContent  %+v", 204, o.Payload)
 }
 
+func (o *DeleteContentFavoriteNoContent) GetPayload() string {
+	return o.Payload
+}
+
 func (o *DeleteContentFavoriteNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type DeleteContentFavoriteBadRequest struct {
 
 func (o *DeleteContentFavoriteBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /content_favorite/{content_favorite_id}][%d] deleteContentFavoriteBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *DeleteContentFavoriteBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteContentFavoriteBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type DeleteContentFavoriteNotFound struct {
 
 func (o *DeleteContentFavoriteNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /content_favorite/{content_favorite_id}][%d] deleteContentFavoriteNotFound  %+v", 404, o.Payload)
+}
+
+func (o *DeleteContentFavoriteNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteContentFavoriteNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

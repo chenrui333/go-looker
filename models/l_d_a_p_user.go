@@ -21,7 +21,7 @@ type LDAPUser struct {
 	// Read Only: true
 	AllEmails []string `json:"all_emails"`
 
-	// Dictionary of user's attrributes (name/value)
+	// Dictionary of user's attributes (name/value)
 	// Read Only: true
 	Attributes map[string]string `json:"attributes,omitempty"`
 

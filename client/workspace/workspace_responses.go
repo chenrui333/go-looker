@@ -24,21 +24,18 @@ type WorkspaceReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *WorkspaceReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewWorkspaceOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewWorkspaceBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewWorkspaceNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -66,6 +63,10 @@ type WorkspaceOK struct {
 
 func (o *WorkspaceOK) Error() string {
 	return fmt.Sprintf("[GET /workspaces/{workspace_id}][%d] workspaceOK  %+v", 200, o.Payload)
+}
+
+func (o *WorkspaceOK) GetPayload() *models.Workspace {
+	return o.Payload
 }
 
 func (o *WorkspaceOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -97,6 +98,10 @@ func (o *WorkspaceBadRequest) Error() string {
 	return fmt.Sprintf("[GET /workspaces/{workspace_id}][%d] workspaceBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *WorkspaceBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *WorkspaceBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -124,6 +129,10 @@ type WorkspaceNotFound struct {
 
 func (o *WorkspaceNotFound) Error() string {
 	return fmt.Sprintf("[GET /workspaces/{workspace_id}][%d] workspaceNotFound  %+v", 404, o.Payload)
+}
+
+func (o *WorkspaceNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *WorkspaceNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

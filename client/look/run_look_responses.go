@@ -24,28 +24,24 @@ type RunLookReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *RunLookReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewRunLookOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewRunLookBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewRunLookNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewRunLookUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -75,6 +71,10 @@ func (o *RunLookOK) Error() string {
 	return fmt.Sprintf("[GET /looks/{look_id}/run/{result_format}][%d] runLookOK  %+v", 200, o.Payload)
 }
 
+func (o *RunLookOK) GetPayload() string {
+	return o.Payload
+}
+
 func (o *RunLookOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -100,6 +100,10 @@ type RunLookBadRequest struct {
 
 func (o *RunLookBadRequest) Error() string {
 	return fmt.Sprintf("[GET /looks/{look_id}/run/{result_format}][%d] runLookBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *RunLookBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *RunLookBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -131,6 +135,10 @@ func (o *RunLookNotFound) Error() string {
 	return fmt.Sprintf("[GET /looks/{look_id}/run/{result_format}][%d] runLookNotFound  %+v", 404, o.Payload)
 }
 
+func (o *RunLookNotFound) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *RunLookNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -158,6 +166,10 @@ type RunLookUnprocessableEntity struct {
 
 func (o *RunLookUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[GET /looks/{look_id}/run/{result_format}][%d] runLookUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *RunLookUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *RunLookUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

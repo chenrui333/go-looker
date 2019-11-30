@@ -24,21 +24,18 @@ type LookmlModelReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *LookmlModelReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewLookmlModelOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewLookmlModelBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewLookmlModelNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -66,6 +63,10 @@ type LookmlModelOK struct {
 
 func (o *LookmlModelOK) Error() string {
 	return fmt.Sprintf("[GET /lookml_models/{lookml_model_name}][%d] lookmlModelOK  %+v", 200, o.Payload)
+}
+
+func (o *LookmlModelOK) GetPayload() *models.LookmlModel {
+	return o.Payload
 }
 
 func (o *LookmlModelOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -97,6 +98,10 @@ func (o *LookmlModelBadRequest) Error() string {
 	return fmt.Sprintf("[GET /lookml_models/{lookml_model_name}][%d] lookmlModelBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *LookmlModelBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *LookmlModelBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -124,6 +129,10 @@ type LookmlModelNotFound struct {
 
 func (o *LookmlModelNotFound) Error() string {
 	return fmt.Sprintf("[GET /lookml_models/{lookml_model_name}][%d] lookmlModelNotFound  %+v", 404, o.Payload)
+}
+
+func (o *LookmlModelNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *LookmlModelNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

@@ -19,6 +19,10 @@ type LookmlModelNavExplore struct {
 	// Read Only: true
 	Can map[string]bool `json:"can,omitempty"`
 
+	// Description for the explore
+	// Read Only: true
+	Description string `json:"description,omitempty"`
+
 	// Label used to group explores in the navigation menus
 	// Read Only: true
 	GroupLabel string `json:"group_label,omitempty"`

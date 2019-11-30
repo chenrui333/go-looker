@@ -51,6 +51,10 @@ type Dialect struct {
 	// Read Only: true
 	SupportsCostEstimate *bool `json:"supports_cost_estimate,omitempty"`
 
+	// Is supported with the inducer (i.e. generate from sql)
+	// Read Only: true
+	SupportsInducer *bool `json:"supports_inducer,omitempty"`
+
 	// Suports streaming results
 	// Read Only: true
 	SupportsStreaming *bool `json:"supports_streaming,omitempty"`

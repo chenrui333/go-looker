@@ -24,28 +24,24 @@ type SyncLookmlDashboardReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *SyncLookmlDashboardReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewSyncLookmlDashboardOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewSyncLookmlDashboardBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewSyncLookmlDashboardNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewSyncLookmlDashboardUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -65,7 +61,7 @@ func NewSyncLookmlDashboardOK() *SyncLookmlDashboardOK {
 
 /*SyncLookmlDashboardOK handles this case with default header values.
 
-updated dashboard ids
+Ids of all the dashboards that were updated by this operation
 */
 type SyncLookmlDashboardOK struct {
 	Payload []int64
@@ -73,6 +69,10 @@ type SyncLookmlDashboardOK struct {
 
 func (o *SyncLookmlDashboardOK) Error() string {
 	return fmt.Sprintf("[PATCH /dashboards/{lookml_dashboard_id}/sync][%d] syncLookmlDashboardOK  %+v", 200, o.Payload)
+}
+
+func (o *SyncLookmlDashboardOK) GetPayload() []int64 {
+	return o.Payload
 }
 
 func (o *SyncLookmlDashboardOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -100,6 +100,10 @@ type SyncLookmlDashboardBadRequest struct {
 
 func (o *SyncLookmlDashboardBadRequest) Error() string {
 	return fmt.Sprintf("[PATCH /dashboards/{lookml_dashboard_id}/sync][%d] syncLookmlDashboardBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *SyncLookmlDashboardBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *SyncLookmlDashboardBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -131,6 +135,10 @@ func (o *SyncLookmlDashboardNotFound) Error() string {
 	return fmt.Sprintf("[PATCH /dashboards/{lookml_dashboard_id}/sync][%d] syncLookmlDashboardNotFound  %+v", 404, o.Payload)
 }
 
+func (o *SyncLookmlDashboardNotFound) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *SyncLookmlDashboardNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -158,6 +166,10 @@ type SyncLookmlDashboardUnprocessableEntity struct {
 
 func (o *SyncLookmlDashboardUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[PATCH /dashboards/{lookml_dashboard_id}/sync][%d] syncLookmlDashboardUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *SyncLookmlDashboardUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *SyncLookmlDashboardUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

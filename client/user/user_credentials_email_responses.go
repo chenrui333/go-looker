@@ -24,21 +24,18 @@ type UserCredentialsEmailReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *UserCredentialsEmailReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewUserCredentialsEmailOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewUserCredentialsEmailBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewUserCredentialsEmailNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -66,6 +63,10 @@ type UserCredentialsEmailOK struct {
 
 func (o *UserCredentialsEmailOK) Error() string {
 	return fmt.Sprintf("[GET /users/{user_id}/credentials_email][%d] userCredentialsEmailOK  %+v", 200, o.Payload)
+}
+
+func (o *UserCredentialsEmailOK) GetPayload() *models.CredentialsEmail {
+	return o.Payload
 }
 
 func (o *UserCredentialsEmailOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -97,6 +98,10 @@ func (o *UserCredentialsEmailBadRequest) Error() string {
 	return fmt.Sprintf("[GET /users/{user_id}/credentials_email][%d] userCredentialsEmailBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *UserCredentialsEmailBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UserCredentialsEmailBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -124,6 +129,10 @@ type UserCredentialsEmailNotFound struct {
 
 func (o *UserCredentialsEmailNotFound) Error() string {
 	return fmt.Sprintf("[GET /users/{user_id}/credentials_email][%d] userCredentialsEmailNotFound  %+v", 404, o.Payload)
+}
+
+func (o *UserCredentialsEmailNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *UserCredentialsEmailNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

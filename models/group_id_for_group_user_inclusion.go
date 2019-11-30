@@ -15,10 +15,6 @@ import (
 // swagger:model GroupIdForGroupUserInclusion
 type GroupIDForGroupUserInclusion struct {
 
-	// Operations the current user is able to perform on this object
-	// Read Only: true
-	Can map[string]bool `json:"can,omitempty"`
-
 	// Id of user
 	// Read Only: true
 	UserID int64 `json:"user_id,omitempty"`

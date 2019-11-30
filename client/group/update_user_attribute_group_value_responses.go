@@ -24,21 +24,18 @@ type UpdateUserAttributeGroupValueReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *UpdateUserAttributeGroupValueReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewUpdateUserAttributeGroupValueOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewUpdateUserAttributeGroupValueBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewUpdateUserAttributeGroupValueNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -66,6 +63,10 @@ type UpdateUserAttributeGroupValueOK struct {
 
 func (o *UpdateUserAttributeGroupValueOK) Error() string {
 	return fmt.Sprintf("[PATCH /groups/{group_id}/attribute_values/{user_attribute_id}][%d] updateUserAttributeGroupValueOK  %+v", 200, o.Payload)
+}
+
+func (o *UpdateUserAttributeGroupValueOK) GetPayload() *models.UserAttributeGroupValue {
+	return o.Payload
 }
 
 func (o *UpdateUserAttributeGroupValueOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -97,6 +98,10 @@ func (o *UpdateUserAttributeGroupValueBadRequest) Error() string {
 	return fmt.Sprintf("[PATCH /groups/{group_id}/attribute_values/{user_attribute_id}][%d] updateUserAttributeGroupValueBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *UpdateUserAttributeGroupValueBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UpdateUserAttributeGroupValueBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -124,6 +129,10 @@ type UpdateUserAttributeGroupValueNotFound struct {
 
 func (o *UpdateUserAttributeGroupValueNotFound) Error() string {
 	return fmt.Sprintf("[PATCH /groups/{group_id}/attribute_values/{user_attribute_id}][%d] updateUserAttributeGroupValueNotFound  %+v", 404, o.Payload)
+}
+
+func (o *UpdateUserAttributeGroupValueNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *UpdateUserAttributeGroupValueNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

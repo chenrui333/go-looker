@@ -24,21 +24,18 @@ type ScheduledPlansForDashboardReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *ScheduledPlansForDashboardReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewScheduledPlansForDashboardOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewScheduledPlansForDashboardBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewScheduledPlansForDashboardNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *ScheduledPlansForDashboardOK) Error() string {
 	return fmt.Sprintf("[GET /scheduled_plans/dashboard/{dashboard_id}][%d] scheduledPlansForDashboardOK  %+v", 200, o.Payload)
 }
 
+func (o *ScheduledPlansForDashboardOK) GetPayload() []*models.ScheduledPlan {
+	return o.Payload
+}
+
 func (o *ScheduledPlansForDashboardOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type ScheduledPlansForDashboardBadRequest struct {
 
 func (o *ScheduledPlansForDashboardBadRequest) Error() string {
 	return fmt.Sprintf("[GET /scheduled_plans/dashboard/{dashboard_id}][%d] scheduledPlansForDashboardBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *ScheduledPlansForDashboardBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *ScheduledPlansForDashboardBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type ScheduledPlansForDashboardNotFound struct {
 
 func (o *ScheduledPlansForDashboardNotFound) Error() string {
 	return fmt.Sprintf("[GET /scheduled_plans/dashboard/{dashboard_id}][%d] scheduledPlansForDashboardNotFound  %+v", 404, o.Payload)
+}
+
+func (o *ScheduledPlansForDashboardNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *ScheduledPlansForDashboardNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

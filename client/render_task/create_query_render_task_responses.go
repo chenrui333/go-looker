@@ -24,35 +24,30 @@ type CreateQueryRenderTaskReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *CreateQueryRenderTaskReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewCreateQueryRenderTaskOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewCreateQueryRenderTaskBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewCreateQueryRenderTaskNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 409:
 		result := NewCreateQueryRenderTaskConflict()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewCreateQueryRenderTaskUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -80,6 +75,10 @@ type CreateQueryRenderTaskOK struct {
 
 func (o *CreateQueryRenderTaskOK) Error() string {
 	return fmt.Sprintf("[POST /render_tasks/queries/{query_id}/{result_format}][%d] createQueryRenderTaskOK  %+v", 200, o.Payload)
+}
+
+func (o *CreateQueryRenderTaskOK) GetPayload() *models.RenderTask {
+	return o.Payload
 }
 
 func (o *CreateQueryRenderTaskOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -111,6 +110,10 @@ func (o *CreateQueryRenderTaskBadRequest) Error() string {
 	return fmt.Sprintf("[POST /render_tasks/queries/{query_id}/{result_format}][%d] createQueryRenderTaskBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *CreateQueryRenderTaskBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreateQueryRenderTaskBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -138,6 +141,10 @@ type CreateQueryRenderTaskNotFound struct {
 
 func (o *CreateQueryRenderTaskNotFound) Error() string {
 	return fmt.Sprintf("[POST /render_tasks/queries/{query_id}/{result_format}][%d] createQueryRenderTaskNotFound  %+v", 404, o.Payload)
+}
+
+func (o *CreateQueryRenderTaskNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *CreateQueryRenderTaskNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -169,6 +176,10 @@ func (o *CreateQueryRenderTaskConflict) Error() string {
 	return fmt.Sprintf("[POST /render_tasks/queries/{query_id}/{result_format}][%d] createQueryRenderTaskConflict  %+v", 409, o.Payload)
 }
 
+func (o *CreateQueryRenderTaskConflict) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreateQueryRenderTaskConflict) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -196,6 +207,10 @@ type CreateQueryRenderTaskUnprocessableEntity struct {
 
 func (o *CreateQueryRenderTaskUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[POST /render_tasks/queries/{query_id}/{result_format}][%d] createQueryRenderTaskUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *CreateQueryRenderTaskUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *CreateQueryRenderTaskUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

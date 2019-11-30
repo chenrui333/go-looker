@@ -24,28 +24,24 @@ type ValidateProjectReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *ValidateProjectReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewValidateProjectOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewValidateProjectBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewValidateProjectNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewValidateProjectUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -73,6 +69,10 @@ type ValidateProjectOK struct {
 
 func (o *ValidateProjectOK) Error() string {
 	return fmt.Sprintf("[POST /projects/{project_id}/validate][%d] validateProjectOK  %+v", 200, o.Payload)
+}
+
+func (o *ValidateProjectOK) GetPayload() *models.ProjectValidation {
+	return o.Payload
 }
 
 func (o *ValidateProjectOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -104,6 +104,10 @@ func (o *ValidateProjectBadRequest) Error() string {
 	return fmt.Sprintf("[POST /projects/{project_id}/validate][%d] validateProjectBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *ValidateProjectBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *ValidateProjectBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -133,6 +137,10 @@ func (o *ValidateProjectNotFound) Error() string {
 	return fmt.Sprintf("[POST /projects/{project_id}/validate][%d] validateProjectNotFound  %+v", 404, o.Payload)
 }
 
+func (o *ValidateProjectNotFound) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *ValidateProjectNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -160,6 +168,10 @@ type ValidateProjectUnprocessableEntity struct {
 
 func (o *ValidateProjectUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[POST /projects/{project_id}/validate][%d] validateProjectUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *ValidateProjectUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *ValidateProjectUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

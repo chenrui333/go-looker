@@ -24,21 +24,18 @@ type ScheduledPlanReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *ScheduledPlanReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewScheduledPlanOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewScheduledPlanBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewScheduledPlanNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -66,6 +63,10 @@ type ScheduledPlanOK struct {
 
 func (o *ScheduledPlanOK) Error() string {
 	return fmt.Sprintf("[GET /scheduled_plans/{scheduled_plan_id}][%d] scheduledPlanOK  %+v", 200, o.Payload)
+}
+
+func (o *ScheduledPlanOK) GetPayload() *models.ScheduledPlan {
+	return o.Payload
 }
 
 func (o *ScheduledPlanOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -97,6 +98,10 @@ func (o *ScheduledPlanBadRequest) Error() string {
 	return fmt.Sprintf("[GET /scheduled_plans/{scheduled_plan_id}][%d] scheduledPlanBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *ScheduledPlanBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *ScheduledPlanBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -124,6 +129,10 @@ type ScheduledPlanNotFound struct {
 
 func (o *ScheduledPlanNotFound) Error() string {
 	return fmt.Sprintf("[GET /scheduled_plans/{scheduled_plan_id}][%d] scheduledPlanNotFound  %+v", 404, o.Payload)
+}
+
+func (o *ScheduledPlanNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *ScheduledPlanNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

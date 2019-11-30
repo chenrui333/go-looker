@@ -24,28 +24,24 @@ type TestIntegrationReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *TestIntegrationReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewTestIntegrationOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewTestIntegrationBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewTestIntegrationNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewTestIntegrationUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -73,6 +69,10 @@ type TestIntegrationOK struct {
 
 func (o *TestIntegrationOK) Error() string {
 	return fmt.Sprintf("[POST /integrations/{integration_id}/test][%d] testIntegrationOK  %+v", 200, o.Payload)
+}
+
+func (o *TestIntegrationOK) GetPayload() *models.IntegrationTestResult {
+	return o.Payload
 }
 
 func (o *TestIntegrationOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -104,6 +104,10 @@ func (o *TestIntegrationBadRequest) Error() string {
 	return fmt.Sprintf("[POST /integrations/{integration_id}/test][%d] testIntegrationBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *TestIntegrationBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *TestIntegrationBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -133,6 +137,10 @@ func (o *TestIntegrationNotFound) Error() string {
 	return fmt.Sprintf("[POST /integrations/{integration_id}/test][%d] testIntegrationNotFound  %+v", 404, o.Payload)
 }
 
+func (o *TestIntegrationNotFound) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *TestIntegrationNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -160,6 +168,10 @@ type TestIntegrationUnprocessableEntity struct {
 
 func (o *TestIntegrationUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[POST /integrations/{integration_id}/test][%d] testIntegrationUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *TestIntegrationUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *TestIntegrationUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

@@ -24,42 +24,36 @@ type UpdateProjectReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *UpdateProjectReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewUpdateProjectOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewUpdateProjectBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewUpdateProjectNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 409:
 		result := NewUpdateProjectConflict()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewUpdateProjectUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 500:
 		result := NewUpdateProjectInternalServerError()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -87,6 +81,10 @@ type UpdateProjectOK struct {
 
 func (o *UpdateProjectOK) Error() string {
 	return fmt.Sprintf("[PATCH /projects/{project_id}][%d] updateProjectOK  %+v", 200, o.Payload)
+}
+
+func (o *UpdateProjectOK) GetPayload() *models.Project {
+	return o.Payload
 }
 
 func (o *UpdateProjectOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -118,6 +116,10 @@ func (o *UpdateProjectBadRequest) Error() string {
 	return fmt.Sprintf("[PATCH /projects/{project_id}][%d] updateProjectBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *UpdateProjectBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UpdateProjectBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -145,6 +147,10 @@ type UpdateProjectNotFound struct {
 
 func (o *UpdateProjectNotFound) Error() string {
 	return fmt.Sprintf("[PATCH /projects/{project_id}][%d] updateProjectNotFound  %+v", 404, o.Payload)
+}
+
+func (o *UpdateProjectNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *UpdateProjectNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -176,6 +182,10 @@ func (o *UpdateProjectConflict) Error() string {
 	return fmt.Sprintf("[PATCH /projects/{project_id}][%d] updateProjectConflict  %+v", 409, o.Payload)
 }
 
+func (o *UpdateProjectConflict) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UpdateProjectConflict) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -205,6 +215,10 @@ func (o *UpdateProjectUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[PATCH /projects/{project_id}][%d] updateProjectUnprocessableEntity  %+v", 422, o.Payload)
 }
 
+func (o *UpdateProjectUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
+}
+
 func (o *UpdateProjectUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.ValidationError)
@@ -232,6 +246,10 @@ type UpdateProjectInternalServerError struct {
 
 func (o *UpdateProjectInternalServerError) Error() string {
 	return fmt.Sprintf("[PATCH /projects/{project_id}][%d] updateProjectInternalServerError  %+v", 500, o.Payload)
+}
+
+func (o *UpdateProjectInternalServerError) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *UpdateProjectInternalServerError) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

@@ -24,28 +24,24 @@ type RunURLEncodedQueryReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *RunURLEncodedQueryReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewRunURLEncodedQueryOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewRunURLEncodedQueryBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewRunURLEncodedQueryNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewRunURLEncodedQueryUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -75,6 +71,10 @@ func (o *RunURLEncodedQueryOK) Error() string {
 	return fmt.Sprintf("[GET /queries/models/{model_name}/views/{view_name}/run/{result_format}][%d] runUrlEncodedQueryOK  %+v", 200, o.Payload)
 }
 
+func (o *RunURLEncodedQueryOK) GetPayload() string {
+	return o.Payload
+}
+
 func (o *RunURLEncodedQueryOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -100,6 +100,10 @@ type RunURLEncodedQueryBadRequest struct {
 
 func (o *RunURLEncodedQueryBadRequest) Error() string {
 	return fmt.Sprintf("[GET /queries/models/{model_name}/views/{view_name}/run/{result_format}][%d] runUrlEncodedQueryBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *RunURLEncodedQueryBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *RunURLEncodedQueryBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -131,6 +135,10 @@ func (o *RunURLEncodedQueryNotFound) Error() string {
 	return fmt.Sprintf("[GET /queries/models/{model_name}/views/{view_name}/run/{result_format}][%d] runUrlEncodedQueryNotFound  %+v", 404, o.Payload)
 }
 
+func (o *RunURLEncodedQueryNotFound) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *RunURLEncodedQueryNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -158,6 +166,10 @@ type RunURLEncodedQueryUnprocessableEntity struct {
 
 func (o *RunURLEncodedQueryUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[GET /queries/models/{model_name}/views/{view_name}/run/{result_format}][%d] runUrlEncodedQueryUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *RunURLEncodedQueryUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *RunURLEncodedQueryUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

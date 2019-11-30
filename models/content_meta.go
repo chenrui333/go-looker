@@ -27,6 +27,10 @@ type ContentMeta struct {
 	// Read Only: true
 	DashboardID string `json:"dashboard_id,omitempty"`
 
+	// Id of associated folder when content_type is "space"
+	// Read Only: true
+	FolderID string `json:"folder_id,omitempty"`
+
 	// Unique Id
 	// Read Only: true
 	ID int64 `json:"id,omitempty"`

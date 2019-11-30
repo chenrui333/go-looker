@@ -24,14 +24,12 @@ type MeReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *MeReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewMeOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 404:
 		result := NewMeNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -61,6 +59,10 @@ func (o *MeOK) Error() string {
 	return fmt.Sprintf("[GET /user][%d] meOK  %+v", 200, o.Payload)
 }
 
+func (o *MeOK) GetPayload() *models.User {
+	return o.Payload
+}
+
 func (o *MeOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.User)
@@ -88,6 +90,10 @@ type MeNotFound struct {
 
 func (o *MeNotFound) Error() string {
 	return fmt.Sprintf("[GET /user][%d] meNotFound  %+v", 404, o.Payload)
+}
+
+func (o *MeNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *MeNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

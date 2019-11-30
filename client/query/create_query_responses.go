@@ -24,35 +24,30 @@ type CreateQueryReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *CreateQueryReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewCreateQueryOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewCreateQueryBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewCreateQueryNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 409:
 		result := NewCreateQueryConflict()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewCreateQueryUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -80,6 +75,10 @@ type CreateQueryOK struct {
 
 func (o *CreateQueryOK) Error() string {
 	return fmt.Sprintf("[POST /queries][%d] createQueryOK  %+v", 200, o.Payload)
+}
+
+func (o *CreateQueryOK) GetPayload() *models.Query {
+	return o.Payload
 }
 
 func (o *CreateQueryOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -111,6 +110,10 @@ func (o *CreateQueryBadRequest) Error() string {
 	return fmt.Sprintf("[POST /queries][%d] createQueryBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *CreateQueryBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreateQueryBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -138,6 +141,10 @@ type CreateQueryNotFound struct {
 
 func (o *CreateQueryNotFound) Error() string {
 	return fmt.Sprintf("[POST /queries][%d] createQueryNotFound  %+v", 404, o.Payload)
+}
+
+func (o *CreateQueryNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *CreateQueryNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -169,6 +176,10 @@ func (o *CreateQueryConflict) Error() string {
 	return fmt.Sprintf("[POST /queries][%d] createQueryConflict  %+v", 409, o.Payload)
 }
 
+func (o *CreateQueryConflict) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreateQueryConflict) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -196,6 +207,10 @@ type CreateQueryUnprocessableEntity struct {
 
 func (o *CreateQueryUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[POST /queries][%d] createQueryUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *CreateQueryUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *CreateQueryUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

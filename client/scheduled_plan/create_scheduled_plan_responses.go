@@ -24,35 +24,30 @@ type CreateScheduledPlanReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *CreateScheduledPlanReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewCreateScheduledPlanOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewCreateScheduledPlanBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewCreateScheduledPlanNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 409:
 		result := NewCreateScheduledPlanConflict()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewCreateScheduledPlanUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -80,6 +75,10 @@ type CreateScheduledPlanOK struct {
 
 func (o *CreateScheduledPlanOK) Error() string {
 	return fmt.Sprintf("[POST /scheduled_plans][%d] createScheduledPlanOK  %+v", 200, o.Payload)
+}
+
+func (o *CreateScheduledPlanOK) GetPayload() *models.ScheduledPlan {
+	return o.Payload
 }
 
 func (o *CreateScheduledPlanOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -111,6 +110,10 @@ func (o *CreateScheduledPlanBadRequest) Error() string {
 	return fmt.Sprintf("[POST /scheduled_plans][%d] createScheduledPlanBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *CreateScheduledPlanBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreateScheduledPlanBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -138,6 +141,10 @@ type CreateScheduledPlanNotFound struct {
 
 func (o *CreateScheduledPlanNotFound) Error() string {
 	return fmt.Sprintf("[POST /scheduled_plans][%d] createScheduledPlanNotFound  %+v", 404, o.Payload)
+}
+
+func (o *CreateScheduledPlanNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *CreateScheduledPlanNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -169,6 +176,10 @@ func (o *CreateScheduledPlanConflict) Error() string {
 	return fmt.Sprintf("[POST /scheduled_plans][%d] createScheduledPlanConflict  %+v", 409, o.Payload)
 }
 
+func (o *CreateScheduledPlanConflict) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreateScheduledPlanConflict) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -196,6 +207,10 @@ type CreateScheduledPlanUnprocessableEntity struct {
 
 func (o *CreateScheduledPlanUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[POST /scheduled_plans][%d] createScheduledPlanUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *CreateScheduledPlanUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *CreateScheduledPlanUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

@@ -6,14 +6,14 @@ package dashboard
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"net/http"
 	"time"
-
-	"golang.org/x/net/context"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	cr "github.com/go-openapi/runtime/client"
+	"github.com/go-openapi/swag"
 
 	strfmt "github.com/go-openapi/strfmt"
 
@@ -70,10 +70,15 @@ type SyncLookmlDashboardParams struct {
 	*/
 	Body *models.Dashboard
 	/*LookmlDashboardID
-	  Id of LookML dashboard
+	  Id of LookML dashboard, in the form 'model::dashboardname'
 
 	*/
 	LookmlDashboardID string
+	/*RawLocale
+	  If true, and this dashboard is localized, export it with the raw keys, not localized.
+
+	*/
+	RawLocale *bool
 
 	timeout    time.Duration
 	Context    context.Context
@@ -135,6 +140,17 @@ func (o *SyncLookmlDashboardParams) SetLookmlDashboardID(lookmlDashboardID strin
 	o.LookmlDashboardID = lookmlDashboardID
 }
 
+// WithRawLocale adds the rawLocale to the sync lookml dashboard params
+func (o *SyncLookmlDashboardParams) WithRawLocale(rawLocale *bool) *SyncLookmlDashboardParams {
+	o.SetRawLocale(rawLocale)
+	return o
+}
+
+// SetRawLocale adds the rawLocale to the sync lookml dashboard params
+func (o *SyncLookmlDashboardParams) SetRawLocale(rawLocale *bool) {
+	o.RawLocale = rawLocale
+}
+
 // WriteToRequest writes these params to a swagger request
 func (o *SyncLookmlDashboardParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
@@ -152,6 +168,22 @@ func (o *SyncLookmlDashboardParams) WriteToRequest(r runtime.ClientRequest, reg 
 	// path param lookml_dashboard_id
 	if err := r.SetPathParam("lookml_dashboard_id", o.LookmlDashboardID); err != nil {
 		return err
+	}
+
+	if o.RawLocale != nil {
+
+		// query param raw_locale
+		var qrRawLocale bool
+		if o.RawLocale != nil {
+			qrRawLocale = *o.RawLocale
+		}
+		qRawLocale := swag.FormatBool(qrRawLocale)
+		if qRawLocale != "" {
+			if err := r.SetQueryParam("raw_locale", qRawLocale); err != nil {
+				return err
+			}
+		}
+
 	}
 
 	if len(res) > 0 {

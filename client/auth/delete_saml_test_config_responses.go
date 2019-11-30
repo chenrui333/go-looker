@@ -24,21 +24,18 @@ type DeleteSamlTestConfigReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *DeleteSamlTestConfigReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 204:
 		result := NewDeleteSamlTestConfigNoContent()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewDeleteSamlTestConfigBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewDeleteSamlTestConfigNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *DeleteSamlTestConfigNoContent) Error() string {
 	return fmt.Sprintf("[DELETE /saml_test_configs/{test_slug}][%d] deleteSamlTestConfigNoContent  %+v", 204, o.Payload)
 }
 
+func (o *DeleteSamlTestConfigNoContent) GetPayload() string {
+	return o.Payload
+}
+
 func (o *DeleteSamlTestConfigNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type DeleteSamlTestConfigBadRequest struct {
 
 func (o *DeleteSamlTestConfigBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /saml_test_configs/{test_slug}][%d] deleteSamlTestConfigBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *DeleteSamlTestConfigBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteSamlTestConfigBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type DeleteSamlTestConfigNotFound struct {
 
 func (o *DeleteSamlTestConfigNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /saml_test_configs/{test_slug}][%d] deleteSamlTestConfigNotFound  %+v", 404, o.Payload)
+}
+
+func (o *DeleteSamlTestConfigNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteSamlTestConfigNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

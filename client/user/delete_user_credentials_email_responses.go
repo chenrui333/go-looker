@@ -24,21 +24,18 @@ type DeleteUserCredentialsEmailReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *DeleteUserCredentialsEmailReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 204:
 		result := NewDeleteUserCredentialsEmailNoContent()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewDeleteUserCredentialsEmailBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewDeleteUserCredentialsEmailNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *DeleteUserCredentialsEmailNoContent) Error() string {
 	return fmt.Sprintf("[DELETE /users/{user_id}/credentials_email][%d] deleteUserCredentialsEmailNoContent  %+v", 204, o.Payload)
 }
 
+func (o *DeleteUserCredentialsEmailNoContent) GetPayload() string {
+	return o.Payload
+}
+
 func (o *DeleteUserCredentialsEmailNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type DeleteUserCredentialsEmailBadRequest struct {
 
 func (o *DeleteUserCredentialsEmailBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /users/{user_id}/credentials_email][%d] deleteUserCredentialsEmailBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *DeleteUserCredentialsEmailBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteUserCredentialsEmailBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type DeleteUserCredentialsEmailNotFound struct {
 
 func (o *DeleteUserCredentialsEmailNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /users/{user_id}/credentials_email][%d] deleteUserCredentialsEmailNotFound  %+v", 404, o.Payload)
+}
+
+func (o *DeleteUserCredentialsEmailNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteUserCredentialsEmailNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

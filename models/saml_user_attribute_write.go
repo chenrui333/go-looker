@@ -17,10 +17,6 @@ import (
 // swagger:model SamlUserAttributeWrite
 type SamlUserAttributeWrite struct {
 
-	// Operations the current user is able to perform on this object
-	// Read Only: true
-	Can map[string]bool `json:"can,omitempty"`
-
 	// Name of User Attribute in Saml
 	Name string `json:"name,omitempty"`
 

@@ -24,21 +24,18 @@ type DeleteUserSessionReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *DeleteUserSessionReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 204:
 		result := NewDeleteUserSessionNoContent()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewDeleteUserSessionBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewDeleteUserSessionNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *DeleteUserSessionNoContent) Error() string {
 	return fmt.Sprintf("[DELETE /users/{user_id}/sessions/{session_id}][%d] deleteUserSessionNoContent  %+v", 204, o.Payload)
 }
 
+func (o *DeleteUserSessionNoContent) GetPayload() string {
+	return o.Payload
+}
+
 func (o *DeleteUserSessionNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type DeleteUserSessionBadRequest struct {
 
 func (o *DeleteUserSessionBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /users/{user_id}/sessions/{session_id}][%d] deleteUserSessionBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *DeleteUserSessionBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteUserSessionBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type DeleteUserSessionNotFound struct {
 
 func (o *DeleteUserSessionNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /users/{user_id}/sessions/{session_id}][%d] deleteUserSessionNotFound  %+v", 404, o.Payload)
+}
+
+func (o *DeleteUserSessionNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteUserSessionNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

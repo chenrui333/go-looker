@@ -24,35 +24,30 @@ type CreateGitBranchReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *CreateGitBranchReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewCreateGitBranchOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewCreateGitBranchBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewCreateGitBranchNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 409:
 		result := NewCreateGitBranchConflict()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewCreateGitBranchUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -80,6 +75,10 @@ type CreateGitBranchOK struct {
 
 func (o *CreateGitBranchOK) Error() string {
 	return fmt.Sprintf("[POST /projects/{project_id}/git_branch][%d] createGitBranchOK  %+v", 200, o.Payload)
+}
+
+func (o *CreateGitBranchOK) GetPayload() *models.GitBranch {
+	return o.Payload
 }
 
 func (o *CreateGitBranchOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -111,6 +110,10 @@ func (o *CreateGitBranchBadRequest) Error() string {
 	return fmt.Sprintf("[POST /projects/{project_id}/git_branch][%d] createGitBranchBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *CreateGitBranchBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreateGitBranchBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -138,6 +141,10 @@ type CreateGitBranchNotFound struct {
 
 func (o *CreateGitBranchNotFound) Error() string {
 	return fmt.Sprintf("[POST /projects/{project_id}/git_branch][%d] createGitBranchNotFound  %+v", 404, o.Payload)
+}
+
+func (o *CreateGitBranchNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *CreateGitBranchNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -169,6 +176,10 @@ func (o *CreateGitBranchConflict) Error() string {
 	return fmt.Sprintf("[POST /projects/{project_id}/git_branch][%d] createGitBranchConflict  %+v", 409, o.Payload)
 }
 
+func (o *CreateGitBranchConflict) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreateGitBranchConflict) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -196,6 +207,10 @@ type CreateGitBranchUnprocessableEntity struct {
 
 func (o *CreateGitBranchUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[POST /projects/{project_id}/git_branch][%d] createGitBranchUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *CreateGitBranchUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *CreateGitBranchUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

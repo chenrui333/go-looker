@@ -15,10 +15,6 @@ import (
 // swagger:model LookModel
 type LookModel struct {
 
-	// Operations the current user is able to perform on this object
-	// Read Only: true
-	Can map[string]bool `json:"can,omitempty"`
-
 	// Model Id
 	// Read Only: true
 	ID string `json:"id,omitempty"`

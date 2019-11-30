@@ -24,21 +24,18 @@ type AllIntegrationHubsReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *AllIntegrationHubsReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewAllIntegrationHubsOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewAllIntegrationHubsBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewAllIntegrationHubsNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *AllIntegrationHubsOK) Error() string {
 	return fmt.Sprintf("[GET /integration_hubs][%d] allIntegrationHubsOK  %+v", 200, o.Payload)
 }
 
+func (o *AllIntegrationHubsOK) GetPayload() []*models.IntegrationHub {
+	return o.Payload
+}
+
 func (o *AllIntegrationHubsOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type AllIntegrationHubsBadRequest struct {
 
 func (o *AllIntegrationHubsBadRequest) Error() string {
 	return fmt.Sprintf("[GET /integration_hubs][%d] allIntegrationHubsBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *AllIntegrationHubsBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *AllIntegrationHubsBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type AllIntegrationHubsNotFound struct {
 
 func (o *AllIntegrationHubsNotFound) Error() string {
 	return fmt.Sprintf("[GET /integration_hubs][%d] allIntegrationHubsNotFound  %+v", 404, o.Payload)
+}
+
+func (o *AllIntegrationHubsNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *AllIntegrationHubsNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

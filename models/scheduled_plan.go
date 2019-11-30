@@ -23,6 +23,9 @@ type ScheduledPlan struct {
 	// Read Only: true
 	Can map[string]bool `json:"can,omitempty"`
 
+	// Color scheme of the dashboard if applicable
+	ColorTheme string `json:"color_theme,omitempty"`
+
 	// Date and time when ScheduledPlan was created
 	// Read Only: true
 	// Format: date-time
@@ -39,6 +42,9 @@ type ScheduledPlan struct {
 
 	// Name of a datagroup; if specified will run when datagroup triggered (can't be used with cron string)
 	Datagroup string `json:"datagroup,omitempty"`
+
+	// Whether this schedule is in an embed context or not
+	Embed bool `json:"embed,omitempty"`
 
 	// Whether the ScheduledPlan is enabled
 	Enabled bool `json:"enabled,omitempty"`
@@ -58,13 +64,16 @@ type ScheduledPlan struct {
 	// Format: date-time
 	LastRunAt strfmt.DateTime `json:"last_run_at,omitempty"`
 
+	// Whether or not to expand table vis to full length
+	LongTables bool `json:"long_tables,omitempty"`
+
 	// Id of a look
 	LookID int64 `json:"look_id,omitempty"`
 
 	// Id of a LookML dashboard
 	LookmlDashboardID string `json:"lookml_dashboard_id,omitempty"`
 
-	// Name
+	// Name of this scheduled plan
 	Name string `json:"name,omitempty"`
 
 	// When the ScheduledPlan will next run (null if running once)
@@ -90,7 +99,7 @@ type ScheduledPlan struct {
 	// Delivery should occur if running the dashboard or look returns results
 	RequireResults bool `json:"require_results,omitempty"`
 
-	// Whether schedule is ran as recipient (only applicable for email recipients)
+	// Whether schedule is run as recipient (only applicable for email recipients)
 	RunAsRecipient bool `json:"run_as_recipient,omitempty"`
 
 	// Whether the plan in question should only be run once (usually for testing)
@@ -118,7 +127,7 @@ type ScheduledPlan struct {
 	// Read Only: true
 	User *UserPublic `json:"user,omitempty"`
 
-	// User Id which owns this ScheduledPlan
+	// User Id which owns this scheduled plan
 	UserID int64 `json:"user_id,omitempty"`
 }
 

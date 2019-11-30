@@ -6,6 +6,8 @@ package role
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"fmt"
+
 	"github.com/go-openapi/runtime"
 
 	strfmt "github.com/go-openapi/strfmt"
@@ -51,8 +53,14 @@ func (a *Client) AllModelSets(params *AllModelSetsParams) (*AllModelSetsOK, erro
 	if err != nil {
 		return nil, err
 	}
-	return result.(*AllModelSetsOK), nil
-
+	success, ok := result.(*AllModelSetsOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for all_model_sets: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -82,8 +90,14 @@ func (a *Client) AllPermissionSets(params *AllPermissionSetsParams) (*AllPermiss
 	if err != nil {
 		return nil, err
 	}
-	return result.(*AllPermissionSetsOK), nil
-
+	success, ok := result.(*AllPermissionSetsOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for all_permission_sets: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -113,8 +127,14 @@ func (a *Client) AllPermissions(params *AllPermissionsParams) (*AllPermissionsOK
 	if err != nil {
 		return nil, err
 	}
-	return result.(*AllPermissionsOK), nil
-
+	success, ok := result.(*AllPermissionsOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for all_permissions: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -144,8 +164,14 @@ func (a *Client) AllRoles(params *AllRolesParams) (*AllRolesOK, error) {
 	if err != nil {
 		return nil, err
 	}
-	return result.(*AllRolesOK), nil
-
+	success, ok := result.(*AllRolesOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for all_roles: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -175,8 +201,14 @@ func (a *Client) CreateModelSet(params *CreateModelSetParams) (*CreateModelSetOK
 	if err != nil {
 		return nil, err
 	}
-	return result.(*CreateModelSetOK), nil
-
+	success, ok := result.(*CreateModelSetOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for create_model_set: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -206,8 +238,14 @@ func (a *Client) CreatePermissionSet(params *CreatePermissionSetParams) (*Create
 	if err != nil {
 		return nil, err
 	}
-	return result.(*CreatePermissionSetOK), nil
-
+	success, ok := result.(*CreatePermissionSetOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for create_permission_set: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -237,8 +275,14 @@ func (a *Client) CreateRole(params *CreateRoleParams) (*CreateRoleOK, error) {
 	if err != nil {
 		return nil, err
 	}
-	return result.(*CreateRoleOK), nil
-
+	success, ok := result.(*CreateRoleOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for create_role: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -268,8 +312,14 @@ func (a *Client) DeleteModelSet(params *DeleteModelSetParams) (*DeleteModelSetNo
 	if err != nil {
 		return nil, err
 	}
-	return result.(*DeleteModelSetNoContent), nil
-
+	success, ok := result.(*DeleteModelSetNoContent)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for delete_model_set: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -299,8 +349,14 @@ func (a *Client) DeletePermissionSet(params *DeletePermissionSetParams) (*Delete
 	if err != nil {
 		return nil, err
 	}
-	return result.(*DeletePermissionSetNoContent), nil
-
+	success, ok := result.(*DeletePermissionSetNoContent)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for delete_permission_set: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -330,8 +386,14 @@ func (a *Client) DeleteRole(params *DeleteRoleParams) (*DeleteRoleNoContent, err
 	if err != nil {
 		return nil, err
 	}
-	return result.(*DeleteRoleNoContent), nil
-
+	success, ok := result.(*DeleteRoleNoContent)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for delete_role: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -361,8 +423,14 @@ func (a *Client) ModelSet(params *ModelSetParams) (*ModelSetOK, error) {
 	if err != nil {
 		return nil, err
 	}
-	return result.(*ModelSetOK), nil
-
+	success, ok := result.(*ModelSetOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for model_set: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -392,8 +460,14 @@ func (a *Client) PermissionSet(params *PermissionSetParams) (*PermissionSetOK, e
 	if err != nil {
 		return nil, err
 	}
-	return result.(*PermissionSetOK), nil
-
+	success, ok := result.(*PermissionSetOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for permission_set: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -423,8 +497,14 @@ func (a *Client) Role(params *RoleParams) (*RoleOK, error) {
 	if err != nil {
 		return nil, err
 	}
-	return result.(*RoleOK), nil
-
+	success, ok := result.(*RoleOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for role: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -454,8 +534,14 @@ func (a *Client) RoleGroups(params *RoleGroupsParams) (*RoleGroupsOK, error) {
 	if err != nil {
 		return nil, err
 	}
-	return result.(*RoleGroupsOK), nil
-
+	success, ok := result.(*RoleGroupsOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for role_groups: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -485,8 +571,14 @@ func (a *Client) RoleUsers(params *RoleUsersParams) (*RoleUsersOK, error) {
 	if err != nil {
 		return nil, err
 	}
-	return result.(*RoleUsersOK), nil
-
+	success, ok := result.(*RoleUsersOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for role_users: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -516,8 +608,14 @@ func (a *Client) SetRoleGroups(params *SetRoleGroupsParams) (*SetRoleGroupsOK, e
 	if err != nil {
 		return nil, err
 	}
-	return result.(*SetRoleGroupsOK), nil
-
+	success, ok := result.(*SetRoleGroupsOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for set_role_groups: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -547,8 +645,14 @@ func (a *Client) SetRoleUsers(params *SetRoleUsersParams) (*SetRoleUsersOK, erro
 	if err != nil {
 		return nil, err
 	}
-	return result.(*SetRoleUsersOK), nil
-
+	success, ok := result.(*SetRoleUsersOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for set_role_users: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -578,8 +682,14 @@ func (a *Client) UpdateModelSet(params *UpdateModelSetParams) (*UpdateModelSetOK
 	if err != nil {
 		return nil, err
 	}
-	return result.(*UpdateModelSetOK), nil
-
+	success, ok := result.(*UpdateModelSetOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for update_model_set: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -609,8 +719,14 @@ func (a *Client) UpdatePermissionSet(params *UpdatePermissionSetParams) (*Update
 	if err != nil {
 		return nil, err
 	}
-	return result.(*UpdatePermissionSetOK), nil
-
+	success, ok := result.(*UpdatePermissionSetOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for update_permission_set: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -640,8 +756,14 @@ func (a *Client) UpdateRole(params *UpdateRoleParams) (*UpdateRoleOK, error) {
 	if err != nil {
 		return nil, err
 	}
-	return result.(*UpdateRoleOK), nil
-
+	success, ok := result.(*UpdateRoleOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for update_role: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 // SetTransport changes the transport on the client

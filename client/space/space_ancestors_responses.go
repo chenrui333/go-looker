@@ -24,21 +24,18 @@ type SpaceAncestorsReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *SpaceAncestorsReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewSpaceAncestorsOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewSpaceAncestorsBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewSpaceAncestorsNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *SpaceAncestorsOK) Error() string {
 	return fmt.Sprintf("[GET /spaces/{space_id}/ancestors][%d] spaceAncestorsOK  %+v", 200, o.Payload)
 }
 
+func (o *SpaceAncestorsOK) GetPayload() []*models.Space {
+	return o.Payload
+}
+
 func (o *SpaceAncestorsOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type SpaceAncestorsBadRequest struct {
 
 func (o *SpaceAncestorsBadRequest) Error() string {
 	return fmt.Sprintf("[GET /spaces/{space_id}/ancestors][%d] spaceAncestorsBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *SpaceAncestorsBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *SpaceAncestorsBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type SpaceAncestorsNotFound struct {
 
 func (o *SpaceAncestorsNotFound) Error() string {
 	return fmt.Sprintf("[GET /spaces/{space_id}/ancestors][%d] spaceAncestorsNotFound  %+v", 404, o.Payload)
+}
+
+func (o *SpaceAncestorsNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *SpaceAncestorsNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

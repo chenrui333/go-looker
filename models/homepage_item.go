@@ -73,6 +73,10 @@ type HomepageItem struct {
 	// Read Only: true
 	ImageURL string `json:"image_url,omitempty"`
 
+	// The container folder name of the content
+	// Read Only: true
+	Location string `json:"location,omitempty"`
+
 	// Look to base this item on
 	LookID int64 `json:"look_id,omitempty"`
 

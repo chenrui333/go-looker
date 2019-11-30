@@ -6,6 +6,8 @@ package content
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"fmt"
+
 	"github.com/go-openapi/runtime"
 
 	strfmt "github.com/go-openapi/strfmt"
@@ -25,34 +27,40 @@ type Client struct {
 }
 
 /*
-AllContentMetadataAccesss gets all content metadata accesss
+AllContentMetadataAccesses gets all content metadata accesses
 
 ### All content metadata access records for a content metadata item.
 
 */
-func (a *Client) AllContentMetadataAccesss(params *AllContentMetadataAccesssParams) (*AllContentMetadataAccesssOK, error) {
+func (a *Client) AllContentMetadataAccesses(params *AllContentMetadataAccessesParams) (*AllContentMetadataAccessesOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewAllContentMetadataAccesssParams()
+		params = NewAllContentMetadataAccessesParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "all_content_metadata_accesss",
+		ID:                 "all_content_metadata_accesses",
 		Method:             "GET",
 		PathPattern:        "/content_metadata_access",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},
 		Params:             params,
-		Reader:             &AllContentMetadataAccesssReader{formats: a.formats},
+		Reader:             &AllContentMetadataAccessesReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
-	return result.(*AllContentMetadataAccesssOK), nil
-
+	success, ok := result.(*AllContentMetadataAccessesOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for all_content_metadata_accesses: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -82,8 +90,14 @@ func (a *Client) AllContentMetadatas(params *AllContentMetadatasParams) (*AllCon
 	if err != nil {
 		return nil, err
 	}
-	return result.(*AllContentMetadatasOK), nil
-
+	success, ok := result.(*AllContentMetadatasOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for all_content_metadatas: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -112,8 +126,14 @@ func (a *Client) ContentFavorite(params *ContentFavoriteParams) (*ContentFavorit
 	if err != nil {
 		return nil, err
 	}
-	return result.(*ContentFavoriteOK), nil
-
+	success, ok := result.(*ContentFavoriteOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for content_favorite: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -143,8 +163,55 @@ func (a *Client) ContentMetadata(params *ContentMetadataParams) (*ContentMetadat
 	if err != nil {
 		return nil, err
 	}
-	return result.(*ContentMetadataOK), nil
+	success, ok := result.(*ContentMetadataOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for content_metadata: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
 
+/*
+ContentValidation validates content
+
+### Validate All Content
+Requires Content Validation Labs Feature be enabled
+
+Performs validation of all looks and dashboards
+Returns a list of errors found as well as metadata about the content validation run.
+
+*/
+func (a *Client) ContentValidation(params *ContentValidationParams) (*ContentValidationOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewContentValidationParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "content_validation",
+		Method:             "GET",
+		PathPattern:        "/content_validation",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &ContentValidationReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*ContentValidationOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for content_validation: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -173,8 +240,14 @@ func (a *Client) CreateContentFavorite(params *CreateContentFavoriteParams) (*Cr
 	if err != nil {
 		return nil, err
 	}
-	return result.(*CreateContentFavoriteOK), nil
-
+	success, ok := result.(*CreateContentFavoriteOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for create_content_favorite: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -204,8 +277,14 @@ func (a *Client) CreateContentMetadataAccess(params *CreateContentMetadataAccess
 	if err != nil {
 		return nil, err
 	}
-	return result.(*CreateContentMetadataAccessOK), nil
-
+	success, ok := result.(*CreateContentMetadataAccessOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for create_content_metadata_access: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -234,8 +313,14 @@ func (a *Client) DeleteContentFavorite(params *DeleteContentFavoriteParams) (*De
 	if err != nil {
 		return nil, err
 	}
-	return result.(*DeleteContentFavoriteNoContent), nil
-
+	success, ok := result.(*DeleteContentFavoriteNoContent)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for delete_content_favorite: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -265,14 +350,42 @@ func (a *Client) DeleteContentMetadataAccess(params *DeleteContentMetadataAccess
 	if err != nil {
 		return nil, err
 	}
-	return result.(*DeleteContentMetadataAccessNoContent), nil
-
+	success, ok := result.(*DeleteContentMetadataAccessNoContent)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for delete_content_metadata_access: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
 SearchContentFavorites searches favorite contents
 
 ### Search Favorite Content
+
+If multiple search params are given and `filter_or` is FALSE or not specified,
+search params are combined in a logical AND operation.
+Only rows that match *all* search param criteria will be returned.
+
+If `filter_or` is TRUE, multiple search params are combined in a logical OR operation.
+Results will include rows that match **any** of the search criteria.
+
+String search params use case-insensitive matching.
+String search params can contain `%` and '_' as SQL LIKE pattern match wildcard expressions.
+example="dan%" will match "danger" and "Danzig" but not "David"
+example="D_m%" will match "Damage" and "dump"
+
+Integer search params can accept a single value or a comma separated list of values. The multiple
+values will be combined under a logical OR operation - results will match at least one of
+the given values.
+
+Most search params can accept "IS NULL" and "NOT NULL" as special expressions to match
+or exclude (respectively) rows where the column is null.
+
+Boolean search params accept only "true" and "false" as values.
+
 
 */
 func (a *Client) SearchContentFavorites(params *SearchContentFavoritesParams) (*SearchContentFavoritesOK, error) {
@@ -296,14 +409,42 @@ func (a *Client) SearchContentFavorites(params *SearchContentFavoritesParams) (*
 	if err != nil {
 		return nil, err
 	}
-	return result.(*SearchContentFavoritesOK), nil
-
+	success, ok := result.(*SearchContentFavoritesOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for search_content_favorites: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
 SearchContentViews searches content views
 
-### Search Content View
+### Search Content Views
+
+If multiple search params are given and `filter_or` is FALSE or not specified,
+search params are combined in a logical AND operation.
+Only rows that match *all* search param criteria will be returned.
+
+If `filter_or` is TRUE, multiple search params are combined in a logical OR operation.
+Results will include rows that match **any** of the search criteria.
+
+String search params use case-insensitive matching.
+String search params can contain `%` and '_' as SQL LIKE pattern match wildcard expressions.
+example="dan%" will match "danger" and "Danzig" but not "David"
+example="D_m%" will match "Damage" and "dump"
+
+Integer search params can accept a single value or a comma separated list of values. The multiple
+values will be combined under a logical OR operation - results will match at least one of
+the given values.
+
+Most search params can accept "IS NULL" and "NOT NULL" as special expressions to match
+or exclude (respectively) rows where the column is null.
+
+Boolean search params accept only "true" and "false" as values.
+
 
 */
 func (a *Client) SearchContentViews(params *SearchContentViewsParams) (*SearchContentViewsOK, error) {
@@ -327,8 +468,14 @@ func (a *Client) SearchContentViews(params *SearchContentViewsParams) (*SearchCo
 	if err != nil {
 		return nil, err
 	}
-	return result.(*SearchContentViewsOK), nil
-
+	success, ok := result.(*SearchContentViewsOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for search_content_views: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -358,8 +505,14 @@ func (a *Client) UpdateContentMetadata(params *UpdateContentMetadataParams) (*Up
 	if err != nil {
 		return nil, err
 	}
-	return result.(*UpdateContentMetadataOK), nil
-
+	success, ok := result.(*UpdateContentMetadataOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for update_content_metadata: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -389,8 +542,14 @@ func (a *Client) UpdateContentMetadataAccess(params *UpdateContentMetadataAccess
 	if err != nil {
 		return nil, err
 	}
-	return result.(*UpdateContentMetadataAccessOK), nil
-
+	success, ok := result.(*UpdateContentMetadataAccessOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for update_content_metadata_access: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 // SetTransport changes the transport on the client

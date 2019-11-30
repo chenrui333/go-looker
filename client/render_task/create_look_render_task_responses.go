@@ -24,35 +24,30 @@ type CreateLookRenderTaskReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *CreateLookRenderTaskReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewCreateLookRenderTaskOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewCreateLookRenderTaskBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewCreateLookRenderTaskNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 409:
 		result := NewCreateLookRenderTaskConflict()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewCreateLookRenderTaskUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -80,6 +75,10 @@ type CreateLookRenderTaskOK struct {
 
 func (o *CreateLookRenderTaskOK) Error() string {
 	return fmt.Sprintf("[POST /render_tasks/looks/{look_id}/{result_format}][%d] createLookRenderTaskOK  %+v", 200, o.Payload)
+}
+
+func (o *CreateLookRenderTaskOK) GetPayload() *models.RenderTask {
+	return o.Payload
 }
 
 func (o *CreateLookRenderTaskOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -111,6 +110,10 @@ func (o *CreateLookRenderTaskBadRequest) Error() string {
 	return fmt.Sprintf("[POST /render_tasks/looks/{look_id}/{result_format}][%d] createLookRenderTaskBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *CreateLookRenderTaskBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreateLookRenderTaskBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -138,6 +141,10 @@ type CreateLookRenderTaskNotFound struct {
 
 func (o *CreateLookRenderTaskNotFound) Error() string {
 	return fmt.Sprintf("[POST /render_tasks/looks/{look_id}/{result_format}][%d] createLookRenderTaskNotFound  %+v", 404, o.Payload)
+}
+
+func (o *CreateLookRenderTaskNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *CreateLookRenderTaskNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -169,6 +176,10 @@ func (o *CreateLookRenderTaskConflict) Error() string {
 	return fmt.Sprintf("[POST /render_tasks/looks/{look_id}/{result_format}][%d] createLookRenderTaskConflict  %+v", 409, o.Payload)
 }
 
+func (o *CreateLookRenderTaskConflict) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreateLookRenderTaskConflict) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -196,6 +207,10 @@ type CreateLookRenderTaskUnprocessableEntity struct {
 
 func (o *CreateLookRenderTaskUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[POST /render_tasks/looks/{look_id}/{result_format}][%d] createLookRenderTaskUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *CreateLookRenderTaskUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *CreateLookRenderTaskUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

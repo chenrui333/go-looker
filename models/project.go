@@ -27,6 +27,9 @@ type Project struct {
 	// (Write-Only) Optional secret token with which to authenticate requests to the webhook deploy endpoint. If not set, endpoint is unauthenticated.
 	DeploySecret string `json:"deploy_secret,omitempty"`
 
+	// If true, folders are enabled for this project
+	FoldersEnabled bool `json:"folders_enabled,omitempty"`
+
 	// (Write-Only) Git password for HTTPS authentication. (For production only, if using user attributes.)
 	GitPassword string `json:"git_password,omitempty"`
 

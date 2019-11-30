@@ -24,28 +24,24 @@ type AcceptIntegrationHubLegalAgreementReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *AcceptIntegrationHubLegalAgreementReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewAcceptIntegrationHubLegalAgreementOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewAcceptIntegrationHubLegalAgreementBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewAcceptIntegrationHubLegalAgreementNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewAcceptIntegrationHubLegalAgreementUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -73,6 +69,10 @@ type AcceptIntegrationHubLegalAgreementOK struct {
 
 func (o *AcceptIntegrationHubLegalAgreementOK) Error() string {
 	return fmt.Sprintf("[POST /integration_hubs/{integration_hub_id}/accept_legal_agreement][%d] acceptIntegrationHubLegalAgreementOK  %+v", 200, o.Payload)
+}
+
+func (o *AcceptIntegrationHubLegalAgreementOK) GetPayload() *models.IntegrationHub {
+	return o.Payload
 }
 
 func (o *AcceptIntegrationHubLegalAgreementOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -104,6 +104,10 @@ func (o *AcceptIntegrationHubLegalAgreementBadRequest) Error() string {
 	return fmt.Sprintf("[POST /integration_hubs/{integration_hub_id}/accept_legal_agreement][%d] acceptIntegrationHubLegalAgreementBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *AcceptIntegrationHubLegalAgreementBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *AcceptIntegrationHubLegalAgreementBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -133,6 +137,10 @@ func (o *AcceptIntegrationHubLegalAgreementNotFound) Error() string {
 	return fmt.Sprintf("[POST /integration_hubs/{integration_hub_id}/accept_legal_agreement][%d] acceptIntegrationHubLegalAgreementNotFound  %+v", 404, o.Payload)
 }
 
+func (o *AcceptIntegrationHubLegalAgreementNotFound) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *AcceptIntegrationHubLegalAgreementNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -160,6 +168,10 @@ type AcceptIntegrationHubLegalAgreementUnprocessableEntity struct {
 
 func (o *AcceptIntegrationHubLegalAgreementUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[POST /integration_hubs/{integration_hub_id}/accept_legal_agreement][%d] acceptIntegrationHubLegalAgreementUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *AcceptIntegrationHubLegalAgreementUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *AcceptIntegrationHubLegalAgreementUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

@@ -19,6 +19,10 @@ type APISession struct {
 	// Read Only: true
 	Can map[string]bool `json:"can,omitempty"`
 
+	// The id of the actual user in the case when this session represents one user sudo'ing as another
+	// Read Only: true
+	SudoUserID int64 `json:"sudo_user_id,omitempty"`
+
 	// The id of active workspace for this session
 	WorkspaceID string `json:"workspace_id,omitempty"`
 }

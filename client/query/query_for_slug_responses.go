@@ -24,21 +24,18 @@ type QueryForSlugReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *QueryForSlugReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewQueryForSlugOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewQueryForSlugBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewQueryForSlugNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -66,6 +63,10 @@ type QueryForSlugOK struct {
 
 func (o *QueryForSlugOK) Error() string {
 	return fmt.Sprintf("[GET /queries/slug/{slug}][%d] queryForSlugOK  %+v", 200, o.Payload)
+}
+
+func (o *QueryForSlugOK) GetPayload() *models.Query {
+	return o.Payload
 }
 
 func (o *QueryForSlugOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -97,6 +98,10 @@ func (o *QueryForSlugBadRequest) Error() string {
 	return fmt.Sprintf("[GET /queries/slug/{slug}][%d] queryForSlugBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *QueryForSlugBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *QueryForSlugBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -124,6 +129,10 @@ type QueryForSlugNotFound struct {
 
 func (o *QueryForSlugNotFound) Error() string {
 	return fmt.Sprintf("[GET /queries/slug/{slug}][%d] queryForSlugNotFound  %+v", 404, o.Payload)
+}
+
+func (o *QueryForSlugNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *QueryForSlugNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

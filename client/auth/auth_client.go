@@ -6,6 +6,8 @@ package auth
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"fmt"
+
 	"github.com/go-openapi/runtime"
 
 	strfmt "github.com/go-openapi/strfmt"
@@ -22,6 +24,43 @@ Client for auth API
 type Client struct {
 	transport runtime.ClientTransport
 	formats   strfmt.Registry
+}
+
+/*
+AllUserLoginLockouts gets all user login lockouts
+
+### Get currently locked-out users.
+
+*/
+func (a *Client) AllUserLoginLockouts(params *AllUserLoginLockoutsParams) (*AllUserLoginLockoutsOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewAllUserLoginLockoutsParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "all_user_login_lockouts",
+		Method:             "GET",
+		PathPattern:        "/user_login_lockouts",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &AllUserLoginLockoutsReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*AllUserLoginLockoutsOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for all_user_login_lockouts: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -51,8 +90,14 @@ func (a *Client) CreateOidcTestConfig(params *CreateOidcTestConfigParams) (*Crea
 	if err != nil {
 		return nil, err
 	}
-	return result.(*CreateOidcTestConfigOK), nil
-
+	success, ok := result.(*CreateOidcTestConfigOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for create_oidc_test_config: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -82,8 +127,84 @@ func (a *Client) CreateSamlTestConfig(params *CreateSamlTestConfigParams) (*Crea
 	if err != nil {
 		return nil, err
 	}
-	return result.(*CreateSamlTestConfigOK), nil
+	success, ok := result.(*CreateSamlTestConfigOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for create_saml_test_config: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
 
+/*
+CreateSsoEmbedURL creates s s o embed Url
+
+### Create SSO Embed URL
+
+Creates an SSO embed URL and cryptographically signs it with an embed secret.
+This signed URL can then be used to instantiate a Looker embed session in a PBL web application.
+Do not make any modifications to this URL - any change may invalidate the signature and
+cause the URL to fail to load a Looker embed session.
+
+A signed SSO embed URL can only be used once. After it has been used to request a page from the
+Looker server, the URL is invalid. Future requests using the same URL will fail. This is to prevent
+'replay attacks'.
+
+The `target_url` property must be a complete URL of a Looker UI page - scheme, hostname, path and query params.
+To load a dashboard with id 56 and with a filter of `Date=1 years`, the looker URL would look like `https:/myname.looker.com/dashboards/56?Date=1%20years`.
+The best way to obtain this target_url is to navigate to the desired Looker page in your web browser,
+copy the URL shown in the browser address bar and paste it into the `target_url` property as a quoted string value in this API request.
+
+Permissions for the embed user are defined by the groups in which the embed user is a member (group_ids property)
+and the lists of models and permissions assigned to the embed user.
+At a minimum, you must provide values for either the group_ids property, or both the models and permissions properties.
+These properties are additive; an embed user can be a member of certain groups AND be granted access to models and permissions.
+
+The embed user's access is the union of permissions granted by the group_ids, models, and permissions properties.
+
+This function does not strictly require all group_ids, user attribute names, or model names to exist at the moment the
+SSO embed url is created. Unknown group_id, user attribute names or model names will be passed through to the output URL.
+To diagnose potential problems with an SSO embed URL, you can copy the signed URL into the Embed URI Validator text box in `<your looker instance>/admin/embed`.
+
+The `secret_id` parameter is optional. If specified, its value must be the id of an active secret defined in the Looker instance.
+if not specified, the URL will be signed using the newest active secret defined in the Looker instance.
+
+#### Security Note
+Protect this signed URL as you would an access token or password credentials - do not write
+it to disk, do not pass it to a third party, and only pass it through a secure HTTPS
+encrypted transport.
+
+*/
+func (a *Client) CreateSsoEmbedURL(params *CreateSsoEmbedURLParams) (*CreateSsoEmbedURLOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewCreateSsoEmbedURLParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "create_sso_embed_url",
+		Method:             "POST",
+		PathPattern:        "/embed/sso_url",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &CreateSsoEmbedURLReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*CreateSsoEmbedURLOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for create_sso_embed_url: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -113,8 +234,14 @@ func (a *Client) DeleteOidcTestConfig(params *DeleteOidcTestConfigParams) (*Dele
 	if err != nil {
 		return nil, err
 	}
-	return result.(*DeleteOidcTestConfigNoContent), nil
-
+	success, ok := result.(*DeleteOidcTestConfigNoContent)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for delete_oidc_test_config: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -144,8 +271,51 @@ func (a *Client) DeleteSamlTestConfig(params *DeleteSamlTestConfigParams) (*Dele
 	if err != nil {
 		return nil, err
 	}
-	return result.(*DeleteSamlTestConfigNoContent), nil
+	success, ok := result.(*DeleteSamlTestConfigNoContent)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for delete_saml_test_config: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
 
+/*
+DeleteUserLoginLockout deletes user login lockout
+
+### Removes login lockout for the associated user.
+
+*/
+func (a *Client) DeleteUserLoginLockout(params *DeleteUserLoginLockoutParams) (*DeleteUserLoginLockoutNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewDeleteUserLoginLockoutParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "delete_user_login_lockout",
+		Method:             "DELETE",
+		PathPattern:        "/user_login_lockout/{key}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &DeleteUserLoginLockoutReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*DeleteUserLoginLockoutNoContent)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for delete_user_login_lockout: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -177,8 +347,51 @@ func (a *Client) FetchAndParseSamlIdpMetadata(params *FetchAndParseSamlIdpMetada
 	if err != nil {
 		return nil, err
 	}
-	return result.(*FetchAndParseSamlIdpMetadataOK), nil
+	success, ok := result.(*FetchAndParseSamlIdpMetadataOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for fetch_and_parse_saml_idp_metadata: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
 
+/*
+ForcePasswordResetAtNextLoginForAllUsers forces password reset
+
+### Force all credentials_email users to reset their login passwords upon their next login.
+
+*/
+func (a *Client) ForcePasswordResetAtNextLoginForAllUsers(params *ForcePasswordResetAtNextLoginForAllUsersParams) (*ForcePasswordResetAtNextLoginForAllUsersOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewForcePasswordResetAtNextLoginForAllUsersParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "force_password_reset_at_next_login_for_all_users",
+		Method:             "PUT",
+		PathPattern:        "/password_config/force_password_reset_at_next_login_for_all_users",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &ForcePasswordResetAtNextLoginForAllUsersReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*ForcePasswordResetAtNextLoginForAllUsersOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for force_password_reset_at_next_login_for_all_users: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -223,8 +436,14 @@ func (a *Client) LdapConfig(params *LdapConfigParams) (*LdapConfigOK, error) {
 	if err != nil {
 		return nil, err
 	}
-	return result.(*LdapConfigOK), nil
-
+	success, ok := result.(*LdapConfigOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for ldap_config: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -265,8 +484,14 @@ func (a *Client) OidcConfig(params *OidcConfigParams) (*OidcConfigOK, error) {
 	if err != nil {
 		return nil, err
 	}
-	return result.(*OidcConfigOK), nil
-
+	success, ok := result.(*OidcConfigOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for oidc_config: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -296,8 +521,14 @@ func (a *Client) OidcTestConfig(params *OidcTestConfigParams) (*OidcTestConfigOK
 	if err != nil {
 		return nil, err
 	}
-	return result.(*OidcTestConfigOK), nil
-
+	success, ok := result.(*OidcTestConfigOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for oidc_test_config: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -327,8 +558,51 @@ func (a *Client) ParseSamlIdpMetadata(params *ParseSamlIdpMetadataParams) (*Pars
 	if err != nil {
 		return nil, err
 	}
-	return result.(*ParseSamlIdpMetadataOK), nil
+	success, ok := result.(*ParseSamlIdpMetadataOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for parse_saml_idp_metadata: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
 
+/*
+PasswordConfig gets password config
+
+### Get password config.
+
+*/
+func (a *Client) PasswordConfig(params *PasswordConfigParams) (*PasswordConfigOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewPasswordConfigParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "password_config",
+		Method:             "GET",
+		PathPattern:        "/password_config",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &PasswordConfigReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*PasswordConfigOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for password_config: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -369,8 +643,14 @@ func (a *Client) SamlConfig(params *SamlConfigParams) (*SamlConfigOK, error) {
 	if err != nil {
 		return nil, err
 	}
-	return result.(*SamlConfigOK), nil
-
+	success, ok := result.(*SamlConfigOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for saml_config: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -400,8 +680,88 @@ func (a *Client) SamlTestConfig(params *SamlTestConfigParams) (*SamlTestConfigOK
 	if err != nil {
 		return nil, err
 	}
-	return result.(*SamlTestConfigOK), nil
+	success, ok := result.(*SamlTestConfigOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for saml_test_config: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
 
+/*
+SearchUserLoginLockouts searches user login lockouts
+
+### Search currently locked-out users.
+
+*/
+func (a *Client) SearchUserLoginLockouts(params *SearchUserLoginLockoutsParams) (*SearchUserLoginLockoutsOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewSearchUserLoginLockoutsParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "search_user_login_lockouts",
+		Method:             "GET",
+		PathPattern:        "/user_login_lockouts/search",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &SearchUserLoginLockoutsReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*SearchUserLoginLockoutsOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for search_user_login_lockouts: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+SessionConfig gets session config
+
+### Get session config.
+
+*/
+func (a *Client) SessionConfig(params *SessionConfigParams) (*SessionConfigOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewSessionConfigParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "session_config",
+		Method:             "GET",
+		PathPattern:        "/session_config",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &SessionConfigReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*SessionConfigOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for session_config: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -451,8 +811,14 @@ func (a *Client) TestLdapConfigAuth(params *TestLdapConfigAuthParams) (*TestLdap
 	if err != nil {
 		return nil, err
 	}
-	return result.(*TestLdapConfigAuthOK), nil
-
+	success, ok := result.(*TestLdapConfigAuthOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for test_ldap_config_auth: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -499,8 +865,14 @@ func (a *Client) TestLdapConfigConnection(params *TestLdapConfigConnectionParams
 	if err != nil {
 		return nil, err
 	}
-	return result.(*TestLdapConfigConnectionOK), nil
-
+	success, ok := result.(*TestLdapConfigConnectionOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for test_ldap_config_connection: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -539,8 +911,14 @@ func (a *Client) TestLdapConfigUserAuth(params *TestLdapConfigUserAuthParams) (*
 	if err != nil {
 		return nil, err
 	}
-	return result.(*TestLdapConfigUserAuthOK), nil
-
+	success, ok := result.(*TestLdapConfigUserAuthOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for test_ldap_config_user_auth: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -579,8 +957,14 @@ func (a *Client) TestLdapConfigUserInfo(params *TestLdapConfigUserInfoParams) (*
 	if err != nil {
 		return nil, err
 	}
-	return result.(*TestLdapConfigUserInfoOK), nil
-
+	success, ok := result.(*TestLdapConfigUserInfoOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for test_ldap_config_user_info: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -620,8 +1004,14 @@ func (a *Client) UpdateLdapConfig(params *UpdateLdapConfigParams) (*UpdateLdapCo
 	if err != nil {
 		return nil, err
 	}
-	return result.(*UpdateLdapConfigOK), nil
-
+	success, ok := result.(*UpdateLdapConfigOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for update_ldap_config: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -659,8 +1049,51 @@ func (a *Client) UpdateOidcConfig(params *UpdateOidcConfigParams) (*UpdateOidcCo
 	if err != nil {
 		return nil, err
 	}
-	return result.(*UpdateOidcConfigOK), nil
+	success, ok := result.(*UpdateOidcConfigOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for update_oidc_config: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
 
+/*
+UpdatePasswordConfig updates password config
+
+### Update password config.
+
+*/
+func (a *Client) UpdatePasswordConfig(params *UpdatePasswordConfigParams) (*UpdatePasswordConfigOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUpdatePasswordConfigParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "update_password_config",
+		Method:             "PATCH",
+		PathPattern:        "/password_config",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &UpdatePasswordConfigReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*UpdatePasswordConfigOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for update_password_config: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -698,8 +1131,51 @@ func (a *Client) UpdateSamlConfig(params *UpdateSamlConfigParams) (*UpdateSamlCo
 	if err != nil {
 		return nil, err
 	}
-	return result.(*UpdateSamlConfigOK), nil
+	success, ok := result.(*UpdateSamlConfigOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for update_saml_config: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
 
+/*
+UpdateSessionConfig updates session config
+
+### Update session config.
+
+*/
+func (a *Client) UpdateSessionConfig(params *UpdateSessionConfigParams) (*UpdateSessionConfigOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUpdateSessionConfigParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "update_session_config",
+		Method:             "PATCH",
+		PathPattern:        "/session_config",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &UpdateSessionConfigReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*UpdateSessionConfigOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for update_session_config: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 // SetTransport changes the transport on the client

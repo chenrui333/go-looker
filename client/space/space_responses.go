@@ -24,21 +24,18 @@ type SpaceReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *SpaceReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewSpaceOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewSpaceBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewSpaceNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -66,6 +63,10 @@ type SpaceOK struct {
 
 func (o *SpaceOK) Error() string {
 	return fmt.Sprintf("[GET /spaces/{space_id}][%d] spaceOK  %+v", 200, o.Payload)
+}
+
+func (o *SpaceOK) GetPayload() *models.Space {
+	return o.Payload
 }
 
 func (o *SpaceOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -97,6 +98,10 @@ func (o *SpaceBadRequest) Error() string {
 	return fmt.Sprintf("[GET /spaces/{space_id}][%d] spaceBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *SpaceBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *SpaceBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -124,6 +129,10 @@ type SpaceNotFound struct {
 
 func (o *SpaceNotFound) Error() string {
 	return fmt.Sprintf("[GET /spaces/{space_id}][%d] spaceNotFound  %+v", 404, o.Payload)
+}
+
+func (o *SpaceNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *SpaceNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

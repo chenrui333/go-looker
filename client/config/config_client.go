@@ -6,6 +6,8 @@ package config
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"fmt"
+
 	"github.com/go-openapi/runtime"
 
 	strfmt "github.com/go-openapi/strfmt"
@@ -51,8 +53,51 @@ func (a *Client) AllLegacyFeatures(params *AllLegacyFeaturesParams) (*AllLegacyF
 	if err != nil {
 		return nil, err
 	}
-	return result.(*AllLegacyFeaturesOK), nil
+	success, ok := result.(*AllLegacyFeaturesOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for all_legacy_features: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
 
+/*
+AllLocales gets all locales
+
+### Get a list of locales that Looker supports.
+
+*/
+func (a *Client) AllLocales(params *AllLocalesParams) (*AllLocalesOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewAllLocalesParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "all_locales",
+		Method:             "GET",
+		PathPattern:        "/locales",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &AllLocalesReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*AllLocalesOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for all_locales: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -82,8 +127,14 @@ func (a *Client) AllTimezones(params *AllTimezonesParams) (*AllTimezonesOK, erro
 	if err != nil {
 		return nil, err
 	}
-	return result.(*AllTimezonesOK), nil
-
+	success, ok := result.(*AllTimezonesOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for all_timezones: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -113,8 +164,125 @@ func (a *Client) BackupConfiguration(params *BackupConfigurationParams) (*Backup
 	if err != nil {
 		return nil, err
 	}
-	return result.(*BackupConfigurationOK), nil
+	success, ok := result.(*BackupConfigurationOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for backup_configuration: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
 
+/*
+CustomWelcomeEmail gets custom welcome email
+
+### Get the current status and content of custom welcome emails
+
+*/
+func (a *Client) CustomWelcomeEmail(params *CustomWelcomeEmailParams) (*CustomWelcomeEmailOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewCustomWelcomeEmailParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "custom_welcome_email",
+		Method:             "GET",
+		PathPattern:        "/custom_welcome_email",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &CustomWelcomeEmailReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*CustomWelcomeEmailOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for custom_welcome_email: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+InternalHelpResources gets internal help resources
+
+### Get and set the options for internal help resources
+
+*/
+func (a *Client) InternalHelpResources(params *InternalHelpResourcesParams) (*InternalHelpResourcesOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewInternalHelpResourcesParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "internal_help_resources",
+		Method:             "GET",
+		PathPattern:        "/internal_help_resources_enabled",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &InternalHelpResourcesReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*InternalHelpResourcesOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for internal_help_resources: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+InternalHelpResourcesContent gets internal help resources content
+
+### Set the menu item name and content for internal help resources
+
+*/
+func (a *Client) InternalHelpResourcesContent(params *InternalHelpResourcesContentParams) (*InternalHelpResourcesContentOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewInternalHelpResourcesContentParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "internal_help_resources_content",
+		Method:             "GET",
+		PathPattern:        "/internal_help_resources_content",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &InternalHelpResourcesContentReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*InternalHelpResourcesContentOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for internal_help_resources_content: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -144,8 +312,14 @@ func (a *Client) LegacyFeature(params *LegacyFeatureParams) (*LegacyFeatureOK, e
 	if err != nil {
 		return nil, err
 	}
-	return result.(*LegacyFeatureOK), nil
-
+	success, ok := result.(*LegacyFeatureOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for legacy_feature: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -175,8 +349,162 @@ func (a *Client) UpdateBackupConfiguration(params *UpdateBackupConfigurationPara
 	if err != nil {
 		return nil, err
 	}
-	return result.(*UpdateBackupConfigurationOK), nil
+	success, ok := result.(*UpdateBackupConfigurationOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for update_backup_configuration: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
 
+/*
+UpdateCustomWelcomeEmail updates custom welcome email content
+
+Update custom welcome email setting and values. Optionally send a test email with the new content to the currently logged in user.
+
+*/
+func (a *Client) UpdateCustomWelcomeEmail(params *UpdateCustomWelcomeEmailParams) (*UpdateCustomWelcomeEmailOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUpdateCustomWelcomeEmailParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "update_custom_welcome_email",
+		Method:             "PATCH",
+		PathPattern:        "/custom_welcome_email",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &UpdateCustomWelcomeEmailReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*UpdateCustomWelcomeEmailOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for update_custom_welcome_email: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+UpdateCustomWelcomeEmailTest sends a test welcome email to the currently logged in user with the supplied content
+
+Requests to this endpoint will send a welcome email with the custom content provided in the body to the currently logged in user.
+
+*/
+func (a *Client) UpdateCustomWelcomeEmailTest(params *UpdateCustomWelcomeEmailTestParams) (*UpdateCustomWelcomeEmailTestOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUpdateCustomWelcomeEmailTestParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "update_custom_welcome_email_test",
+		Method:             "PUT",
+		PathPattern:        "/custom_welcome_email_test",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &UpdateCustomWelcomeEmailTestReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*UpdateCustomWelcomeEmailTestOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for update_custom_welcome_email_test: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+UpdateInternalHelpResources updates internal help resources configuration
+
+Update internal help resources settings
+
+*/
+func (a *Client) UpdateInternalHelpResources(params *UpdateInternalHelpResourcesParams) (*UpdateInternalHelpResourcesOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUpdateInternalHelpResourcesParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "update_internal_help_resources",
+		Method:             "PATCH",
+		PathPattern:        "/internal_help_resources",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &UpdateInternalHelpResourcesReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*UpdateInternalHelpResourcesOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for update_internal_help_resources: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+UpdateInternalHelpResourcesContent updates internal help resources content
+
+Update internal help resources content
+
+*/
+func (a *Client) UpdateInternalHelpResourcesContent(params *UpdateInternalHelpResourcesContentParams) (*UpdateInternalHelpResourcesContentOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUpdateInternalHelpResourcesContentParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "update_internal_help_resources_content",
+		Method:             "PATCH",
+		PathPattern:        "/internal_help_resources_content",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &UpdateInternalHelpResourcesContentReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*UpdateInternalHelpResourcesContentOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for update_internal_help_resources_content: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -206,8 +534,14 @@ func (a *Client) UpdateLegacyFeature(params *UpdateLegacyFeatureParams) (*Update
 	if err != nil {
 		return nil, err
 	}
-	return result.(*UpdateLegacyFeatureOK), nil
-
+	success, ok := result.(*UpdateLegacyFeatureOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for update_legacy_feature: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -237,8 +571,14 @@ func (a *Client) UpdateWhitelabelConfiguration(params *UpdateWhitelabelConfigura
 	if err != nil {
 		return nil, err
 	}
-	return result.(*UpdateWhitelabelConfigurationOK), nil
-
+	success, ok := result.(*UpdateWhitelabelConfigurationOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for update_whitelabel_configuration: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -268,8 +608,14 @@ func (a *Client) Versions(params *VersionsParams) (*VersionsOK, error) {
 	if err != nil {
 		return nil, err
 	}
-	return result.(*VersionsOK), nil
-
+	success, ok := result.(*VersionsOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for versions: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -300,8 +646,14 @@ func (a *Client) WhitelabelConfiguration(params *WhitelabelConfigurationParams) 
 	if err != nil {
 		return nil, err
 	}
-	return result.(*WhitelabelConfigurationOK), nil
-
+	success, ok := result.(*WhitelabelConfigurationOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for whitelabel_configuration: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 // SetTransport changes the transport on the client

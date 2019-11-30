@@ -20,6 +20,10 @@ type ProjectFile struct {
 	// Read Only: true
 	Can map[string]bool `json:"can,omitempty"`
 
+	// State of editability for the file.
+	// Read Only: true
+	Editable *bool `json:"editable,omitempty"`
+
 	// The extension of the file: .view.lkml, .model.lkml, etc
 	// Read Only: true
 	Extension string `json:"extension,omitempty"`

@@ -24,35 +24,30 @@ type CreatePermissionSetReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *CreatePermissionSetReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewCreatePermissionSetOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewCreatePermissionSetBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewCreatePermissionSetNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 409:
 		result := NewCreatePermissionSetConflict()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewCreatePermissionSetUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -80,6 +75,10 @@ type CreatePermissionSetOK struct {
 
 func (o *CreatePermissionSetOK) Error() string {
 	return fmt.Sprintf("[POST /permission_sets][%d] createPermissionSetOK  %+v", 200, o.Payload)
+}
+
+func (o *CreatePermissionSetOK) GetPayload() *models.PermissionSet {
+	return o.Payload
 }
 
 func (o *CreatePermissionSetOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -111,6 +110,10 @@ func (o *CreatePermissionSetBadRequest) Error() string {
 	return fmt.Sprintf("[POST /permission_sets][%d] createPermissionSetBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *CreatePermissionSetBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreatePermissionSetBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -138,6 +141,10 @@ type CreatePermissionSetNotFound struct {
 
 func (o *CreatePermissionSetNotFound) Error() string {
 	return fmt.Sprintf("[POST /permission_sets][%d] createPermissionSetNotFound  %+v", 404, o.Payload)
+}
+
+func (o *CreatePermissionSetNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *CreatePermissionSetNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -169,6 +176,10 @@ func (o *CreatePermissionSetConflict) Error() string {
 	return fmt.Sprintf("[POST /permission_sets][%d] createPermissionSetConflict  %+v", 409, o.Payload)
 }
 
+func (o *CreatePermissionSetConflict) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreatePermissionSetConflict) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -196,6 +207,10 @@ type CreatePermissionSetUnprocessableEntity struct {
 
 func (o *CreatePermissionSetUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[POST /permission_sets][%d] createPermissionSetUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *CreatePermissionSetUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *CreatePermissionSetUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

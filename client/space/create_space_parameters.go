@@ -6,10 +6,9 @@ package space
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"net/http"
 	"time"
-
-	"golang.org/x/net/context"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
@@ -65,7 +64,7 @@ for the create space operation typically these are written to a http.Request
 type CreateSpaceParams struct {
 
 	/*Body
-	  Space
+	  Create a new space
 
 	*/
 	Body *models.Space

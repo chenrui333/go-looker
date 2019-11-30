@@ -6,10 +6,9 @@ package user_attribute
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"net/http"
 	"time"
-
-	"golang.org/x/net/context"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
@@ -68,7 +67,7 @@ type AllUserAttributesParams struct {
 	*/
 	Fields *string
 	/*Sorts
-	  Fields to sort by.
+	  Fields to order the results by. Sortable fields include: name, label
 
 	*/
 	Sorts *string

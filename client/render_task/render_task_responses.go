@@ -24,14 +24,12 @@ type RenderTaskReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *RenderTaskReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewRenderTaskOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 404:
 		result := NewRenderTaskNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -61,6 +59,10 @@ func (o *RenderTaskOK) Error() string {
 	return fmt.Sprintf("[GET /render_tasks/{render_task_id}][%d] renderTaskOK  %+v", 200, o.Payload)
 }
 
+func (o *RenderTaskOK) GetPayload() *models.RenderTask {
+	return o.Payload
+}
+
 func (o *RenderTaskOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.RenderTask)
@@ -88,6 +90,10 @@ type RenderTaskNotFound struct {
 
 func (o *RenderTaskNotFound) Error() string {
 	return fmt.Sprintf("[GET /render_tasks/{render_task_id}][%d] renderTaskNotFound  %+v", 404, o.Payload)
+}
+
+func (o *RenderTaskNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *RenderTaskNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
