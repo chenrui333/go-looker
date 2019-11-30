@@ -12,4 +12,6 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - uses: actions/action-builder/shell@master
-        run: make generate
+        with:
+          entrypoint: make
+          args: generate
