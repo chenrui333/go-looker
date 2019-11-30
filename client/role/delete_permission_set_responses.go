@@ -24,28 +24,24 @@ type DeletePermissionSetReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *DeletePermissionSetReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 204:
 		result := NewDeletePermissionSetNoContent()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewDeletePermissionSetBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewDeletePermissionSetNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 405:
 		result := NewDeletePermissionSetMethodNotAllowed()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -75,6 +71,10 @@ func (o *DeletePermissionSetNoContent) Error() string {
 	return fmt.Sprintf("[DELETE /permission_sets/{permission_set_id}][%d] deletePermissionSetNoContent  %+v", 204, o.Payload)
 }
 
+func (o *DeletePermissionSetNoContent) GetPayload() string {
+	return o.Payload
+}
+
 func (o *DeletePermissionSetNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -100,6 +100,10 @@ type DeletePermissionSetBadRequest struct {
 
 func (o *DeletePermissionSetBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /permission_sets/{permission_set_id}][%d] deletePermissionSetBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *DeletePermissionSetBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeletePermissionSetBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -131,6 +135,10 @@ func (o *DeletePermissionSetNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /permission_sets/{permission_set_id}][%d] deletePermissionSetNotFound  %+v", 404, o.Payload)
 }
 
+func (o *DeletePermissionSetNotFound) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *DeletePermissionSetNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -158,6 +166,10 @@ type DeletePermissionSetMethodNotAllowed struct {
 
 func (o *DeletePermissionSetMethodNotAllowed) Error() string {
 	return fmt.Sprintf("[DELETE /permission_sets/{permission_set_id}][%d] deletePermissionSetMethodNotAllowed  %+v", 405, o.Payload)
+}
+
+func (o *DeletePermissionSetMethodNotAllowed) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeletePermissionSetMethodNotAllowed) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

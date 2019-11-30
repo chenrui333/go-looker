@@ -6,6 +6,8 @@ package integration
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"fmt"
+
 	"github.com/go-openapi/runtime"
 
 	strfmt "github.com/go-openapi/strfmt"
@@ -50,8 +52,14 @@ func (a *Client) AcceptIntegrationHubLegalAgreement(params *AcceptIntegrationHub
 	if err != nil {
 		return nil, err
 	}
-	return result.(*AcceptIntegrationHubLegalAgreementOK), nil
-
+	success, ok := result.(*AcceptIntegrationHubLegalAgreementOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for accept_integration_hub_legal_agreement: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -81,8 +89,14 @@ func (a *Client) AllIntegrationHubs(params *AllIntegrationHubsParams) (*AllInteg
 	if err != nil {
 		return nil, err
 	}
-	return result.(*AllIntegrationHubsOK), nil
-
+	success, ok := result.(*AllIntegrationHubsOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for all_integration_hubs: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -112,14 +126,22 @@ func (a *Client) AllIntegrations(params *AllIntegrationsParams) (*AllIntegration
 	if err != nil {
 		return nil, err
 	}
-	return result.(*AllIntegrationsOK), nil
-
+	success, ok := result.(*AllIntegrationsOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for all_integrations: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
 CreateIntegrationHub creates integration hub
 
 ### Create a new Integration Hub.
+
+This API is rate limited to prevent it from being used for SSRF attacks
 
 */
 func (a *Client) CreateIntegrationHub(params *CreateIntegrationHubParams) (*CreateIntegrationHubOK, error) {
@@ -143,8 +165,14 @@ func (a *Client) CreateIntegrationHub(params *CreateIntegrationHubParams) (*Crea
 	if err != nil {
 		return nil, err
 	}
-	return result.(*CreateIntegrationHubOK), nil
-
+	success, ok := result.(*CreateIntegrationHubOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for create_integration_hub: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -174,8 +202,14 @@ func (a *Client) DeleteIntegrationHub(params *DeleteIntegrationHubParams) (*Dele
 	if err != nil {
 		return nil, err
 	}
-	return result.(*DeleteIntegrationHubNoContent), nil
-
+	success, ok := result.(*DeleteIntegrationHubNoContent)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for delete_integration_hub: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -204,8 +238,14 @@ func (a *Client) FetchIntegrationForm(params *FetchIntegrationFormParams) (*Fetc
 	if err != nil {
 		return nil, err
 	}
-	return result.(*FetchIntegrationFormOK), nil
-
+	success, ok := result.(*FetchIntegrationFormOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for fetch_integration_form: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -235,8 +275,14 @@ func (a *Client) Integration(params *IntegrationParams) (*IntegrationOK, error) 
 	if err != nil {
 		return nil, err
 	}
-	return result.(*IntegrationOK), nil
-
+	success, ok := result.(*IntegrationOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for integration: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -266,8 +312,14 @@ func (a *Client) IntegrationHub(params *IntegrationHubParams) (*IntegrationHubOK
 	if err != nil {
 		return nil, err
 	}
-	return result.(*IntegrationHubOK), nil
-
+	success, ok := result.(*IntegrationHubOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for integration_hub: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -296,8 +348,14 @@ func (a *Client) TestIntegration(params *TestIntegrationParams) (*TestIntegratio
 	if err != nil {
 		return nil, err
 	}
-	return result.(*TestIntegrationOK), nil
-
+	success, ok := result.(*TestIntegrationOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for test_integration: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -327,14 +385,22 @@ func (a *Client) UpdateIntegration(params *UpdateIntegrationParams) (*UpdateInte
 	if err != nil {
 		return nil, err
 	}
-	return result.(*UpdateIntegrationOK), nil
-
+	success, ok := result.(*UpdateIntegrationOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for update_integration: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
 UpdateIntegrationHub updates integration hub
 
 ### Update a Integration Hub definition.
+
+This API is rate limited to prevent it from being used for SSRF attacks
 
 */
 func (a *Client) UpdateIntegrationHub(params *UpdateIntegrationHubParams) (*UpdateIntegrationHubOK, error) {
@@ -358,8 +424,14 @@ func (a *Client) UpdateIntegrationHub(params *UpdateIntegrationHubParams) (*Upda
 	if err != nil {
 		return nil, err
 	}
-	return result.(*UpdateIntegrationHubOK), nil
-
+	success, ok := result.(*UpdateIntegrationHubOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for update_integration_hub: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 // SetTransport changes the transport on the client

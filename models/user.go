@@ -19,22 +19,19 @@ import (
 // swagger:model User
 type User struct {
 
-	// Model access filters.
-	// Read Only: true
-	AccessFilters []*AccessFilter `json:"access_filters"`
-
 	// URL for the avatar image (may be generic)
 	// Read Only: true
 	// Format: uri
 	AvatarURL strfmt.URI `json:"avatar_url,omitempty"`
 
+	// URL for the avatar image (may be generic), does not specify size
+	// Read Only: true
+	// Format: uri
+	AvatarURLWithoutSizing strfmt.URI `json:"avatar_url_without_sizing,omitempty"`
+
 	// Operations the current user is able to perform on this object
 	// Read Only: true
 	Can map[string]bool `json:"can,omitempty"`
-
-	// API user credentials. NO LONGER SUPPORTED.
-	// Read Only: true
-	CredentialsAPI *CredentialsAPI `json:"credentials_api,omitempty"`
 
 	// API 3 credentials
 	// Read Only: true
@@ -91,6 +88,9 @@ type User struct {
 	// Read Only: true
 	GroupIds []int64 `json:"group_ids"`
 
+	// ID string for user's home folder
+	HomeFolderID string `json:"home_folder_id,omitempty"`
+
 	// ID string for user's home space
 	HomeSpaceID string `json:"home_space_id,omitempty"`
 
@@ -111,6 +111,13 @@ type User struct {
 	// Read Only: true
 	LookerVersions []string `json:"looker_versions"`
 
+	// User's dev workspace has been checked for presence of applicable production projects
+	ModelsDirValidated bool `json:"models_dir_validated,omitempty"`
+
+	// ID of user's personal folder
+	// Read Only: true
+	PersonalFolderID int64 `json:"personal_folder_id,omitempty"`
+
 	// ID of user's personal space
 	// Read Only: true
 	PersonalSpaceID int64 `json:"personal_space_id,omitempty"`
@@ -122,6 +129,10 @@ type User struct {
 	// Array of ids of the roles for this user
 	// Read Only: true
 	RoleIds []int64 `json:"role_ids"`
+
+	// User's roles are managed by an external directory like SAML or LDAP and can not be changed directly.
+	// Read Only: true
+	RolesExternallyManaged *bool `json:"roles_externally_managed,omitempty"`
 
 	// Active sessions
 	// Read Only: true
@@ -144,15 +155,11 @@ type User struct {
 func (m *User) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateAccessFilters(formats); err != nil {
-		res = append(res, err)
-	}
-
 	if err := m.validateAvatarURL(formats); err != nil {
 		res = append(res, err)
 	}
 
-	if err := m.validateCredentialsAPI(formats); err != nil {
+	if err := m.validateAvatarURLWithoutSizing(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -206,31 +213,6 @@ func (m *User) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *User) validateAccessFilters(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.AccessFilters) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.AccessFilters); i++ {
-		if swag.IsZero(m.AccessFilters[i]) { // not required
-			continue
-		}
-
-		if m.AccessFilters[i] != nil {
-			if err := m.AccessFilters[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("access_filters" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
 func (m *User) validateAvatarURL(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.AvatarURL) { // not required
@@ -244,19 +226,14 @@ func (m *User) validateAvatarURL(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *User) validateCredentialsAPI(formats strfmt.Registry) error {
+func (m *User) validateAvatarURLWithoutSizing(formats strfmt.Registry) error {
 
-	if swag.IsZero(m.CredentialsAPI) { // not required
+	if swag.IsZero(m.AvatarURLWithoutSizing) { // not required
 		return nil
 	}
 
-	if m.CredentialsAPI != nil {
-		if err := m.CredentialsAPI.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("credentials_api")
-			}
-			return err
-		}
+	if err := validate.FormatOf("avatar_url_without_sizing", "body", "uri", m.AvatarURLWithoutSizing.String(), formats); err != nil {
+		return err
 	}
 
 	return nil

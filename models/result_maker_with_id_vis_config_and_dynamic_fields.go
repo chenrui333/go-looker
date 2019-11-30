@@ -18,10 +18,6 @@ import (
 // swagger:model ResultMakerWithIdVisConfigAndDynamicFields
 type ResultMakerWithIDVisConfigAndDynamicFields struct {
 
-	// Operations the current user is able to perform on this object
-	// Read Only: true
-	Can map[string]bool `json:"can,omitempty"`
-
 	// JSON string of dynamic field information.
 	// Read Only: true
 	DynamicFields string `json:"dynamic_fields,omitempty"`

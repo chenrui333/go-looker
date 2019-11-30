@@ -24,21 +24,18 @@ type LogoutReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *LogoutReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 204:
 		result := NewLogoutNoContent()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewLogoutBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewLogoutNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *LogoutNoContent) Error() string {
 	return fmt.Sprintf("[DELETE /logout][%d] logoutNoContent  %+v", 204, o.Payload)
 }
 
+func (o *LogoutNoContent) GetPayload() string {
+	return o.Payload
+}
+
 func (o *LogoutNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type LogoutBadRequest struct {
 
 func (o *LogoutBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /logout][%d] logoutBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *LogoutBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *LogoutBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type LogoutNotFound struct {
 
 func (o *LogoutNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /logout][%d] logoutNotFound  %+v", 404, o.Payload)
+}
+
+func (o *LogoutNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *LogoutNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

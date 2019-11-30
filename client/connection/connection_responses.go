@@ -24,21 +24,18 @@ type ConnectionReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *ConnectionReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewConnectionOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewConnectionBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewConnectionNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -66,6 +63,10 @@ type ConnectionOK struct {
 
 func (o *ConnectionOK) Error() string {
 	return fmt.Sprintf("[GET /connections/{connection_name}][%d] connectionOK  %+v", 200, o.Payload)
+}
+
+func (o *ConnectionOK) GetPayload() *models.DBConnection {
+	return o.Payload
 }
 
 func (o *ConnectionOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -97,6 +98,10 @@ func (o *ConnectionBadRequest) Error() string {
 	return fmt.Sprintf("[GET /connections/{connection_name}][%d] connectionBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *ConnectionBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *ConnectionBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -124,6 +129,10 @@ type ConnectionNotFound struct {
 
 func (o *ConnectionNotFound) Error() string {
 	return fmt.Sprintf("[GET /connections/{connection_name}][%d] connectionNotFound  %+v", 404, o.Payload)
+}
+
+func (o *ConnectionNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *ConnectionNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

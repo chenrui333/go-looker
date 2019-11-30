@@ -24,21 +24,18 @@ type PerformDataActionReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *PerformDataActionReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewPerformDataActionOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewPerformDataActionBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewPerformDataActionNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -66,6 +63,10 @@ type PerformDataActionOK struct {
 
 func (o *PerformDataActionOK) Error() string {
 	return fmt.Sprintf("[POST /data_actions][%d] performDataActionOK  %+v", 200, o.Payload)
+}
+
+func (o *PerformDataActionOK) GetPayload() *models.DataActionResponse {
+	return o.Payload
 }
 
 func (o *PerformDataActionOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -97,6 +98,10 @@ func (o *PerformDataActionBadRequest) Error() string {
 	return fmt.Sprintf("[POST /data_actions][%d] performDataActionBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *PerformDataActionBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *PerformDataActionBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -124,6 +129,10 @@ type PerformDataActionNotFound struct {
 
 func (o *PerformDataActionNotFound) Error() string {
 	return fmt.Sprintf("[POST /data_actions][%d] performDataActionNotFound  %+v", 404, o.Payload)
+}
+
+func (o *PerformDataActionNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *PerformDataActionNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

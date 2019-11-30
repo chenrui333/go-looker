@@ -24,28 +24,24 @@ type DeleteRoleReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *DeleteRoleReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 204:
 		result := NewDeleteRoleNoContent()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewDeleteRoleBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewDeleteRoleNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 405:
 		result := NewDeleteRoleMethodNotAllowed()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -75,6 +71,10 @@ func (o *DeleteRoleNoContent) Error() string {
 	return fmt.Sprintf("[DELETE /roles/{role_id}][%d] deleteRoleNoContent  %+v", 204, o.Payload)
 }
 
+func (o *DeleteRoleNoContent) GetPayload() string {
+	return o.Payload
+}
+
 func (o *DeleteRoleNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -100,6 +100,10 @@ type DeleteRoleBadRequest struct {
 
 func (o *DeleteRoleBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /roles/{role_id}][%d] deleteRoleBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *DeleteRoleBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteRoleBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -131,6 +135,10 @@ func (o *DeleteRoleNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /roles/{role_id}][%d] deleteRoleNotFound  %+v", 404, o.Payload)
 }
 
+func (o *DeleteRoleNotFound) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *DeleteRoleNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -158,6 +166,10 @@ type DeleteRoleMethodNotAllowed struct {
 
 func (o *DeleteRoleMethodNotAllowed) Error() string {
 	return fmt.Sprintf("[DELETE /roles/{role_id}][%d] deleteRoleMethodNotAllowed  %+v", 405, o.Payload)
+}
+
+func (o *DeleteRoleMethodNotAllowed) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteRoleMethodNotAllowed) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

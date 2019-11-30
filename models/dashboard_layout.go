@@ -35,6 +35,10 @@ type DashboardLayout struct {
 	// Read Only: true
 	DashboardLayoutComponents []*DashboardLayoutComponent `json:"dashboard_layout_components"`
 
+	// Title extracted from the dashboard this layout represents.
+	// Read Only: true
+	DashboardTitle string `json:"dashboard_title,omitempty"`
+
 	// Whether or not the dashboard layout is deleted.
 	// Read Only: true
 	Deleted *bool `json:"deleted,omitempty"`

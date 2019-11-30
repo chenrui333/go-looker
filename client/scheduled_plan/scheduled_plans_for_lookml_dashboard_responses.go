@@ -24,21 +24,18 @@ type ScheduledPlansForLookmlDashboardReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *ScheduledPlansForLookmlDashboardReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewScheduledPlansForLookmlDashboardOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewScheduledPlansForLookmlDashboardBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewScheduledPlansForLookmlDashboardNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *ScheduledPlansForLookmlDashboardOK) Error() string {
 	return fmt.Sprintf("[GET /scheduled_plans/lookml_dashboard/{lookml_dashboard_id}][%d] scheduledPlansForLookmlDashboardOK  %+v", 200, o.Payload)
 }
 
+func (o *ScheduledPlansForLookmlDashboardOK) GetPayload() []*models.ScheduledPlan {
+	return o.Payload
+}
+
 func (o *ScheduledPlansForLookmlDashboardOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type ScheduledPlansForLookmlDashboardBadRequest struct {
 
 func (o *ScheduledPlansForLookmlDashboardBadRequest) Error() string {
 	return fmt.Sprintf("[GET /scheduled_plans/lookml_dashboard/{lookml_dashboard_id}][%d] scheduledPlansForLookmlDashboardBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *ScheduledPlansForLookmlDashboardBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *ScheduledPlansForLookmlDashboardBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type ScheduledPlansForLookmlDashboardNotFound struct {
 
 func (o *ScheduledPlansForLookmlDashboardNotFound) Error() string {
 	return fmt.Sprintf("[GET /scheduled_plans/lookml_dashboard/{lookml_dashboard_id}][%d] scheduledPlansForLookmlDashboardNotFound  %+v", 404, o.Payload)
+}
+
+func (o *ScheduledPlansForLookmlDashboardNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *ScheduledPlansForLookmlDashboardNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

@@ -29,6 +29,10 @@ type UserAttribute struct {
 	// Read Only: true
 	ID int64 `json:"id,omitempty"`
 
+	// Attribute is permanent and cannot be deleted
+	// Read Only: true
+	IsPermanent *bool `json:"is_permanent,omitempty"`
+
 	// Attribute is a system default
 	// Read Only: true
 	IsSystem *bool `json:"is_system,omitempty"`

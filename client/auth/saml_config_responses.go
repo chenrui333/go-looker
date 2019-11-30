@@ -24,14 +24,12 @@ type SamlConfigReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *SamlConfigReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewSamlConfigOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 404:
 		result := NewSamlConfigNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -61,6 +59,10 @@ func (o *SamlConfigOK) Error() string {
 	return fmt.Sprintf("[GET /saml_config][%d] samlConfigOK  %+v", 200, o.Payload)
 }
 
+func (o *SamlConfigOK) GetPayload() *models.SamlConfig {
+	return o.Payload
+}
+
 func (o *SamlConfigOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.SamlConfig)
@@ -88,6 +90,10 @@ type SamlConfigNotFound struct {
 
 func (o *SamlConfigNotFound) Error() string {
 	return fmt.Sprintf("[GET /saml_config][%d] samlConfigNotFound  %+v", 404, o.Payload)
+}
+
+func (o *SamlConfigNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *SamlConfigNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

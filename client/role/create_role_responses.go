@@ -24,35 +24,30 @@ type CreateRoleReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *CreateRoleReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewCreateRoleOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewCreateRoleBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewCreateRoleNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 409:
 		result := NewCreateRoleConflict()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewCreateRoleUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -80,6 +75,10 @@ type CreateRoleOK struct {
 
 func (o *CreateRoleOK) Error() string {
 	return fmt.Sprintf("[POST /roles][%d] createRoleOK  %+v", 200, o.Payload)
+}
+
+func (o *CreateRoleOK) GetPayload() *models.Role {
+	return o.Payload
 }
 
 func (o *CreateRoleOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -111,6 +110,10 @@ func (o *CreateRoleBadRequest) Error() string {
 	return fmt.Sprintf("[POST /roles][%d] createRoleBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *CreateRoleBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreateRoleBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -138,6 +141,10 @@ type CreateRoleNotFound struct {
 
 func (o *CreateRoleNotFound) Error() string {
 	return fmt.Sprintf("[POST /roles][%d] createRoleNotFound  %+v", 404, o.Payload)
+}
+
+func (o *CreateRoleNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *CreateRoleNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -169,6 +176,10 @@ func (o *CreateRoleConflict) Error() string {
 	return fmt.Sprintf("[POST /roles][%d] createRoleConflict  %+v", 409, o.Payload)
 }
 
+func (o *CreateRoleConflict) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreateRoleConflict) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -196,6 +207,10 @@ type CreateRoleUnprocessableEntity struct {
 
 func (o *CreateRoleUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[POST /roles][%d] createRoleUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *CreateRoleUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *CreateRoleUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

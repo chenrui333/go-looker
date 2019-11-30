@@ -61,17 +61,9 @@ type SpaceBase struct {
 	// Read Only: true
 	IsPersonalDescendant *bool `json:"is_personal_descendant,omitempty"`
 
-	// (DEPRECATED) Space is the root shared space (alias of is_shared_root)
-	// Read Only: true
-	IsRoot *bool `json:"is_root,omitempty"`
-
 	// Space is the root shared space
 	// Read Only: true
 	IsSharedRoot *bool `json:"is_shared_root,omitempty"`
-
-	// (DEPRECATED) Space is the root user space (alias of is_users_root
-	// Read Only: true
-	IsUserRoot *bool `json:"is_user_root,omitempty"`
 
 	// Space is the root user space
 	// Read Only: true
@@ -83,7 +75,7 @@ type SpaceBase struct {
 
 	// Id of Parent
 	// Required: true
-	ParentID *int64 `json:"parent_id"`
+	ParentID *string `json:"parent_id"`
 }
 
 // Validate validates this space base

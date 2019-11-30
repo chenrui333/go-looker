@@ -24,42 +24,36 @@ type SetRoleUsersReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *SetRoleUsersReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewSetRoleUsersOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewSetRoleUsersBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 403:
 		result := NewSetRoleUsersForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewSetRoleUsersNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 405:
 		result := NewSetRoleUsersMethodNotAllowed()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewSetRoleUsersUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -89,6 +83,10 @@ func (o *SetRoleUsersOK) Error() string {
 	return fmt.Sprintf("[PUT /roles/{role_id}/users][%d] setRoleUsersOK  %+v", 200, o.Payload)
 }
 
+func (o *SetRoleUsersOK) GetPayload() []*models.User {
+	return o.Payload
+}
+
 func (o *SetRoleUsersOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -114,6 +112,10 @@ type SetRoleUsersBadRequest struct {
 
 func (o *SetRoleUsersBadRequest) Error() string {
 	return fmt.Sprintf("[PUT /roles/{role_id}/users][%d] setRoleUsersBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *SetRoleUsersBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *SetRoleUsersBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -145,6 +147,10 @@ func (o *SetRoleUsersForbidden) Error() string {
 	return fmt.Sprintf("[PUT /roles/{role_id}/users][%d] setRoleUsersForbidden  %+v", 403, o.Payload)
 }
 
+func (o *SetRoleUsersForbidden) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *SetRoleUsersForbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -172,6 +178,10 @@ type SetRoleUsersNotFound struct {
 
 func (o *SetRoleUsersNotFound) Error() string {
 	return fmt.Sprintf("[PUT /roles/{role_id}/users][%d] setRoleUsersNotFound  %+v", 404, o.Payload)
+}
+
+func (o *SetRoleUsersNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *SetRoleUsersNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -203,6 +213,10 @@ func (o *SetRoleUsersMethodNotAllowed) Error() string {
 	return fmt.Sprintf("[PUT /roles/{role_id}/users][%d] setRoleUsersMethodNotAllowed  %+v", 405, o.Payload)
 }
 
+func (o *SetRoleUsersMethodNotAllowed) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *SetRoleUsersMethodNotAllowed) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -230,6 +244,10 @@ type SetRoleUsersUnprocessableEntity struct {
 
 func (o *SetRoleUsersUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[PUT /roles/{role_id}/users][%d] setRoleUsersUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *SetRoleUsersUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *SetRoleUsersUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

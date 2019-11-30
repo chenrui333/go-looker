@@ -24,28 +24,24 @@ type CreateGitDeployKeyReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *CreateGitDeployKeyReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewCreateGitDeployKeyOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewCreateGitDeployKeyBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewCreateGitDeployKeyNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 409:
 		result := NewCreateGitDeployKeyConflict()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -75,6 +71,10 @@ func (o *CreateGitDeployKeyOK) Error() string {
 	return fmt.Sprintf("[POST /projects/{project_id}/git/deploy_key][%d] createGitDeployKeyOK  %+v", 200, o.Payload)
 }
 
+func (o *CreateGitDeployKeyOK) GetPayload() string {
+	return o.Payload
+}
+
 func (o *CreateGitDeployKeyOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -100,6 +100,10 @@ type CreateGitDeployKeyBadRequest struct {
 
 func (o *CreateGitDeployKeyBadRequest) Error() string {
 	return fmt.Sprintf("[POST /projects/{project_id}/git/deploy_key][%d] createGitDeployKeyBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *CreateGitDeployKeyBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *CreateGitDeployKeyBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -131,6 +135,10 @@ func (o *CreateGitDeployKeyNotFound) Error() string {
 	return fmt.Sprintf("[POST /projects/{project_id}/git/deploy_key][%d] createGitDeployKeyNotFound  %+v", 404, o.Payload)
 }
 
+func (o *CreateGitDeployKeyNotFound) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreateGitDeployKeyNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -158,6 +166,10 @@ type CreateGitDeployKeyConflict struct {
 
 func (o *CreateGitDeployKeyConflict) Error() string {
 	return fmt.Sprintf("[POST /projects/{project_id}/git/deploy_key][%d] createGitDeployKeyConflict  %+v", 409, o.Payload)
+}
+
+func (o *CreateGitDeployKeyConflict) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *CreateGitDeployKeyConflict) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

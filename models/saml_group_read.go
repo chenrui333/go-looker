@@ -19,10 +19,6 @@ import (
 // swagger:model SamlGroupRead
 type SamlGroupRead struct {
 
-	// Operations the current user is able to perform on this object
-	// Read Only: true
-	Can map[string]bool `json:"can,omitempty"`
-
 	// Name of group in Saml
 	// Read Only: true
 	Name string `json:"name,omitempty"`

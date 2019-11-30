@@ -166,6 +166,10 @@ type LookmlModelExploreField struct {
 	// Read Only: true
 	SQLCase []*LookmlModelExploreFieldSQLCase `json:"sql_case"`
 
+	// If yes, the field will not be localized with the user attribute number_format. Defaults to no
+	// Read Only: true
+	StrictValueFormat *bool `json:"strict_value_format,omitempty"`
+
 	// The name of the dimension to base suggest queries from.
 	// Read Only: true
 	SuggestDimension string `json:"suggest_dimension,omitempty"`
@@ -194,7 +198,7 @@ type LookmlModelExploreField struct {
 	// Read Only: true
 	Type string `json:"type,omitempty"`
 
-	// An array of user attribute types that are allowed to be used in filters on this field. Valid values are: "advanced_filter_string", "advanced_filter_number", "advanced_filter_datetime", "string", "number", "datetime", "yesno", "zipcode".
+	// An array of user attribute types that are allowed to be used in filters on this field. Valid values are: "advanced_filter_string", "advanced_filter_number", "advanced_filter_datetime", "string", "number", "datetime", "relative_url", "yesno", "zipcode".
 	// Read Only: true
 	UserAttributeFilterTypes []string `json:"user_attribute_filter_types"`
 

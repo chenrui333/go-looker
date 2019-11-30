@@ -24,35 +24,30 @@ type CreateLookmlDashboardRenderTaskReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *CreateLookmlDashboardRenderTaskReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewCreateLookmlDashboardRenderTaskOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewCreateLookmlDashboardRenderTaskBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewCreateLookmlDashboardRenderTaskNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 409:
 		result := NewCreateLookmlDashboardRenderTaskConflict()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewCreateLookmlDashboardRenderTaskUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -80,6 +75,10 @@ type CreateLookmlDashboardRenderTaskOK struct {
 
 func (o *CreateLookmlDashboardRenderTaskOK) Error() string {
 	return fmt.Sprintf("[POST /render_tasks/lookml_dashboards/{dashboard_id}/{result_format}][%d] createLookmlDashboardRenderTaskOK  %+v", 200, o.Payload)
+}
+
+func (o *CreateLookmlDashboardRenderTaskOK) GetPayload() *models.RenderTask {
+	return o.Payload
 }
 
 func (o *CreateLookmlDashboardRenderTaskOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -111,6 +110,10 @@ func (o *CreateLookmlDashboardRenderTaskBadRequest) Error() string {
 	return fmt.Sprintf("[POST /render_tasks/lookml_dashboards/{dashboard_id}/{result_format}][%d] createLookmlDashboardRenderTaskBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *CreateLookmlDashboardRenderTaskBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreateLookmlDashboardRenderTaskBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -138,6 +141,10 @@ type CreateLookmlDashboardRenderTaskNotFound struct {
 
 func (o *CreateLookmlDashboardRenderTaskNotFound) Error() string {
 	return fmt.Sprintf("[POST /render_tasks/lookml_dashboards/{dashboard_id}/{result_format}][%d] createLookmlDashboardRenderTaskNotFound  %+v", 404, o.Payload)
+}
+
+func (o *CreateLookmlDashboardRenderTaskNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *CreateLookmlDashboardRenderTaskNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -169,6 +176,10 @@ func (o *CreateLookmlDashboardRenderTaskConflict) Error() string {
 	return fmt.Sprintf("[POST /render_tasks/lookml_dashboards/{dashboard_id}/{result_format}][%d] createLookmlDashboardRenderTaskConflict  %+v", 409, o.Payload)
 }
 
+func (o *CreateLookmlDashboardRenderTaskConflict) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreateLookmlDashboardRenderTaskConflict) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -196,6 +207,10 @@ type CreateLookmlDashboardRenderTaskUnprocessableEntity struct {
 
 func (o *CreateLookmlDashboardRenderTaskUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[POST /render_tasks/lookml_dashboards/{dashboard_id}/{result_format}][%d] createLookmlDashboardRenderTaskUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *CreateLookmlDashboardRenderTaskUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *CreateLookmlDashboardRenderTaskUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

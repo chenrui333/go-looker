@@ -24,21 +24,18 @@ type ParseSamlIdpMetadataReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *ParseSamlIdpMetadataReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewParseSamlIdpMetadataOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewParseSamlIdpMetadataBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewParseSamlIdpMetadataNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -66,6 +63,10 @@ type ParseSamlIdpMetadataOK struct {
 
 func (o *ParseSamlIdpMetadataOK) Error() string {
 	return fmt.Sprintf("[POST /parse_saml_idp_metadata][%d] parseSamlIdpMetadataOK  %+v", 200, o.Payload)
+}
+
+func (o *ParseSamlIdpMetadataOK) GetPayload() *models.SamlMetadataParseResult {
+	return o.Payload
 }
 
 func (o *ParseSamlIdpMetadataOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -97,6 +98,10 @@ func (o *ParseSamlIdpMetadataBadRequest) Error() string {
 	return fmt.Sprintf("[POST /parse_saml_idp_metadata][%d] parseSamlIdpMetadataBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *ParseSamlIdpMetadataBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *ParseSamlIdpMetadataBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -124,6 +129,10 @@ type ParseSamlIdpMetadataNotFound struct {
 
 func (o *ParseSamlIdpMetadataNotFound) Error() string {
 	return fmt.Sprintf("[POST /parse_saml_idp_metadata][%d] parseSamlIdpMetadataNotFound  %+v", 404, o.Payload)
+}
+
+func (o *ParseSamlIdpMetadataNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *ParseSamlIdpMetadataNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

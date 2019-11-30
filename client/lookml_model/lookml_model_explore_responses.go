@@ -24,21 +24,18 @@ type LookmlModelExploreReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *LookmlModelExploreReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewLookmlModelExploreOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewLookmlModelExploreBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewLookmlModelExploreNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -66,6 +63,10 @@ type LookmlModelExploreOK struct {
 
 func (o *LookmlModelExploreOK) Error() string {
 	return fmt.Sprintf("[GET /lookml_models/{lookml_model_name}/explores/{explore_name}][%d] lookmlModelExploreOK  %+v", 200, o.Payload)
+}
+
+func (o *LookmlModelExploreOK) GetPayload() *models.LookmlModelExplore {
+	return o.Payload
 }
 
 func (o *LookmlModelExploreOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -97,6 +98,10 @@ func (o *LookmlModelExploreBadRequest) Error() string {
 	return fmt.Sprintf("[GET /lookml_models/{lookml_model_name}/explores/{explore_name}][%d] lookmlModelExploreBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *LookmlModelExploreBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *LookmlModelExploreBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -124,6 +129,10 @@ type LookmlModelExploreNotFound struct {
 
 func (o *LookmlModelExploreNotFound) Error() string {
 	return fmt.Sprintf("[GET /lookml_models/{lookml_model_name}/explores/{explore_name}][%d] lookmlModelExploreNotFound  %+v", 404, o.Payload)
+}
+
+func (o *LookmlModelExploreNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *LookmlModelExploreNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

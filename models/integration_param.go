@@ -15,6 +15,10 @@ import (
 // swagger:model IntegrationParam
 type IntegrationParam struct {
 
+	// When present, the param represents the oauth url the user will be taken to.
+	// Read Only: true
+	DelegateOauthURL string `json:"delegate_oauth_url,omitempty"`
+
 	// Short description of the parameter.
 	// Read Only: true
 	Description string `json:"description,omitempty"`

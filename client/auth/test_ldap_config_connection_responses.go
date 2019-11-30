@@ -24,28 +24,24 @@ type TestLdapConfigConnectionReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *TestLdapConfigConnectionReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewTestLdapConfigConnectionOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewTestLdapConfigConnectionBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewTestLdapConfigConnectionNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewTestLdapConfigConnectionUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -73,6 +69,10 @@ type TestLdapConfigConnectionOK struct {
 
 func (o *TestLdapConfigConnectionOK) Error() string {
 	return fmt.Sprintf("[PUT /ldap_config/test_connection][%d] testLdapConfigConnectionOK  %+v", 200, o.Payload)
+}
+
+func (o *TestLdapConfigConnectionOK) GetPayload() *models.LDAPConfigTestResult {
+	return o.Payload
 }
 
 func (o *TestLdapConfigConnectionOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -104,6 +104,10 @@ func (o *TestLdapConfigConnectionBadRequest) Error() string {
 	return fmt.Sprintf("[PUT /ldap_config/test_connection][%d] testLdapConfigConnectionBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *TestLdapConfigConnectionBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *TestLdapConfigConnectionBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -133,6 +137,10 @@ func (o *TestLdapConfigConnectionNotFound) Error() string {
 	return fmt.Sprintf("[PUT /ldap_config/test_connection][%d] testLdapConfigConnectionNotFound  %+v", 404, o.Payload)
 }
 
+func (o *TestLdapConfigConnectionNotFound) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *TestLdapConfigConnectionNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -160,6 +168,10 @@ type TestLdapConfigConnectionUnprocessableEntity struct {
 
 func (o *TestLdapConfigConnectionUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[PUT /ldap_config/test_connection][%d] testLdapConfigConnectionUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *TestLdapConfigConnectionUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *TestLdapConfigConnectionUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

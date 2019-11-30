@@ -24,28 +24,24 @@ type CreateOidcTestConfigReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *CreateOidcTestConfigReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewCreateOidcTestConfigOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewCreateOidcTestConfigBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewCreateOidcTestConfigNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewCreateOidcTestConfigUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -73,6 +69,10 @@ type CreateOidcTestConfigOK struct {
 
 func (o *CreateOidcTestConfigOK) Error() string {
 	return fmt.Sprintf("[POST /oidc_test_configs][%d] createOidcTestConfigOK  %+v", 200, o.Payload)
+}
+
+func (o *CreateOidcTestConfigOK) GetPayload() *models.OIDCConfig {
+	return o.Payload
 }
 
 func (o *CreateOidcTestConfigOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -104,6 +104,10 @@ func (o *CreateOidcTestConfigBadRequest) Error() string {
 	return fmt.Sprintf("[POST /oidc_test_configs][%d] createOidcTestConfigBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *CreateOidcTestConfigBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreateOidcTestConfigBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -133,6 +137,10 @@ func (o *CreateOidcTestConfigNotFound) Error() string {
 	return fmt.Sprintf("[POST /oidc_test_configs][%d] createOidcTestConfigNotFound  %+v", 404, o.Payload)
 }
 
+func (o *CreateOidcTestConfigNotFound) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreateOidcTestConfigNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -160,6 +168,10 @@ type CreateOidcTestConfigUnprocessableEntity struct {
 
 func (o *CreateOidcTestConfigUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[POST /oidc_test_configs][%d] createOidcTestConfigUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *CreateOidcTestConfigUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *CreateOidcTestConfigUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

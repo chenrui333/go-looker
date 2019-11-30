@@ -24,28 +24,24 @@ type FetchIntegrationFormReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *FetchIntegrationFormReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewFetchIntegrationFormOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewFetchIntegrationFormBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewFetchIntegrationFormNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewFetchIntegrationFormUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -73,6 +69,10 @@ type FetchIntegrationFormOK struct {
 
 func (o *FetchIntegrationFormOK) Error() string {
 	return fmt.Sprintf("[POST /integrations/{integration_id}/form][%d] fetchIntegrationFormOK  %+v", 200, o.Payload)
+}
+
+func (o *FetchIntegrationFormOK) GetPayload() *models.DataActionForm {
+	return o.Payload
 }
 
 func (o *FetchIntegrationFormOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -104,6 +104,10 @@ func (o *FetchIntegrationFormBadRequest) Error() string {
 	return fmt.Sprintf("[POST /integrations/{integration_id}/form][%d] fetchIntegrationFormBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *FetchIntegrationFormBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *FetchIntegrationFormBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -133,6 +137,10 @@ func (o *FetchIntegrationFormNotFound) Error() string {
 	return fmt.Sprintf("[POST /integrations/{integration_id}/form][%d] fetchIntegrationFormNotFound  %+v", 404, o.Payload)
 }
 
+func (o *FetchIntegrationFormNotFound) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *FetchIntegrationFormNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -160,6 +168,10 @@ type FetchIntegrationFormUnprocessableEntity struct {
 
 func (o *FetchIntegrationFormUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[POST /integrations/{integration_id}/form][%d] fetchIntegrationFormUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *FetchIntegrationFormUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *FetchIntegrationFormUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

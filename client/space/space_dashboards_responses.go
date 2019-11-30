@@ -24,21 +24,18 @@ type SpaceDashboardsReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *SpaceDashboardsReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewSpaceDashboardsOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewSpaceDashboardsBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewSpaceDashboardsNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *SpaceDashboardsOK) Error() string {
 	return fmt.Sprintf("[GET /spaces/{space_id}/dashboards][%d] spaceDashboardsOK  %+v", 200, o.Payload)
 }
 
+func (o *SpaceDashboardsOK) GetPayload() []*models.Dashboard {
+	return o.Payload
+}
+
 func (o *SpaceDashboardsOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type SpaceDashboardsBadRequest struct {
 
 func (o *SpaceDashboardsBadRequest) Error() string {
 	return fmt.Sprintf("[GET /spaces/{space_id}/dashboards][%d] spaceDashboardsBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *SpaceDashboardsBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *SpaceDashboardsBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type SpaceDashboardsNotFound struct {
 
 func (o *SpaceDashboardsNotFound) Error() string {
 	return fmt.Sprintf("[GET /spaces/{space_id}/dashboards][%d] spaceDashboardsNotFound  %+v", 404, o.Payload)
+}
+
+func (o *SpaceDashboardsNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *SpaceDashboardsNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

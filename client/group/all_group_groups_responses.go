@@ -24,21 +24,18 @@ type AllGroupGroupsReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *AllGroupGroupsReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewAllGroupGroupsOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewAllGroupGroupsBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewAllGroupGroupsNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *AllGroupGroupsOK) Error() string {
 	return fmt.Sprintf("[GET /groups/{group_id}/groups][%d] allGroupGroupsOK  %+v", 200, o.Payload)
 }
 
+func (o *AllGroupGroupsOK) GetPayload() []*models.Group {
+	return o.Payload
+}
+
 func (o *AllGroupGroupsOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type AllGroupGroupsBadRequest struct {
 
 func (o *AllGroupGroupsBadRequest) Error() string {
 	return fmt.Sprintf("[GET /groups/{group_id}/groups][%d] allGroupGroupsBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *AllGroupGroupsBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *AllGroupGroupsBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type AllGroupGroupsNotFound struct {
 
 func (o *AllGroupGroupsNotFound) Error() string {
 	return fmt.Sprintf("[GET /groups/{group_id}/groups][%d] allGroupGroupsNotFound  %+v", 404, o.Payload)
+}
+
+func (o *AllGroupGroupsNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *AllGroupGroupsNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

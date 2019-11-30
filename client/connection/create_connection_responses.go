@@ -24,35 +24,30 @@ type CreateConnectionReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *CreateConnectionReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewCreateConnectionOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewCreateConnectionBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewCreateConnectionNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 409:
 		result := NewCreateConnectionConflict()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewCreateConnectionUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -80,6 +75,10 @@ type CreateConnectionOK struct {
 
 func (o *CreateConnectionOK) Error() string {
 	return fmt.Sprintf("[POST /connections][%d] createConnectionOK  %+v", 200, o.Payload)
+}
+
+func (o *CreateConnectionOK) GetPayload() *models.DBConnection {
+	return o.Payload
 }
 
 func (o *CreateConnectionOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -111,6 +110,10 @@ func (o *CreateConnectionBadRequest) Error() string {
 	return fmt.Sprintf("[POST /connections][%d] createConnectionBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *CreateConnectionBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreateConnectionBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -138,6 +141,10 @@ type CreateConnectionNotFound struct {
 
 func (o *CreateConnectionNotFound) Error() string {
 	return fmt.Sprintf("[POST /connections][%d] createConnectionNotFound  %+v", 404, o.Payload)
+}
+
+func (o *CreateConnectionNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *CreateConnectionNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -169,6 +176,10 @@ func (o *CreateConnectionConflict) Error() string {
 	return fmt.Sprintf("[POST /connections][%d] createConnectionConflict  %+v", 409, o.Payload)
 }
 
+func (o *CreateConnectionConflict) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreateConnectionConflict) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -196,6 +207,10 @@ type CreateConnectionUnprocessableEntity struct {
 
 func (o *CreateConnectionUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[POST /connections][%d] createConnectionUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *CreateConnectionUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *CreateConnectionUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

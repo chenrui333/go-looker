@@ -6,10 +6,9 @@ package user
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"net/http"
 	"time"
-
-	"golang.org/x/net/context"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
@@ -64,22 +63,22 @@ for the search users operation typically these are written to a http.Request
 type SearchUsersParams struct {
 
 	/*ContentMetadataID
-	  Id of content metadata to which users must have access
+	  Search for users who have access to this content_metadata item
 
 	*/
 	ContentMetadataID *int64
 	/*Email
-	  Match Email Address.
+	  Search for the user with this email address
 
 	*/
 	Email *string
 	/*Fields
-	  Requested fields.
+	  Include only these fields in the response
 
 	*/
 	Fields *string
 	/*FilterOr
-	  Do an OR search with parameters
+	  Combine given search criteria in a boolean OR expression
 
 	*/
 	FilterOr *bool
@@ -89,7 +88,7 @@ type SearchUsersParams struct {
 	*/
 	FirstName *string
 	/*GroupID
-	  Id of group of which users must be directly members
+	  Search for users who are direct members of this group
 
 	*/
 	GroupID *int64
@@ -99,7 +98,7 @@ type SearchUsersParams struct {
 	*/
 	ID *int64
 	/*IsDisabled
-	  Match Is disabled.
+	  Search for disabled user accounts
 
 	*/
 	IsDisabled *bool
@@ -109,12 +108,12 @@ type SearchUsersParams struct {
 	*/
 	LastName *string
 	/*Page
-	  Requested page.
+	  Return only page N of paginated results
 
 	*/
 	Page *int64
 	/*PerPage
-	  Results per page.
+	  Return N rows of data per page
 
 	*/
 	PerPage *int64
@@ -124,7 +123,7 @@ type SearchUsersParams struct {
 	*/
 	Sorts *string
 	/*VerifiedLookerEmployee
-	  Match Verified Looker employee.
+	  Search for user accounts associated with Looker employees
 
 	*/
 	VerifiedLookerEmployee *bool

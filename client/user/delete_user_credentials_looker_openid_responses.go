@@ -24,21 +24,18 @@ type DeleteUserCredentialsLookerOpenidReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *DeleteUserCredentialsLookerOpenidReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 204:
 		result := NewDeleteUserCredentialsLookerOpenidNoContent()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewDeleteUserCredentialsLookerOpenidBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewDeleteUserCredentialsLookerOpenidNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *DeleteUserCredentialsLookerOpenidNoContent) Error() string {
 	return fmt.Sprintf("[DELETE /users/{user_id}/credentials_looker_openid][%d] deleteUserCredentialsLookerOpenidNoContent  %+v", 204, o.Payload)
 }
 
+func (o *DeleteUserCredentialsLookerOpenidNoContent) GetPayload() string {
+	return o.Payload
+}
+
 func (o *DeleteUserCredentialsLookerOpenidNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type DeleteUserCredentialsLookerOpenidBadRequest struct {
 
 func (o *DeleteUserCredentialsLookerOpenidBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /users/{user_id}/credentials_looker_openid][%d] deleteUserCredentialsLookerOpenidBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *DeleteUserCredentialsLookerOpenidBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteUserCredentialsLookerOpenidBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type DeleteUserCredentialsLookerOpenidNotFound struct {
 
 func (o *DeleteUserCredentialsLookerOpenidNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /users/{user_id}/credentials_looker_openid][%d] deleteUserCredentialsLookerOpenidNotFound  %+v", 404, o.Payload)
+}
+
+func (o *DeleteUserCredentialsLookerOpenidNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteUserCredentialsLookerOpenidNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

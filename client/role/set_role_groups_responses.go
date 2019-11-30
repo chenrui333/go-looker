@@ -24,28 +24,24 @@ type SetRoleGroupsReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *SetRoleGroupsReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewSetRoleGroupsOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewSetRoleGroupsBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewSetRoleGroupsNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewSetRoleGroupsUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -75,6 +71,10 @@ func (o *SetRoleGroupsOK) Error() string {
 	return fmt.Sprintf("[PUT /roles/{role_id}/groups][%d] setRoleGroupsOK  %+v", 200, o.Payload)
 }
 
+func (o *SetRoleGroupsOK) GetPayload() []*models.Group {
+	return o.Payload
+}
+
 func (o *SetRoleGroupsOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -100,6 +100,10 @@ type SetRoleGroupsBadRequest struct {
 
 func (o *SetRoleGroupsBadRequest) Error() string {
 	return fmt.Sprintf("[PUT /roles/{role_id}/groups][%d] setRoleGroupsBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *SetRoleGroupsBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *SetRoleGroupsBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -131,6 +135,10 @@ func (o *SetRoleGroupsNotFound) Error() string {
 	return fmt.Sprintf("[PUT /roles/{role_id}/groups][%d] setRoleGroupsNotFound  %+v", 404, o.Payload)
 }
 
+func (o *SetRoleGroupsNotFound) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *SetRoleGroupsNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -158,6 +166,10 @@ type SetRoleGroupsUnprocessableEntity struct {
 
 func (o *SetRoleGroupsUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[PUT /roles/{role_id}/groups][%d] setRoleGroupsUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *SetRoleGroupsUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *SetRoleGroupsUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

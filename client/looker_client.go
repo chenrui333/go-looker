@@ -13,12 +13,14 @@ import (
 
 	"github.com/chenrui333/go-looker/client/api_auth"
 	"github.com/chenrui333/go-looker/client/auth"
+	"github.com/chenrui333/go-looker/client/color_collection"
 	"github.com/chenrui333/go-looker/client/config"
 	"github.com/chenrui333/go-looker/client/connection"
 	"github.com/chenrui333/go-looker/client/content"
 	"github.com/chenrui333/go-looker/client/dashboard"
 	"github.com/chenrui333/go-looker/client/data_action"
 	"github.com/chenrui333/go-looker/client/datagroup"
+	"github.com/chenrui333/go-looker/client/folder"
 	"github.com/chenrui333/go-looker/client/group"
 	"github.com/chenrui333/go-looker/client/homepage"
 	"github.com/chenrui333/go-looker/client/integration"
@@ -28,11 +30,10 @@ import (
 	"github.com/chenrui333/go-looker/client/query"
 	"github.com/chenrui333/go-looker/client/render_task"
 	"github.com/chenrui333/go-looker/client/role"
-	"github.com/chenrui333/go-looker/client/running_queries"
 	"github.com/chenrui333/go-looker/client/scheduled_plan"
 	"github.com/chenrui333/go-looker/client/session"
 	"github.com/chenrui333/go-looker/client/space"
-	"github.com/chenrui333/go-looker/client/sql_query"
+	"github.com/chenrui333/go-looker/client/theme"
 	"github.com/chenrui333/go-looker/client/user"
 	"github.com/chenrui333/go-looker/client/user_attribute"
 	"github.com/chenrui333/go-looker/client/workspace"
@@ -47,7 +48,7 @@ const (
 	DefaultHost string = "meetup.looker.com:19999"
 	// DefaultBasePath is the default BasePath
 	// found in Meta (info) section of spec file
-	DefaultBasePath string = "/api/3.0"
+	DefaultBasePath string = "/api/3.1"
 )
 
 // DefaultSchemes are the default schemes found in Meta (info) section of spec file
@@ -85,6 +86,8 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *Looker {
 
 	cli.Auth = auth.New(transport, formats)
 
+	cli.ColorCollection = color_collection.New(transport, formats)
+
 	cli.Config = config.New(transport, formats)
 
 	cli.Connection = connection.New(transport, formats)
@@ -96,6 +99,8 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *Looker {
 	cli.DataAction = data_action.New(transport, formats)
 
 	cli.Datagroup = datagroup.New(transport, formats)
+
+	cli.Folder = folder.New(transport, formats)
 
 	cli.Group = group.New(transport, formats)
 
@@ -115,15 +120,13 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *Looker {
 
 	cli.Role = role.New(transport, formats)
 
-	cli.RunningQueries = running_queries.New(transport, formats)
-
 	cli.ScheduledPlan = scheduled_plan.New(transport, formats)
 
 	cli.Session = session.New(transport, formats)
 
 	cli.Space = space.New(transport, formats)
 
-	cli.SQLQuery = sql_query.New(transport, formats)
+	cli.Theme = theme.New(transport, formats)
 
 	cli.User = user.New(transport, formats)
 
@@ -179,6 +182,8 @@ type Looker struct {
 
 	Auth *auth.Client
 
+	ColorCollection *color_collection.Client
+
 	Config *config.Client
 
 	Connection *connection.Client
@@ -190,6 +195,8 @@ type Looker struct {
 	DataAction *data_action.Client
 
 	Datagroup *datagroup.Client
+
+	Folder *folder.Client
 
 	Group *group.Client
 
@@ -209,15 +216,13 @@ type Looker struct {
 
 	Role *role.Client
 
-	RunningQueries *running_queries.Client
-
 	ScheduledPlan *scheduled_plan.Client
 
 	Session *session.Client
 
 	Space *space.Client
 
-	SQLQuery *sql_query.Client
+	Theme *theme.Client
 
 	User *user.Client
 
@@ -236,6 +241,8 @@ func (c *Looker) SetTransport(transport runtime.ClientTransport) {
 
 	c.Auth.SetTransport(transport)
 
+	c.ColorCollection.SetTransport(transport)
+
 	c.Config.SetTransport(transport)
 
 	c.Connection.SetTransport(transport)
@@ -247,6 +254,8 @@ func (c *Looker) SetTransport(transport runtime.ClientTransport) {
 	c.DataAction.SetTransport(transport)
 
 	c.Datagroup.SetTransport(transport)
+
+	c.Folder.SetTransport(transport)
 
 	c.Group.SetTransport(transport)
 
@@ -266,15 +275,13 @@ func (c *Looker) SetTransport(transport runtime.ClientTransport) {
 
 	c.Role.SetTransport(transport)
 
-	c.RunningQueries.SetTransport(transport)
-
 	c.ScheduledPlan.SetTransport(transport)
 
 	c.Session.SetTransport(transport)
 
 	c.Space.SetTransport(transport)
 
-	c.SQLQuery.SetTransport(transport)
+	c.Theme.SetTransport(transport)
 
 	c.User.SetTransport(transport)
 

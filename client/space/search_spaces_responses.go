@@ -24,21 +24,18 @@ type SearchSpacesReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *SearchSpacesReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewSearchSpacesOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewSearchSpacesBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewSearchSpacesNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *SearchSpacesOK) Error() string {
 	return fmt.Sprintf("[GET /spaces/search][%d] searchSpacesOK  %+v", 200, o.Payload)
 }
 
+func (o *SearchSpacesOK) GetPayload() []*models.Space {
+	return o.Payload
+}
+
 func (o *SearchSpacesOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type SearchSpacesBadRequest struct {
 
 func (o *SearchSpacesBadRequest) Error() string {
 	return fmt.Sprintf("[GET /spaces/search][%d] searchSpacesBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *SearchSpacesBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *SearchSpacesBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type SearchSpacesNotFound struct {
 
 func (o *SearchSpacesNotFound) Error() string {
 	return fmt.Sprintf("[GET /spaces/search][%d] searchSpacesNotFound  %+v", 404, o.Payload)
+}
+
+func (o *SearchSpacesNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *SearchSpacesNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

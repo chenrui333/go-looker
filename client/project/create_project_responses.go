@@ -24,28 +24,24 @@ type CreateProjectReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *CreateProjectReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewCreateProjectOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewCreateProjectBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewCreateProjectNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewCreateProjectUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -73,6 +69,10 @@ type CreateProjectOK struct {
 
 func (o *CreateProjectOK) Error() string {
 	return fmt.Sprintf("[POST /projects][%d] createProjectOK  %+v", 200, o.Payload)
+}
+
+func (o *CreateProjectOK) GetPayload() *models.Project {
+	return o.Payload
 }
 
 func (o *CreateProjectOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -104,6 +104,10 @@ func (o *CreateProjectBadRequest) Error() string {
 	return fmt.Sprintf("[POST /projects][%d] createProjectBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *CreateProjectBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreateProjectBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -133,6 +137,10 @@ func (o *CreateProjectNotFound) Error() string {
 	return fmt.Sprintf("[POST /projects][%d] createProjectNotFound  %+v", 404, o.Payload)
 }
 
+func (o *CreateProjectNotFound) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreateProjectNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -160,6 +168,10 @@ type CreateProjectUnprocessableEntity struct {
 
 func (o *CreateProjectUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[POST /projects][%d] createProjectUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *CreateProjectUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *CreateProjectUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

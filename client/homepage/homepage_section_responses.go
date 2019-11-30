@@ -24,21 +24,18 @@ type HomepageSectionReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *HomepageSectionReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewHomepageSectionOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewHomepageSectionBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewHomepageSectionNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -66,6 +63,10 @@ type HomepageSectionOK struct {
 
 func (o *HomepageSectionOK) Error() string {
 	return fmt.Sprintf("[GET /homepage_sections/{homepage_section_id}][%d] homepageSectionOK  %+v", 200, o.Payload)
+}
+
+func (o *HomepageSectionOK) GetPayload() *models.HomepageSection {
+	return o.Payload
 }
 
 func (o *HomepageSectionOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -97,6 +98,10 @@ func (o *HomepageSectionBadRequest) Error() string {
 	return fmt.Sprintf("[GET /homepage_sections/{homepage_section_id}][%d] homepageSectionBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *HomepageSectionBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *HomepageSectionBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -124,6 +129,10 @@ type HomepageSectionNotFound struct {
 
 func (o *HomepageSectionNotFound) Error() string {
 	return fmt.Sprintf("[GET /homepage_sections/{homepage_section_id}][%d] homepageSectionNotFound  %+v", 404, o.Payload)
+}
+
+func (o *HomepageSectionNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *HomepageSectionNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

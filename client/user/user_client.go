@@ -6,6 +6,8 @@ package user
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"fmt"
+
 	"github.com/go-openapi/runtime"
 
 	strfmt "github.com/go-openapi/strfmt"
@@ -25,44 +27,14 @@ type Client struct {
 }
 
 /*
-AllUserAccessFilters gets all access filters
-
-### NOTE: this feature is completely end of life and has been removed from the product.
-*/
-func (a *Client) AllUserAccessFilters(params *AllUserAccessFiltersParams) (*AllUserAccessFiltersOK, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewAllUserAccessFiltersParams()
-	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "all_user_access_filters",
-		Method:             "GET",
-		PathPattern:        "/users/{user_id}/access_filters",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"https"},
-		Params:             params,
-		Reader:             &AllUserAccessFiltersReader{formats: a.formats},
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, err
-	}
-	return result.(*AllUserAccessFiltersOK), nil
-
-}
-
-/*
-AllUserCredentialsAPI3S gets all API 3 credentials
+AllUserCredentialsApi3s gets all API 3 credentials
 
 ### API 3 login information for the specified user. This is for the newer API keys that can be added for any user.
 */
-func (a *Client) AllUserCredentialsAPI3S(params *AllUserCredentialsAPI3SParams) (*AllUserCredentialsAPI3SOK, error) {
+func (a *Client) AllUserCredentialsApi3s(params *AllUserCredentialsApi3sParams) (*AllUserCredentialsApi3sOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewAllUserCredentialsAPI3SParams()
+		params = NewAllUserCredentialsApi3sParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
@@ -73,15 +45,21 @@ func (a *Client) AllUserCredentialsAPI3S(params *AllUserCredentialsAPI3SParams) 
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},
 		Params:             params,
-		Reader:             &AllUserCredentialsAPI3SReader{formats: a.formats},
+		Reader:             &AllUserCredentialsApi3sReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
-	return result.(*AllUserCredentialsAPI3SOK), nil
-
+	success, ok := result.(*AllUserCredentialsApi3sOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for all_user_credentials_api3s: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -110,8 +88,14 @@ func (a *Client) AllUserCredentialsEmbeds(params *AllUserCredentialsEmbedsParams
 	if err != nil {
 		return nil, err
 	}
-	return result.(*AllUserCredentialsEmbedsOK), nil
-
+	success, ok := result.(*AllUserCredentialsEmbedsOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for all_user_credentials_embeds: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -140,8 +124,14 @@ func (a *Client) AllUserSessions(params *AllUserSessionsParams) (*AllUserSession
 	if err != nil {
 		return nil, err
 	}
-	return result.(*AllUserSessionsOK), nil
-
+	success, ok := result.(*AllUserSessionsOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for all_user_sessions: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -171,8 +161,14 @@ func (a *Client) AllUsers(params *AllUsersParams) (*AllUsersOK, error) {
 	if err != nil {
 		return nil, err
 	}
-	return result.(*AllUsersOK), nil
-
+	success, ok := result.(*AllUsersOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for all_users: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -202,70 +198,14 @@ func (a *Client) CreateUser(params *CreateUserParams) (*CreateUserOK, error) {
 	if err != nil {
 		return nil, err
 	}
-	return result.(*CreateUserOK), nil
-
-}
-
-/*
-CreateUserAccessFilter creates access filter
-
-### NOTE: this feature is completely end of life and has been removed from the product.
-*/
-func (a *Client) CreateUserAccessFilter(params *CreateUserAccessFilterParams) (*CreateUserAccessFilterOK, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewCreateUserAccessFilterParams()
+	success, ok := result.(*CreateUserOK)
+	if ok {
+		return success, nil
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "create_user_access_filter",
-		Method:             "POST",
-		PathPattern:        "/users/{user_id}/access_filters",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"https"},
-		Params:             params,
-		Reader:             &CreateUserAccessFilterReader{formats: a.formats},
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, err
-	}
-	return result.(*CreateUserAccessFilterOK), nil
-
-}
-
-/*
-CreateUserCredentialsAPI creates API credential
-
-### Create API Credential.
-SUPPORT FOR THIS HAS BEEN REMOVED.
-
-*/
-func (a *Client) CreateUserCredentialsAPI(params *CreateUserCredentialsAPIParams) (*CreateUserCredentialsAPIOK, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewCreateUserCredentialsAPIParams()
-	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "create_user_credentials_api",
-		Method:             "POST",
-		PathPattern:        "/users/{user_id}/credentials_api",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"https"},
-		Params:             params,
-		Reader:             &CreateUserCredentialsAPIReader{formats: a.formats},
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, err
-	}
-	return result.(*CreateUserCredentialsAPIOK), nil
-
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for create_user: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -294,8 +234,14 @@ func (a *Client) CreateUserCredentialsApi3(params *CreateUserCredentialsApi3Para
 	if err != nil {
 		return nil, err
 	}
-	return result.(*CreateUserCredentialsApi3OK), nil
-
+	success, ok := result.(*CreateUserCredentialsApi3OK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for create_user_credentials_api3: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -324,8 +270,14 @@ func (a *Client) CreateUserCredentialsEmail(params *CreateUserCredentialsEmailPa
 	if err != nil {
 		return nil, err
 	}
-	return result.(*CreateUserCredentialsEmailOK), nil
-
+	success, ok := result.(*CreateUserCredentialsEmailOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for create_user_credentials_email: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -363,8 +315,14 @@ func (a *Client) CreateUserCredentialsEmailPasswordReset(params *CreateUserCrede
 	if err != nil {
 		return nil, err
 	}
-	return result.(*CreateUserCredentialsEmailPasswordResetOK), nil
-
+	success, ok := result.(*CreateUserCredentialsEmailPasswordResetOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for create_user_credentials_email_password_reset: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -393,8 +351,14 @@ func (a *Client) CreateUserCredentialsTotp(params *CreateUserCredentialsTotpPara
 	if err != nil {
 		return nil, err
 	}
-	return result.(*CreateUserCredentialsTotpOK), nil
-
+	success, ok := result.(*CreateUserCredentialsTotpOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for create_user_credentials_totp: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -426,38 +390,14 @@ func (a *Client) DeleteUser(params *DeleteUserParams) (*DeleteUserNoContent, err
 	if err != nil {
 		return nil, err
 	}
-	return result.(*DeleteUserNoContent), nil
-
-}
-
-/*
-DeleteUserAccessFilter deletes access filter
-
-### NOTE: this feature is completely end of life and has been removed from the product.
-*/
-func (a *Client) DeleteUserAccessFilter(params *DeleteUserAccessFilterParams) (*DeleteUserAccessFilterNoContent, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewDeleteUserAccessFilterParams()
+	success, ok := result.(*DeleteUserNoContent)
+	if ok {
+		return success, nil
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "delete_user_access_filter",
-		Method:             "DELETE",
-		PathPattern:        "/users/{user_id}/access_filters/{access_filter_id}",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"https"},
-		Params:             params,
-		Reader:             &DeleteUserAccessFilterReader{formats: a.formats},
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, err
-	}
-	return result.(*DeleteUserAccessFilterNoContent), nil
-
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for delete_user: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -492,38 +432,14 @@ func (a *Client) DeleteUserAttributeUserValue(params *DeleteUserAttributeUserVal
 	if err != nil {
 		return nil, err
 	}
-	return result.(*DeleteUserAttributeUserValueNoContent), nil
-
-}
-
-/*
-DeleteUserCredentialsAPI deletes API credential
-
-### API login information for the specified user. This is for 'API Users' used for the 'old' query API. THIS SUPPORT HAS BEEN REMOVED.
-*/
-func (a *Client) DeleteUserCredentialsAPI(params *DeleteUserCredentialsAPIParams) (*DeleteUserCredentialsAPINoContent, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewDeleteUserCredentialsAPIParams()
+	success, ok := result.(*DeleteUserAttributeUserValueNoContent)
+	if ok {
+		return success, nil
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "delete_user_credentials_api",
-		Method:             "DELETE",
-		PathPattern:        "/users/{user_id}/credentials_api",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"https"},
-		Params:             params,
-		Reader:             &DeleteUserCredentialsAPIReader{formats: a.formats},
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, err
-	}
-	return result.(*DeleteUserCredentialsAPINoContent), nil
-
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for delete_user_attribute_user_value: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -552,8 +468,14 @@ func (a *Client) DeleteUserCredentialsApi3(params *DeleteUserCredentialsApi3Para
 	if err != nil {
 		return nil, err
 	}
-	return result.(*DeleteUserCredentialsApi3NoContent), nil
-
+	success, ok := result.(*DeleteUserCredentialsApi3NoContent)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for delete_user_credentials_api3: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -582,8 +504,14 @@ func (a *Client) DeleteUserCredentialsEmail(params *DeleteUserCredentialsEmailPa
 	if err != nil {
 		return nil, err
 	}
-	return result.(*DeleteUserCredentialsEmailNoContent), nil
-
+	success, ok := result.(*DeleteUserCredentialsEmailNoContent)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for delete_user_credentials_email: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -612,8 +540,14 @@ func (a *Client) DeleteUserCredentialsEmbed(params *DeleteUserCredentialsEmbedPa
 	if err != nil {
 		return nil, err
 	}
-	return result.(*DeleteUserCredentialsEmbedNoContent), nil
-
+	success, ok := result.(*DeleteUserCredentialsEmbedNoContent)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for delete_user_credentials_embed: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -642,8 +576,14 @@ func (a *Client) DeleteUserCredentialsGoogle(params *DeleteUserCredentialsGoogle
 	if err != nil {
 		return nil, err
 	}
-	return result.(*DeleteUserCredentialsGoogleNoContent), nil
-
+	success, ok := result.(*DeleteUserCredentialsGoogleNoContent)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for delete_user_credentials_google: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -672,8 +612,14 @@ func (a *Client) DeleteUserCredentialsLdap(params *DeleteUserCredentialsLdapPara
 	if err != nil {
 		return nil, err
 	}
-	return result.(*DeleteUserCredentialsLdapNoContent), nil
-
+	success, ok := result.(*DeleteUserCredentialsLdapNoContent)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for delete_user_credentials_ldap: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -702,8 +648,14 @@ func (a *Client) DeleteUserCredentialsLookerOpenid(params *DeleteUserCredentials
 	if err != nil {
 		return nil, err
 	}
-	return result.(*DeleteUserCredentialsLookerOpenidNoContent), nil
-
+	success, ok := result.(*DeleteUserCredentialsLookerOpenidNoContent)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for delete_user_credentials_looker_openid: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -732,8 +684,14 @@ func (a *Client) DeleteUserCredentialsOidc(params *DeleteUserCredentialsOidcPara
 	if err != nil {
 		return nil, err
 	}
-	return result.(*DeleteUserCredentialsOidcNoContent), nil
-
+	success, ok := result.(*DeleteUserCredentialsOidcNoContent)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for delete_user_credentials_oidc: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -762,8 +720,14 @@ func (a *Client) DeleteUserCredentialsSaml(params *DeleteUserCredentialsSamlPara
 	if err != nil {
 		return nil, err
 	}
-	return result.(*DeleteUserCredentialsSamlNoContent), nil
-
+	success, ok := result.(*DeleteUserCredentialsSamlNoContent)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for delete_user_credentials_saml: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -792,8 +756,14 @@ func (a *Client) DeleteUserCredentialsTotp(params *DeleteUserCredentialsTotpPara
 	if err != nil {
 		return nil, err
 	}
-	return result.(*DeleteUserCredentialsTotpNoContent), nil
-
+	success, ok := result.(*DeleteUserCredentialsTotpNoContent)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for delete_user_credentials_totp: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -822,8 +792,14 @@ func (a *Client) DeleteUserSession(params *DeleteUserSessionParams) (*DeleteUser
 	if err != nil {
 		return nil, err
 	}
-	return result.(*DeleteUserSessionNoContent), nil
-
+	success, ok := result.(*DeleteUserSessionNoContent)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for delete_user_session: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -853,14 +829,50 @@ func (a *Client) Me(params *MeParams) (*MeOK, error) {
 	if err != nil {
 		return nil, err
 	}
-	return result.(*MeOK), nil
-
+	success, ok := result.(*MeOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for me: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
 SearchUsers searches users
 
-### Search users.
+### Search users
+
+Returns all<sup>*</sup> user records that match the given search criteria.
+
+If multiple search params are given and `filter_or` is FALSE or not specified,
+search params are combined in a logical AND operation.
+Only rows that match *all* search param criteria will be returned.
+
+If `filter_or` is TRUE, multiple search params are combined in a logical OR operation.
+Results will include rows that match **any** of the search criteria.
+
+String search params use case-insensitive matching.
+String search params can contain `%` and '_' as SQL LIKE pattern match wildcard expressions.
+example="dan%" will match "danger" and "Danzig" but not "David"
+example="D_m%" will match "Damage" and "dump"
+
+Integer search params can accept a single value or a comma separated list of values. The multiple
+values will be combined under a logical OR operation - results will match at least one of
+the given values.
+
+Most search params can accept "IS NULL" and "NOT NULL" as special expressions to match
+or exclude (respectively) rows where the column is null.
+
+Boolean search params accept only "true" and "false" as values.
+
+
+(<sup>*</sup>) Results are always filtered to the level of information the caller is permitted to view.
+Looker admins can see all user details; normal users in an open system can see
+names of other users but no details; normal users in a closed system can only see
+names of other users who are members of the same group as the user.
+
 
 */
 func (a *Client) SearchUsers(params *SearchUsersParams) (*SearchUsersOK, error) {
@@ -884,16 +896,25 @@ func (a *Client) SearchUsers(params *SearchUsersParams) (*SearchUsersOK, error) 
 	if err != nil {
 		return nil, err
 	}
-	return result.(*SearchUsersOK), nil
-
+	success, ok := result.(*SearchUsersOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for search_users: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
 SearchUsersNames searches user names
 
-### Search users where first_name OR last_name OR email matches a string.
+### Search for user accounts by name
 
-The results will be AND'd with any additional search parameters that are (optionally) included.
+Returns all user accounts where `first_name` OR `last_name` OR `email` field values match a pattern.
+The pattern can contain `%` and `_` wildcards as in SQL LIKE expressions.
+
+Any additional search params will be combined into a logical AND expression.
 
 */
 func (a *Client) SearchUsersNames(params *SearchUsersNamesParams) (*SearchUsersNamesOK, error) {
@@ -917,8 +938,14 @@ func (a *Client) SearchUsersNames(params *SearchUsersNamesParams) (*SearchUsersN
 	if err != nil {
 		return nil, err
 	}
-	return result.(*SearchUsersNamesOK), nil
-
+	success, ok := result.(*SearchUsersNamesOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for search_users_names: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -950,8 +977,14 @@ func (a *Client) SetUserAttributeUserValue(params *SetUserAttributeUserValuePara
 	if err != nil {
 		return nil, err
 	}
-	return result.(*SetUserAttributeUserValueOK), nil
-
+	success, ok := result.(*SetUserAttributeUserValueOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for set_user_attribute_user_value: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -981,8 +1014,14 @@ func (a *Client) SetUserRoles(params *SetUserRolesParams) (*SetUserRolesOK, erro
 	if err != nil {
 		return nil, err
 	}
-	return result.(*SetUserRolesOK), nil
-
+	success, ok := result.(*SetUserRolesOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for set_user_roles: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -1012,38 +1051,14 @@ func (a *Client) UpdateUser(params *UpdateUserParams) (*UpdateUserOK, error) {
 	if err != nil {
 		return nil, err
 	}
-	return result.(*UpdateUserOK), nil
-
-}
-
-/*
-UpdateUserAccessFilter updates access filter
-
-### NOTE: this feature is completely end of life and has been removed from the product.
-*/
-func (a *Client) UpdateUserAccessFilter(params *UpdateUserAccessFilterParams) (*UpdateUserAccessFilterOK, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewUpdateUserAccessFilterParams()
+	success, ok := result.(*UpdateUserOK)
+	if ok {
+		return success, nil
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "update_user_access_filter",
-		Method:             "PATCH",
-		PathPattern:        "/users/{user_id}/access_filters/{access_filter_id}",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"https"},
-		Params:             params,
-		Reader:             &UpdateUserAccessFilterReader{formats: a.formats},
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, err
-	}
-	return result.(*UpdateUserAccessFilterOK), nil
-
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for update_user: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -1072,8 +1087,14 @@ func (a *Client) UpdateUserCredentialsEmail(params *UpdateUserCredentialsEmailPa
 	if err != nil {
 		return nil, err
 	}
-	return result.(*UpdateUserCredentialsEmailOK), nil
-
+	success, ok := result.(*UpdateUserCredentialsEmailOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for update_user_credentials_email: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -1107,38 +1128,14 @@ func (a *Client) User(params *UserParams) (*UserOK, error) {
 	if err != nil {
 		return nil, err
 	}
-	return result.(*UserOK), nil
-
-}
-
-/*
-UserAccessFilter gets access filter
-
-### NOTE: this feature is completely end of life and has been removed from the product.
-*/
-func (a *Client) UserAccessFilter(params *UserAccessFilterParams) (*UserAccessFilterOK, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewUserAccessFilterParams()
+	success, ok := result.(*UserOK)
+	if ok {
+		return success, nil
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "user_access_filter",
-		Method:             "GET",
-		PathPattern:        "/users/{user_id}/access_filters/{access_filter_id}",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"https"},
-		Params:             params,
-		Reader:             &UserAccessFilterReader{formats: a.formats},
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, err
-	}
-	return result.(*UserAccessFilterOK), nil
-
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for user: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -1182,38 +1179,14 @@ func (a *Client) UserAttributeUserValues(params *UserAttributeUserValuesParams) 
 	if err != nil {
 		return nil, err
 	}
-	return result.(*UserAttributeUserValuesOK), nil
-
-}
-
-/*
-UserCredentialsAPI gets API credential
-
-### API login information for the specified user. This is for 'API Users' used for the 'old' query API. THIS SUPPORT HAS BEEN REMOVED.
-*/
-func (a *Client) UserCredentialsAPI(params *UserCredentialsAPIParams) (*UserCredentialsAPIOK, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewUserCredentialsAPIParams()
+	success, ok := result.(*UserAttributeUserValuesOK)
+	if ok {
+		return success, nil
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "user_credentials_api",
-		Method:             "GET",
-		PathPattern:        "/users/{user_id}/credentials_api",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"https"},
-		Params:             params,
-		Reader:             &UserCredentialsAPIReader{formats: a.formats},
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, err
-	}
-	return result.(*UserCredentialsAPIOK), nil
-
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for user_attribute_user_values: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -1242,8 +1215,14 @@ func (a *Client) UserCredentialsApi3(params *UserCredentialsApi3Params) (*UserCr
 	if err != nil {
 		return nil, err
 	}
-	return result.(*UserCredentialsApi3OK), nil
-
+	success, ok := result.(*UserCredentialsApi3OK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for user_credentials_api3: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -1272,8 +1251,14 @@ func (a *Client) UserCredentialsEmail(params *UserCredentialsEmailParams) (*User
 	if err != nil {
 		return nil, err
 	}
-	return result.(*UserCredentialsEmailOK), nil
-
+	success, ok := result.(*UserCredentialsEmailOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for user_credentials_email: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -1302,8 +1287,14 @@ func (a *Client) UserCredentialsEmbed(params *UserCredentialsEmbedParams) (*User
 	if err != nil {
 		return nil, err
 	}
-	return result.(*UserCredentialsEmbedOK), nil
-
+	success, ok := result.(*UserCredentialsEmbedOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for user_credentials_embed: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -1332,8 +1323,14 @@ func (a *Client) UserCredentialsGoogle(params *UserCredentialsGoogleParams) (*Us
 	if err != nil {
 		return nil, err
 	}
-	return result.(*UserCredentialsGoogleOK), nil
-
+	success, ok := result.(*UserCredentialsGoogleOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for user_credentials_google: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -1362,8 +1359,14 @@ func (a *Client) UserCredentialsLdap(params *UserCredentialsLdapParams) (*UserCr
 	if err != nil {
 		return nil, err
 	}
-	return result.(*UserCredentialsLdapOK), nil
-
+	success, ok := result.(*UserCredentialsLdapOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for user_credentials_ldap: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -1392,8 +1395,14 @@ func (a *Client) UserCredentialsLookerOpenid(params *UserCredentialsLookerOpenid
 	if err != nil {
 		return nil, err
 	}
-	return result.(*UserCredentialsLookerOpenidOK), nil
-
+	success, ok := result.(*UserCredentialsLookerOpenidOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for user_credentials_looker_openid: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -1422,8 +1431,14 @@ func (a *Client) UserCredentialsOidc(params *UserCredentialsOidcParams) (*UserCr
 	if err != nil {
 		return nil, err
 	}
-	return result.(*UserCredentialsOidcOK), nil
-
+	success, ok := result.(*UserCredentialsOidcOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for user_credentials_oidc: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -1452,8 +1467,14 @@ func (a *Client) UserCredentialsSaml(params *UserCredentialsSamlParams) (*UserCr
 	if err != nil {
 		return nil, err
 	}
-	return result.(*UserCredentialsSamlOK), nil
-
+	success, ok := result.(*UserCredentialsSamlOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for user_credentials_saml: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -1482,8 +1503,14 @@ func (a *Client) UserCredentialsTotp(params *UserCredentialsTotpParams) (*UserCr
 	if err != nil {
 		return nil, err
 	}
-	return result.(*UserCredentialsTotpOK), nil
-
+	success, ok := result.(*UserCredentialsTotpOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for user_credentials_totp: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -1516,7 +1543,7 @@ which field in the given credential type is actually searched when finding a use
 | embed            | external_user_id |
 | looker_openid    | email            |
 
-NOTE: 'api' is the legacy Looker query API. The API you are currently looking at is 'api3'.
+NOTE: The 'api' credential type was only used with the legacy Looker query API and is no longer supported. The credential type for API you are currently looking at is 'api3'.
 
 
 */
@@ -1541,14 +1568,20 @@ func (a *Client) UserForCredential(params *UserForCredentialParams) (*UserForCre
 	if err != nil {
 		return nil, err
 	}
-	return result.(*UserForCredentialOK), nil
-
+	success, ok := result.(*UserForCredentialOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for user_for_credential: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
 UserRoles gets user roles
 
-### Get information about roles of the user with a specific id.
+### Get information about roles of a given user
 
 */
 func (a *Client) UserRoles(params *UserRolesParams) (*UserRolesOK, error) {
@@ -1572,8 +1605,14 @@ func (a *Client) UserRoles(params *UserRolesParams) (*UserRolesOK, error) {
 	if err != nil {
 		return nil, err
 	}
-	return result.(*UserRolesOK), nil
-
+	success, ok := result.(*UserRolesOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for user_roles: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -1602,8 +1641,14 @@ func (a *Client) UserSession(params *UserSessionParams) (*UserSessionOK, error) 
 	if err != nil {
 		return nil, err
 	}
-	return result.(*UserSessionOK), nil
-
+	success, ok := result.(*UserSessionOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for user_session: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 // SetTransport changes the transport on the client

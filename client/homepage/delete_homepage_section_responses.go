@@ -24,21 +24,18 @@ type DeleteHomepageSectionReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *DeleteHomepageSectionReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 204:
 		result := NewDeleteHomepageSectionNoContent()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewDeleteHomepageSectionBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewDeleteHomepageSectionNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *DeleteHomepageSectionNoContent) Error() string {
 	return fmt.Sprintf("[DELETE /homepage_sections/{homepage_section_id}][%d] deleteHomepageSectionNoContent  %+v", 204, o.Payload)
 }
 
+func (o *DeleteHomepageSectionNoContent) GetPayload() string {
+	return o.Payload
+}
+
 func (o *DeleteHomepageSectionNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type DeleteHomepageSectionBadRequest struct {
 
 func (o *DeleteHomepageSectionBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /homepage_sections/{homepage_section_id}][%d] deleteHomepageSectionBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *DeleteHomepageSectionBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteHomepageSectionBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type DeleteHomepageSectionNotFound struct {
 
 func (o *DeleteHomepageSectionNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /homepage_sections/{homepage_section_id}][%d] deleteHomepageSectionNotFound  %+v", 404, o.Payload)
+}
+
+func (o *DeleteHomepageSectionNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteHomepageSectionNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

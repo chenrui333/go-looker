@@ -6,10 +6,9 @@ package project
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"net/http"
 	"time"
-
-	"golang.org/x/net/context"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
@@ -67,6 +66,11 @@ type AllGitConnectionTestsParams struct {
 
 	*/
 	ProjectID string
+	/*RemoteURL
+	  (Optional: leave blank for root project) The remote url for remote dependency to test.
+
+	*/
+	RemoteURL *string
 
 	timeout    time.Duration
 	Context    context.Context
@@ -117,6 +121,17 @@ func (o *AllGitConnectionTestsParams) SetProjectID(projectID string) {
 	o.ProjectID = projectID
 }
 
+// WithRemoteURL adds the remoteURL to the all git connection tests params
+func (o *AllGitConnectionTestsParams) WithRemoteURL(remoteURL *string) *AllGitConnectionTestsParams {
+	o.SetRemoteURL(remoteURL)
+	return o
+}
+
+// SetRemoteURL adds the remoteUrl to the all git connection tests params
+func (o *AllGitConnectionTestsParams) SetRemoteURL(remoteURL *string) {
+	o.RemoteURL = remoteURL
+}
+
 // WriteToRequest writes these params to a swagger request
 func (o *AllGitConnectionTestsParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
@@ -128,6 +143,22 @@ func (o *AllGitConnectionTestsParams) WriteToRequest(r runtime.ClientRequest, re
 	// path param project_id
 	if err := r.SetPathParam("project_id", o.ProjectID); err != nil {
 		return err
+	}
+
+	if o.RemoteURL != nil {
+
+		// query param remote_url
+		var qrRemoteURL string
+		if o.RemoteURL != nil {
+			qrRemoteURL = *o.RemoteURL
+		}
+		qRemoteURL := qrRemoteURL
+		if qRemoteURL != "" {
+			if err := r.SetQueryParam("remote_url", qRemoteURL); err != nil {
+				return err
+			}
+		}
+
 	}
 
 	if len(res) > 0 {

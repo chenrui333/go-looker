@@ -24,35 +24,30 @@ type CreateUserCredentialsEmailReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *CreateUserCredentialsEmailReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewCreateUserCredentialsEmailOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewCreateUserCredentialsEmailBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewCreateUserCredentialsEmailNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 409:
 		result := NewCreateUserCredentialsEmailConflict()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewCreateUserCredentialsEmailUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -80,6 +75,10 @@ type CreateUserCredentialsEmailOK struct {
 
 func (o *CreateUserCredentialsEmailOK) Error() string {
 	return fmt.Sprintf("[POST /users/{user_id}/credentials_email][%d] createUserCredentialsEmailOK  %+v", 200, o.Payload)
+}
+
+func (o *CreateUserCredentialsEmailOK) GetPayload() *models.CredentialsEmail {
+	return o.Payload
 }
 
 func (o *CreateUserCredentialsEmailOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -111,6 +110,10 @@ func (o *CreateUserCredentialsEmailBadRequest) Error() string {
 	return fmt.Sprintf("[POST /users/{user_id}/credentials_email][%d] createUserCredentialsEmailBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *CreateUserCredentialsEmailBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreateUserCredentialsEmailBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -138,6 +141,10 @@ type CreateUserCredentialsEmailNotFound struct {
 
 func (o *CreateUserCredentialsEmailNotFound) Error() string {
 	return fmt.Sprintf("[POST /users/{user_id}/credentials_email][%d] createUserCredentialsEmailNotFound  %+v", 404, o.Payload)
+}
+
+func (o *CreateUserCredentialsEmailNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *CreateUserCredentialsEmailNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -169,6 +176,10 @@ func (o *CreateUserCredentialsEmailConflict) Error() string {
 	return fmt.Sprintf("[POST /users/{user_id}/credentials_email][%d] createUserCredentialsEmailConflict  %+v", 409, o.Payload)
 }
 
+func (o *CreateUserCredentialsEmailConflict) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreateUserCredentialsEmailConflict) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -196,6 +207,10 @@ type CreateUserCredentialsEmailUnprocessableEntity struct {
 
 func (o *CreateUserCredentialsEmailUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[POST /users/{user_id}/credentials_email][%d] createUserCredentialsEmailUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *CreateUserCredentialsEmailUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *CreateUserCredentialsEmailUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

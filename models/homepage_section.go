@@ -32,12 +32,14 @@ type HomepageSection struct {
 	// Format: date-time
 	DeletedAt strfmt.DateTime `json:"deleted_at,omitempty"`
 
+	// Description of the content found in this section.
+	Description string `json:"description,omitempty"`
+
 	// A URL pointing to a page showing further information about the content in the section.
 	// Read Only: true
 	DetailURL string `json:"detail_url,omitempty"`
 
 	// Id reference to parent homepage
-	// Read Only: true
 	HomepageID int64 `json:"homepage_id,omitempty"`
 
 	// Items in the homepage section
@@ -52,8 +54,8 @@ type HomepageSection struct {
 	// Read Only: true
 	IsHeader *bool `json:"is_header,omitempty"`
 
-	// An arbitrary float representing the sort order of sections.
-	Order float32 `json:"order,omitempty"`
+	// ids of the homepage items in the order they should be displayed
+	ItemOrder []int64 `json:"item_order"`
 
 	// Name of row
 	Title string `json:"title,omitempty"`

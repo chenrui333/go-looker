@@ -24,21 +24,18 @@ type UserRolesReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *UserRolesReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewUserRolesOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewUserRolesBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewUserRolesNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *UserRolesOK) Error() string {
 	return fmt.Sprintf("[GET /users/{user_id}/roles][%d] userRolesOK  %+v", 200, o.Payload)
 }
 
+func (o *UserRolesOK) GetPayload() []*models.Role {
+	return o.Payload
+}
+
 func (o *UserRolesOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type UserRolesBadRequest struct {
 
 func (o *UserRolesBadRequest) Error() string {
 	return fmt.Sprintf("[GET /users/{user_id}/roles][%d] userRolesBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *UserRolesBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *UserRolesBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type UserRolesNotFound struct {
 
 func (o *UserRolesNotFound) Error() string {
 	return fmt.Sprintf("[GET /users/{user_id}/roles][%d] userRolesNotFound  %+v", 404, o.Payload)
+}
+
+func (o *UserRolesNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *UserRolesNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

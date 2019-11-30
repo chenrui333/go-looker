@@ -6,10 +6,9 @@ package user
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"net/http"
 	"time"
-
-	"golang.org/x/net/context"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
@@ -64,57 +63,57 @@ for the search users names operation typically these are written to a http.Reque
 type SearchUsersNamesParams struct {
 
 	/*Email
-	  Match Email Address.
+	  Match Email Address
 
 	*/
 	Email *string
 	/*Fields
-	  Requested fields.
+	  Include only these fields in the response
 
 	*/
 	Fields *string
 	/*FirstName
-	  Match First name.
+	  Match First name
 
 	*/
 	FirstName *string
 	/*ID
-	  Match User Id.
+	  Match User Id
 
 	*/
 	ID *int64
 	/*IsDisabled
-	  Match Is disabled.
+	  Include or exclude disabled accounts in the results
 
 	*/
 	IsDisabled *bool
 	/*LastName
-	  Match Last name.
+	  Match Last name
 
 	*/
 	LastName *string
 	/*Page
-	  Requested page.
+	  Return only page N of paginated results
 
 	*/
 	Page *int64
 	/*Pattern
-	  Pattern to match.
+	  Pattern to match
 
 	*/
 	Pattern string
 	/*PerPage
-	  Results per page.
+	  Return N rows of data per page
 
 	*/
 	PerPage *int64
 	/*Sorts
-	  Fields to sort by.
+	  Fields to sort by
 
 	*/
 	Sorts *string
 	/*VerifiedLookerEmployee
-	  Match Verified Looker employee.
+	  Match Verified Looker employee
 
 	*/
 	VerifiedLookerEmployee *bool

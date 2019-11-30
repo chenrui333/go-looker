@@ -24,28 +24,24 @@ type FetchRemoteDataActionFormReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *FetchRemoteDataActionFormReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewFetchRemoteDataActionFormOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewFetchRemoteDataActionFormBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewFetchRemoteDataActionFormNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewFetchRemoteDataActionFormUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -73,6 +69,10 @@ type FetchRemoteDataActionFormOK struct {
 
 func (o *FetchRemoteDataActionFormOK) Error() string {
 	return fmt.Sprintf("[POST /data_actions/form][%d] fetchRemoteDataActionFormOK  %+v", 200, o.Payload)
+}
+
+func (o *FetchRemoteDataActionFormOK) GetPayload() *models.DataActionForm {
+	return o.Payload
 }
 
 func (o *FetchRemoteDataActionFormOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -104,6 +104,10 @@ func (o *FetchRemoteDataActionFormBadRequest) Error() string {
 	return fmt.Sprintf("[POST /data_actions/form][%d] fetchRemoteDataActionFormBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *FetchRemoteDataActionFormBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *FetchRemoteDataActionFormBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -133,6 +137,10 @@ func (o *FetchRemoteDataActionFormNotFound) Error() string {
 	return fmt.Sprintf("[POST /data_actions/form][%d] fetchRemoteDataActionFormNotFound  %+v", 404, o.Payload)
 }
 
+func (o *FetchRemoteDataActionFormNotFound) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *FetchRemoteDataActionFormNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -160,6 +168,10 @@ type FetchRemoteDataActionFormUnprocessableEntity struct {
 
 func (o *FetchRemoteDataActionFormUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[POST /data_actions/form][%d] fetchRemoteDataActionFormUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *FetchRemoteDataActionFormUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *FetchRemoteDataActionFormUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

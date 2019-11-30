@@ -24,21 +24,18 @@ type UserCredentialsApi3Reader struct {
 // ReadResponse reads a server response into the received o.
 func (o *UserCredentialsApi3Reader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewUserCredentialsApi3OK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewUserCredentialsApi3BadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewUserCredentialsApi3NotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -66,6 +63,10 @@ type UserCredentialsApi3OK struct {
 
 func (o *UserCredentialsApi3OK) Error() string {
 	return fmt.Sprintf("[GET /users/{user_id}/credentials_api3/{credentials_api3_id}][%d] userCredentialsApi3OK  %+v", 200, o.Payload)
+}
+
+func (o *UserCredentialsApi3OK) GetPayload() *models.CredentialsApi3 {
+	return o.Payload
 }
 
 func (o *UserCredentialsApi3OK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -97,6 +98,10 @@ func (o *UserCredentialsApi3BadRequest) Error() string {
 	return fmt.Sprintf("[GET /users/{user_id}/credentials_api3/{credentials_api3_id}][%d] userCredentialsApi3BadRequest  %+v", 400, o.Payload)
 }
 
+func (o *UserCredentialsApi3BadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UserCredentialsApi3BadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -124,6 +129,10 @@ type UserCredentialsApi3NotFound struct {
 
 func (o *UserCredentialsApi3NotFound) Error() string {
 	return fmt.Sprintf("[GET /users/{user_id}/credentials_api3/{credentials_api3_id}][%d] userCredentialsApi3NotFound  %+v", 404, o.Payload)
+}
+
+func (o *UserCredentialsApi3NotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *UserCredentialsApi3NotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

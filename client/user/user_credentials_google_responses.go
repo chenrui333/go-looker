@@ -24,21 +24,18 @@ type UserCredentialsGoogleReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *UserCredentialsGoogleReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewUserCredentialsGoogleOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewUserCredentialsGoogleBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewUserCredentialsGoogleNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -66,6 +63,10 @@ type UserCredentialsGoogleOK struct {
 
 func (o *UserCredentialsGoogleOK) Error() string {
 	return fmt.Sprintf("[GET /users/{user_id}/credentials_google][%d] userCredentialsGoogleOK  %+v", 200, o.Payload)
+}
+
+func (o *UserCredentialsGoogleOK) GetPayload() *models.CredentialsGoogle {
+	return o.Payload
 }
 
 func (o *UserCredentialsGoogleOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -97,6 +98,10 @@ func (o *UserCredentialsGoogleBadRequest) Error() string {
 	return fmt.Sprintf("[GET /users/{user_id}/credentials_google][%d] userCredentialsGoogleBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *UserCredentialsGoogleBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UserCredentialsGoogleBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -124,6 +129,10 @@ type UserCredentialsGoogleNotFound struct {
 
 func (o *UserCredentialsGoogleNotFound) Error() string {
 	return fmt.Sprintf("[GET /users/{user_id}/credentials_google][%d] userCredentialsGoogleNotFound  %+v", 404, o.Payload)
+}
+
+func (o *UserCredentialsGoogleNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *UserCredentialsGoogleNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

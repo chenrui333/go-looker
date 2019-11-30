@@ -24,21 +24,18 @@ type ContentFavoriteReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *ContentFavoriteReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewContentFavoriteOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewContentFavoriteBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewContentFavoriteNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -66,6 +63,10 @@ type ContentFavoriteOK struct {
 
 func (o *ContentFavoriteOK) Error() string {
 	return fmt.Sprintf("[GET /content_favorite/{content_favorite_id}][%d] contentFavoriteOK  %+v", 200, o.Payload)
+}
+
+func (o *ContentFavoriteOK) GetPayload() *models.ContentFavorite {
+	return o.Payload
 }
 
 func (o *ContentFavoriteOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -97,6 +98,10 @@ func (o *ContentFavoriteBadRequest) Error() string {
 	return fmt.Sprintf("[GET /content_favorite/{content_favorite_id}][%d] contentFavoriteBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *ContentFavoriteBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *ContentFavoriteBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -124,6 +129,10 @@ type ContentFavoriteNotFound struct {
 
 func (o *ContentFavoriteNotFound) Error() string {
 	return fmt.Sprintf("[GET /content_favorite/{content_favorite_id}][%d] contentFavoriteNotFound  %+v", 404, o.Payload)
+}
+
+func (o *ContentFavoriteNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *ContentFavoriteNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

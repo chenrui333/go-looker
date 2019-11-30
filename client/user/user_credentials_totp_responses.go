@@ -24,21 +24,18 @@ type UserCredentialsTotpReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *UserCredentialsTotpReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewUserCredentialsTotpOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewUserCredentialsTotpBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewUserCredentialsTotpNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -66,6 +63,10 @@ type UserCredentialsTotpOK struct {
 
 func (o *UserCredentialsTotpOK) Error() string {
 	return fmt.Sprintf("[GET /users/{user_id}/credentials_totp][%d] userCredentialsTotpOK  %+v", 200, o.Payload)
+}
+
+func (o *UserCredentialsTotpOK) GetPayload() *models.CredentialsTotp {
+	return o.Payload
 }
 
 func (o *UserCredentialsTotpOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -97,6 +98,10 @@ func (o *UserCredentialsTotpBadRequest) Error() string {
 	return fmt.Sprintf("[GET /users/{user_id}/credentials_totp][%d] userCredentialsTotpBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *UserCredentialsTotpBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UserCredentialsTotpBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -124,6 +129,10 @@ type UserCredentialsTotpNotFound struct {
 
 func (o *UserCredentialsTotpNotFound) Error() string {
 	return fmt.Sprintf("[GET /users/{user_id}/credentials_totp][%d] userCredentialsTotpNotFound  %+v", 404, o.Payload)
+}
+
+func (o *UserCredentialsTotpNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *UserCredentialsTotpNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

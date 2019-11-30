@@ -24,28 +24,24 @@ type UpdateBackupConfigurationReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *UpdateBackupConfigurationReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewUpdateBackupConfigurationOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewUpdateBackupConfigurationBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewUpdateBackupConfigurationNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewUpdateBackupConfigurationUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -73,6 +69,10 @@ type UpdateBackupConfigurationOK struct {
 
 func (o *UpdateBackupConfigurationOK) Error() string {
 	return fmt.Sprintf("[PATCH /backup_configuration][%d] updateBackupConfigurationOK  %+v", 200, o.Payload)
+}
+
+func (o *UpdateBackupConfigurationOK) GetPayload() *models.BackupConfiguration {
+	return o.Payload
 }
 
 func (o *UpdateBackupConfigurationOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -104,6 +104,10 @@ func (o *UpdateBackupConfigurationBadRequest) Error() string {
 	return fmt.Sprintf("[PATCH /backup_configuration][%d] updateBackupConfigurationBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *UpdateBackupConfigurationBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UpdateBackupConfigurationBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -133,6 +137,10 @@ func (o *UpdateBackupConfigurationNotFound) Error() string {
 	return fmt.Sprintf("[PATCH /backup_configuration][%d] updateBackupConfigurationNotFound  %+v", 404, o.Payload)
 }
 
+func (o *UpdateBackupConfigurationNotFound) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UpdateBackupConfigurationNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -160,6 +168,10 @@ type UpdateBackupConfigurationUnprocessableEntity struct {
 
 func (o *UpdateBackupConfigurationUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[PATCH /backup_configuration][%d] updateBackupConfigurationUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *UpdateBackupConfigurationUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *UpdateBackupConfigurationUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

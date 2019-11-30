@@ -6,10 +6,9 @@ package scheduled_plan
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"net/http"
 	"time"
-
-	"golang.org/x/net/context"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
@@ -63,6 +62,11 @@ for the scheduled plans for dashboard operation typically these are written to a
 */
 type ScheduledPlansForDashboardParams struct {
 
+	/*AllUsers
+	  Return scheduled plans belonging to all users for the dashboard
+
+	*/
+	AllUsers *bool
 	/*DashboardID
 	  Dashboard Id
 
@@ -117,6 +121,17 @@ func (o *ScheduledPlansForDashboardParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithAllUsers adds the allUsers to the scheduled plans for dashboard params
+func (o *ScheduledPlansForDashboardParams) WithAllUsers(allUsers *bool) *ScheduledPlansForDashboardParams {
+	o.SetAllUsers(allUsers)
+	return o
+}
+
+// SetAllUsers adds the allUsers to the scheduled plans for dashboard params
+func (o *ScheduledPlansForDashboardParams) SetAllUsers(allUsers *bool) {
+	o.AllUsers = allUsers
+}
+
 // WithDashboardID adds the dashboardID to the scheduled plans for dashboard params
 func (o *ScheduledPlansForDashboardParams) WithDashboardID(dashboardID int64) *ScheduledPlansForDashboardParams {
 	o.SetDashboardID(dashboardID)
@@ -157,6 +172,22 @@ func (o *ScheduledPlansForDashboardParams) WriteToRequest(r runtime.ClientReques
 		return err
 	}
 	var res []error
+
+	if o.AllUsers != nil {
+
+		// query param all_users
+		var qrAllUsers bool
+		if o.AllUsers != nil {
+			qrAllUsers = *o.AllUsers
+		}
+		qAllUsers := swag.FormatBool(qrAllUsers)
+		if qAllUsers != "" {
+			if err := r.SetQueryParam("all_users", qAllUsers); err != nil {
+				return err
+			}
+		}
+
+	}
 
 	// path param dashboard_id
 	if err := r.SetPathParam("dashboard_id", swag.FormatInt64(o.DashboardID)); err != nil {

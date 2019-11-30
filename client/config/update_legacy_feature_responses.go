@@ -24,28 +24,24 @@ type UpdateLegacyFeatureReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *UpdateLegacyFeatureReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewUpdateLegacyFeatureOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewUpdateLegacyFeatureBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewUpdateLegacyFeatureNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewUpdateLegacyFeatureUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -73,6 +69,10 @@ type UpdateLegacyFeatureOK struct {
 
 func (o *UpdateLegacyFeatureOK) Error() string {
 	return fmt.Sprintf("[PATCH /legacy_features/{legacy_feature_id}][%d] updateLegacyFeatureOK  %+v", 200, o.Payload)
+}
+
+func (o *UpdateLegacyFeatureOK) GetPayload() *models.LegacyFeature {
+	return o.Payload
 }
 
 func (o *UpdateLegacyFeatureOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -104,6 +104,10 @@ func (o *UpdateLegacyFeatureBadRequest) Error() string {
 	return fmt.Sprintf("[PATCH /legacy_features/{legacy_feature_id}][%d] updateLegacyFeatureBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *UpdateLegacyFeatureBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UpdateLegacyFeatureBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -133,6 +137,10 @@ func (o *UpdateLegacyFeatureNotFound) Error() string {
 	return fmt.Sprintf("[PATCH /legacy_features/{legacy_feature_id}][%d] updateLegacyFeatureNotFound  %+v", 404, o.Payload)
 }
 
+func (o *UpdateLegacyFeatureNotFound) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UpdateLegacyFeatureNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -160,6 +168,10 @@ type UpdateLegacyFeatureUnprocessableEntity struct {
 
 func (o *UpdateLegacyFeatureUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[PATCH /legacy_features/{legacy_feature_id}][%d] updateLegacyFeatureUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *UpdateLegacyFeatureUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *UpdateLegacyFeatureUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

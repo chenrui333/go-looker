@@ -24,21 +24,18 @@ type AllLooksReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *AllLooksReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewAllLooksOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewAllLooksBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewAllLooksNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *AllLooksOK) Error() string {
 	return fmt.Sprintf("[GET /looks][%d] allLooksOK  %+v", 200, o.Payload)
 }
 
+func (o *AllLooksOK) GetPayload() []*models.Look {
+	return o.Payload
+}
+
 func (o *AllLooksOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type AllLooksBadRequest struct {
 
 func (o *AllLooksBadRequest) Error() string {
 	return fmt.Sprintf("[GET /looks][%d] allLooksBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *AllLooksBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *AllLooksBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type AllLooksNotFound struct {
 
 func (o *AllLooksNotFound) Error() string {
 	return fmt.Sprintf("[GET /looks][%d] allLooksNotFound  %+v", 404, o.Payload)
+}
+
+func (o *AllLooksNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *AllLooksNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

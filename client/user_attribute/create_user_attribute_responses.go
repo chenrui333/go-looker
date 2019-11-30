@@ -24,35 +24,30 @@ type CreateUserAttributeReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *CreateUserAttributeReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewCreateUserAttributeOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewCreateUserAttributeBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewCreateUserAttributeNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 409:
 		result := NewCreateUserAttributeConflict()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewCreateUserAttributeUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -80,6 +75,10 @@ type CreateUserAttributeOK struct {
 
 func (o *CreateUserAttributeOK) Error() string {
 	return fmt.Sprintf("[POST /user_attributes][%d] createUserAttributeOK  %+v", 200, o.Payload)
+}
+
+func (o *CreateUserAttributeOK) GetPayload() *models.UserAttribute {
+	return o.Payload
 }
 
 func (o *CreateUserAttributeOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -111,6 +110,10 @@ func (o *CreateUserAttributeBadRequest) Error() string {
 	return fmt.Sprintf("[POST /user_attributes][%d] createUserAttributeBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *CreateUserAttributeBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreateUserAttributeBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -138,6 +141,10 @@ type CreateUserAttributeNotFound struct {
 
 func (o *CreateUserAttributeNotFound) Error() string {
 	return fmt.Sprintf("[POST /user_attributes][%d] createUserAttributeNotFound  %+v", 404, o.Payload)
+}
+
+func (o *CreateUserAttributeNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *CreateUserAttributeNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -169,6 +176,10 @@ func (o *CreateUserAttributeConflict) Error() string {
 	return fmt.Sprintf("[POST /user_attributes][%d] createUserAttributeConflict  %+v", 409, o.Payload)
 }
 
+func (o *CreateUserAttributeConflict) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreateUserAttributeConflict) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -196,6 +207,10 @@ type CreateUserAttributeUnprocessableEntity struct {
 
 func (o *CreateUserAttributeUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[POST /user_attributes][%d] createUserAttributeUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *CreateUserAttributeUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *CreateUserAttributeUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

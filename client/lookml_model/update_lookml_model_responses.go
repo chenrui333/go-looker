@@ -24,28 +24,24 @@ type UpdateLookmlModelReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *UpdateLookmlModelReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewUpdateLookmlModelOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewUpdateLookmlModelBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewUpdateLookmlModelNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewUpdateLookmlModelUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -73,6 +69,10 @@ type UpdateLookmlModelOK struct {
 
 func (o *UpdateLookmlModelOK) Error() string {
 	return fmt.Sprintf("[PATCH /lookml_models/{lookml_model_name}][%d] updateLookmlModelOK  %+v", 200, o.Payload)
+}
+
+func (o *UpdateLookmlModelOK) GetPayload() *models.LookmlModel {
+	return o.Payload
 }
 
 func (o *UpdateLookmlModelOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -104,6 +104,10 @@ func (o *UpdateLookmlModelBadRequest) Error() string {
 	return fmt.Sprintf("[PATCH /lookml_models/{lookml_model_name}][%d] updateLookmlModelBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *UpdateLookmlModelBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UpdateLookmlModelBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -133,6 +137,10 @@ func (o *UpdateLookmlModelNotFound) Error() string {
 	return fmt.Sprintf("[PATCH /lookml_models/{lookml_model_name}][%d] updateLookmlModelNotFound  %+v", 404, o.Payload)
 }
 
+func (o *UpdateLookmlModelNotFound) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UpdateLookmlModelNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -160,6 +168,10 @@ type UpdateLookmlModelUnprocessableEntity struct {
 
 func (o *UpdateLookmlModelUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[PATCH /lookml_models/{lookml_model_name}][%d] updateLookmlModelUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *UpdateLookmlModelUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *UpdateLookmlModelUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

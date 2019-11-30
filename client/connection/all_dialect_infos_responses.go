@@ -24,21 +24,18 @@ type AllDialectInfosReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *AllDialectInfosReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewAllDialectInfosOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewAllDialectInfosBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewAllDialectInfosNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *AllDialectInfosOK) Error() string {
 	return fmt.Sprintf("[GET /dialect_info][%d] allDialectInfosOK  %+v", 200, o.Payload)
 }
 
+func (o *AllDialectInfosOK) GetPayload() []*models.DialectInfo {
+	return o.Payload
+}
+
 func (o *AllDialectInfosOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type AllDialectInfosBadRequest struct {
 
 func (o *AllDialectInfosBadRequest) Error() string {
 	return fmt.Sprintf("[GET /dialect_info][%d] allDialectInfosBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *AllDialectInfosBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *AllDialectInfosBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type AllDialectInfosNotFound struct {
 
 func (o *AllDialectInfosNotFound) Error() string {
 	return fmt.Sprintf("[GET /dialect_info][%d] allDialectInfosNotFound  %+v", 404, o.Payload)
+}
+
+func (o *AllDialectInfosNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *AllDialectInfosNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

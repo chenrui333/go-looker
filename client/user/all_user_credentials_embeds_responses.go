@@ -24,21 +24,18 @@ type AllUserCredentialsEmbedsReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *AllUserCredentialsEmbedsReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewAllUserCredentialsEmbedsOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewAllUserCredentialsEmbedsBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewAllUserCredentialsEmbedsNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *AllUserCredentialsEmbedsOK) Error() string {
 	return fmt.Sprintf("[GET /users/{user_id}/credentials_embed][%d] allUserCredentialsEmbedsOK  %+v", 200, o.Payload)
 }
 
+func (o *AllUserCredentialsEmbedsOK) GetPayload() []*models.CredentialsEmbed {
+	return o.Payload
+}
+
 func (o *AllUserCredentialsEmbedsOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type AllUserCredentialsEmbedsBadRequest struct {
 
 func (o *AllUserCredentialsEmbedsBadRequest) Error() string {
 	return fmt.Sprintf("[GET /users/{user_id}/credentials_embed][%d] allUserCredentialsEmbedsBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *AllUserCredentialsEmbedsBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *AllUserCredentialsEmbedsBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type AllUserCredentialsEmbedsNotFound struct {
 
 func (o *AllUserCredentialsEmbedsNotFound) Error() string {
 	return fmt.Sprintf("[GET /users/{user_id}/credentials_embed][%d] allUserCredentialsEmbedsNotFound  %+v", 404, o.Payload)
+}
+
+func (o *AllUserCredentialsEmbedsNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *AllUserCredentialsEmbedsNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

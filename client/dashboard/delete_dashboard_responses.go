@@ -24,21 +24,18 @@ type DeleteDashboardReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *DeleteDashboardReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 204:
 		result := NewDeleteDashboardNoContent()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 404:
 		result := NewDeleteDashboardNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 405:
 		result := NewDeleteDashboardMethodNotAllowed()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *DeleteDashboardNoContent) Error() string {
 	return fmt.Sprintf("[DELETE /dashboards/{dashboard_id}][%d] deleteDashboardNoContent  %+v", 204, o.Payload)
 }
 
+func (o *DeleteDashboardNoContent) GetPayload() string {
+	return o.Payload
+}
+
 func (o *DeleteDashboardNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type DeleteDashboardNotFound struct {
 
 func (o *DeleteDashboardNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /dashboards/{dashboard_id}][%d] deleteDashboardNotFound  %+v", 404, o.Payload)
+}
+
+func (o *DeleteDashboardNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteDashboardNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type DeleteDashboardMethodNotAllowed struct {
 
 func (o *DeleteDashboardMethodNotAllowed) Error() string {
 	return fmt.Sprintf("[DELETE /dashboards/{dashboard_id}][%d] deleteDashboardMethodNotAllowed  %+v", 405, o.Payload)
+}
+
+func (o *DeleteDashboardMethodNotAllowed) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteDashboardMethodNotAllowed) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

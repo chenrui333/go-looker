@@ -24,21 +24,18 @@ type DeleteUserCredentialsLdapReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *DeleteUserCredentialsLdapReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 204:
 		result := NewDeleteUserCredentialsLdapNoContent()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewDeleteUserCredentialsLdapBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewDeleteUserCredentialsLdapNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *DeleteUserCredentialsLdapNoContent) Error() string {
 	return fmt.Sprintf("[DELETE /users/{user_id}/credentials_ldap][%d] deleteUserCredentialsLdapNoContent  %+v", 204, o.Payload)
 }
 
+func (o *DeleteUserCredentialsLdapNoContent) GetPayload() string {
+	return o.Payload
+}
+
 func (o *DeleteUserCredentialsLdapNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type DeleteUserCredentialsLdapBadRequest struct {
 
 func (o *DeleteUserCredentialsLdapBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /users/{user_id}/credentials_ldap][%d] deleteUserCredentialsLdapBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *DeleteUserCredentialsLdapBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteUserCredentialsLdapBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type DeleteUserCredentialsLdapNotFound struct {
 
 func (o *DeleteUserCredentialsLdapNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /users/{user_id}/credentials_ldap][%d] deleteUserCredentialsLdapNotFound  %+v", 404, o.Payload)
+}
+
+func (o *DeleteUserCredentialsLdapNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteUserCredentialsLdapNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

@@ -24,21 +24,18 @@ type DeleteConnectionReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *DeleteConnectionReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 204:
 		result := NewDeleteConnectionNoContent()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewDeleteConnectionBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewDeleteConnectionNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *DeleteConnectionNoContent) Error() string {
 	return fmt.Sprintf("[DELETE /connections/{connection_name}][%d] deleteConnectionNoContent  %+v", 204, o.Payload)
 }
 
+func (o *DeleteConnectionNoContent) GetPayload() string {
+	return o.Payload
+}
+
 func (o *DeleteConnectionNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type DeleteConnectionBadRequest struct {
 
 func (o *DeleteConnectionBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /connections/{connection_name}][%d] deleteConnectionBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *DeleteConnectionBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteConnectionBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type DeleteConnectionNotFound struct {
 
 func (o *DeleteConnectionNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /connections/{connection_name}][%d] deleteConnectionNotFound  %+v", 404, o.Payload)
+}
+
+func (o *DeleteConnectionNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteConnectionNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

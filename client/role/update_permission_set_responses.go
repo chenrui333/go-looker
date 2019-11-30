@@ -24,35 +24,30 @@ type UpdatePermissionSetReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *UpdatePermissionSetReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewUpdatePermissionSetOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewUpdatePermissionSetBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewUpdatePermissionSetNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 405:
 		result := NewUpdatePermissionSetMethodNotAllowed()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewUpdatePermissionSetUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -80,6 +75,10 @@ type UpdatePermissionSetOK struct {
 
 func (o *UpdatePermissionSetOK) Error() string {
 	return fmt.Sprintf("[PATCH /permission_sets/{permission_set_id}][%d] updatePermissionSetOK  %+v", 200, o.Payload)
+}
+
+func (o *UpdatePermissionSetOK) GetPayload() *models.PermissionSet {
+	return o.Payload
 }
 
 func (o *UpdatePermissionSetOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -111,6 +110,10 @@ func (o *UpdatePermissionSetBadRequest) Error() string {
 	return fmt.Sprintf("[PATCH /permission_sets/{permission_set_id}][%d] updatePermissionSetBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *UpdatePermissionSetBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UpdatePermissionSetBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -138,6 +141,10 @@ type UpdatePermissionSetNotFound struct {
 
 func (o *UpdatePermissionSetNotFound) Error() string {
 	return fmt.Sprintf("[PATCH /permission_sets/{permission_set_id}][%d] updatePermissionSetNotFound  %+v", 404, o.Payload)
+}
+
+func (o *UpdatePermissionSetNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *UpdatePermissionSetNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -169,6 +176,10 @@ func (o *UpdatePermissionSetMethodNotAllowed) Error() string {
 	return fmt.Sprintf("[PATCH /permission_sets/{permission_set_id}][%d] updatePermissionSetMethodNotAllowed  %+v", 405, o.Payload)
 }
 
+func (o *UpdatePermissionSetMethodNotAllowed) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UpdatePermissionSetMethodNotAllowed) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -196,6 +207,10 @@ type UpdatePermissionSetUnprocessableEntity struct {
 
 func (o *UpdatePermissionSetUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[PATCH /permission_sets/{permission_set_id}][%d] updatePermissionSetUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *UpdatePermissionSetUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *UpdatePermissionSetUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

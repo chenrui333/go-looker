@@ -24,21 +24,18 @@ type DeleteScheduledPlanReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *DeleteScheduledPlanReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 204:
 		result := NewDeleteScheduledPlanNoContent()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewDeleteScheduledPlanBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewDeleteScheduledPlanNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *DeleteScheduledPlanNoContent) Error() string {
 	return fmt.Sprintf("[DELETE /scheduled_plans/{scheduled_plan_id}][%d] deleteScheduledPlanNoContent  %+v", 204, o.Payload)
 }
 
+func (o *DeleteScheduledPlanNoContent) GetPayload() string {
+	return o.Payload
+}
+
 func (o *DeleteScheduledPlanNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type DeleteScheduledPlanBadRequest struct {
 
 func (o *DeleteScheduledPlanBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /scheduled_plans/{scheduled_plan_id}][%d] deleteScheduledPlanBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *DeleteScheduledPlanBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteScheduledPlanBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type DeleteScheduledPlanNotFound struct {
 
 func (o *DeleteScheduledPlanNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /scheduled_plans/{scheduled_plan_id}][%d] deleteScheduledPlanNotFound  %+v", 404, o.Payload)
+}
+
+func (o *DeleteScheduledPlanNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteScheduledPlanNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

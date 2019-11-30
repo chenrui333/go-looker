@@ -12,16 +12,11 @@ import (
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/swag"
-	"github.com/go-openapi/validate"
 )
 
 // OIDCGroupRead o ID c group read
 // swagger:model OIDCGroupRead
 type OIDCGroupRead struct {
-
-	// Operations the current user is able to perform on this object
-	// Read Only: true
-	Can map[string]bool `json:"can,omitempty"`
 
 	// Name of group in OIDC
 	// Read Only: true
@@ -30,11 +25,6 @@ type OIDCGroupRead struct {
 	// Looker Roles
 	// Read Only: true
 	Roles []*Role `json:"roles"`
-
-	// Link to oidc config
-	// Read Only: true
-	// Format: uri
-	URL strfmt.URI `json:"url,omitempty"`
 }
 
 // Validate validates this o ID c group read
@@ -42,10 +32,6 @@ func (m *OIDCGroupRead) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateRoles(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateURL(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -75,19 +61,6 @@ func (m *OIDCGroupRead) validateRoles(formats strfmt.Registry) error {
 			}
 		}
 
-	}
-
-	return nil
-}
-
-func (m *OIDCGroupRead) validateURL(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.URL) { // not required
-		return nil
-	}
-
-	if err := validate.FormatOf("url", "body", "uri", m.URL.String(), formats); err != nil {
-		return err
 	}
 
 	return nil

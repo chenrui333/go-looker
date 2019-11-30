@@ -24,28 +24,24 @@ type UpdateIntegrationReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *UpdateIntegrationReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewUpdateIntegrationOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewUpdateIntegrationBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewUpdateIntegrationNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewUpdateIntegrationUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -73,6 +69,10 @@ type UpdateIntegrationOK struct {
 
 func (o *UpdateIntegrationOK) Error() string {
 	return fmt.Sprintf("[PATCH /integrations/{integration_id}][%d] updateIntegrationOK  %+v", 200, o.Payload)
+}
+
+func (o *UpdateIntegrationOK) GetPayload() *models.Integration {
+	return o.Payload
 }
 
 func (o *UpdateIntegrationOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -104,6 +104,10 @@ func (o *UpdateIntegrationBadRequest) Error() string {
 	return fmt.Sprintf("[PATCH /integrations/{integration_id}][%d] updateIntegrationBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *UpdateIntegrationBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UpdateIntegrationBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -133,6 +137,10 @@ func (o *UpdateIntegrationNotFound) Error() string {
 	return fmt.Sprintf("[PATCH /integrations/{integration_id}][%d] updateIntegrationNotFound  %+v", 404, o.Payload)
 }
 
+func (o *UpdateIntegrationNotFound) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UpdateIntegrationNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -160,6 +168,10 @@ type UpdateIntegrationUnprocessableEntity struct {
 
 func (o *UpdateIntegrationUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[PATCH /integrations/{integration_id}][%d] updateIntegrationUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *UpdateIntegrationUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *UpdateIntegrationUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

@@ -24,28 +24,24 @@ type DeleteGroupFromGroupReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *DeleteGroupFromGroupReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 204:
 		result := NewDeleteGroupFromGroupNoContent()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewDeleteGroupFromGroupBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 403:
 		result := NewDeleteGroupFromGroupForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewDeleteGroupFromGroupNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -96,6 +92,10 @@ func (o *DeleteGroupFromGroupBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /groups/{group_id}/groups/{deleting_group_id}][%d] deleteGroupFromGroupBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *DeleteGroupFromGroupBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *DeleteGroupFromGroupBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -125,6 +125,10 @@ func (o *DeleteGroupFromGroupForbidden) Error() string {
 	return fmt.Sprintf("[DELETE /groups/{group_id}/groups/{deleting_group_id}][%d] deleteGroupFromGroupForbidden  %+v", 403, o.Payload)
 }
 
+func (o *DeleteGroupFromGroupForbidden) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *DeleteGroupFromGroupForbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -152,6 +156,10 @@ type DeleteGroupFromGroupNotFound struct {
 
 func (o *DeleteGroupFromGroupNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /groups/{group_id}/groups/{deleting_group_id}][%d] deleteGroupFromGroupNotFound  %+v", 404, o.Payload)
+}
+
+func (o *DeleteGroupFromGroupNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteGroupFromGroupNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

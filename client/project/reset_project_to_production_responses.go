@@ -24,28 +24,24 @@ type ResetProjectToProductionReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *ResetProjectToProductionReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewResetProjectToProductionOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 204:
 		result := NewResetProjectToProductionNoContent()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewResetProjectToProductionBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewResetProjectToProductionNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -73,6 +69,10 @@ type ResetProjectToProductionOK struct {
 
 func (o *ResetProjectToProductionOK) Error() string {
 	return fmt.Sprintf("[POST /projects/{project_id}/reset_to_production][%d] resetProjectToProductionOK  %+v", 200, o.Payload)
+}
+
+func (o *ResetProjectToProductionOK) GetPayload() string {
+	return o.Payload
 }
 
 func (o *ResetProjectToProductionOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -123,6 +123,10 @@ func (o *ResetProjectToProductionBadRequest) Error() string {
 	return fmt.Sprintf("[POST /projects/{project_id}/reset_to_production][%d] resetProjectToProductionBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *ResetProjectToProductionBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *ResetProjectToProductionBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -150,6 +154,10 @@ type ResetProjectToProductionNotFound struct {
 
 func (o *ResetProjectToProductionNotFound) Error() string {
 	return fmt.Sprintf("[POST /projects/{project_id}/reset_to_production][%d] resetProjectToProductionNotFound  %+v", 404, o.Payload)
+}
+
+func (o *ResetProjectToProductionNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *ResetProjectToProductionNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

@@ -22,6 +22,10 @@ type Integration struct {
 	// Read Only: true
 	Can map[string]bool `json:"can,omitempty"`
 
+	// Whether the integration uses delegate oauth, which allows federation between an integration installation scope specific entity (like org, group, and team, etc.) and Looker.
+	// Read Only: true
+	DelegateOauth *bool `json:"delegate_oauth,omitempty"`
+
 	// Description of the integration.
 	// Read Only: true
 	Description string `json:"description,omitempty"`
@@ -36,6 +40,10 @@ type Integration struct {
 	// ID of the integration.
 	// Read Only: true
 	ID string `json:"id,omitempty"`
+
+	// OAuth info when the admin installed the integration using delegate oauth.
+	// Read Only: true
+	InstalledDelegateOauth string `json:"installed_delegate_oauth,omitempty"`
 
 	// ID of the integration hub.
 	// Read Only: true
@@ -60,7 +68,7 @@ type Integration struct {
 	// Read Only: true
 	SupportedDownloadSettings []string `json:"supported_download_settings"`
 
-	// A list of data formats the integration supports. If unspecified, this will default to ["txt", "csv", "inline_json", "json", "json_detail", "json_detail_lite_stream", "xlsx", "html", "wysiwyg_pdf", "assembled_pdf", "wysiwyg_png", "csv_zip"]. Valid values are: "txt", "csv", "inline_json", "json", "json_detail", "json_detail_lite_stream", "xlsx", "html", "wysiwyg_pdf", "assembled_pdf", "wysiwyg_png", "csv_zip".
+	// A list of data formats the integration supports. If unspecified, this will default to ["txt", "csv", "inline_json", "json", "json_label", "json_detail", "json_detail_lite_stream", "xlsx", "html", "wysiwyg_pdf", "assembled_pdf", "wysiwyg_png", "csv_zip"]. Valid values are: "txt", "csv", "inline_json", "json", "json_label", "json_detail", "json_detail_lite_stream", "xlsx", "html", "wysiwyg_pdf", "assembled_pdf", "wysiwyg_png", "csv_zip".
 	// Read Only: true
 	SupportedFormats []string `json:"supported_formats"`
 
@@ -71,6 +79,10 @@ type Integration struct {
 	// A list of visualization formatting options the integration supports. If unspecified, this will default to ["apply", "noapply"]. Valid values are: "apply", "noapply".
 	// Read Only: true
 	SupportedVisualizationFormattings []string `json:"supported_visualization_formattings"`
+
+	// Whether the integration uses oauth.
+	// Read Only: true
+	UsesOauth *bool `json:"uses_oauth,omitempty"`
 }
 
 // Validate validates this integration

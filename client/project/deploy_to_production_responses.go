@@ -24,28 +24,24 @@ type DeployToProductionReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *DeployToProductionReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewDeployToProductionOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 204:
 		result := NewDeployToProductionNoContent()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewDeployToProductionBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewDeployToProductionNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -73,6 +69,10 @@ type DeployToProductionOK struct {
 
 func (o *DeployToProductionOK) Error() string {
 	return fmt.Sprintf("[POST /projects/{project_id}/deploy_to_production][%d] deployToProductionOK  %+v", 200, o.Payload)
+}
+
+func (o *DeployToProductionOK) GetPayload() string {
+	return o.Payload
 }
 
 func (o *DeployToProductionOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -123,6 +123,10 @@ func (o *DeployToProductionBadRequest) Error() string {
 	return fmt.Sprintf("[POST /projects/{project_id}/deploy_to_production][%d] deployToProductionBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *DeployToProductionBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *DeployToProductionBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -150,6 +154,10 @@ type DeployToProductionNotFound struct {
 
 func (o *DeployToProductionNotFound) Error() string {
 	return fmt.Sprintf("[POST /projects/{project_id}/deploy_to_production][%d] deployToProductionNotFound  %+v", 404, o.Payload)
+}
+
+func (o *DeployToProductionNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeployToProductionNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

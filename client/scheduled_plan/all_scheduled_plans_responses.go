@@ -24,23 +24,26 @@ type AllScheduledPlansReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *AllScheduledPlansReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewAllScheduledPlansOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewAllScheduledPlansBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewAllScheduledPlansNotFound()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
+	case 422:
+		result := NewAllScheduledPlansUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
@@ -68,6 +71,10 @@ func (o *AllScheduledPlansOK) Error() string {
 	return fmt.Sprintf("[GET /scheduled_plans][%d] allScheduledPlansOK  %+v", 200, o.Payload)
 }
 
+func (o *AllScheduledPlansOK) GetPayload() []*models.ScheduledPlan {
+	return o.Payload
+}
+
 func (o *AllScheduledPlansOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +100,10 @@ type AllScheduledPlansBadRequest struct {
 
 func (o *AllScheduledPlansBadRequest) Error() string {
 	return fmt.Sprintf("[GET /scheduled_plans][%d] allScheduledPlansBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *AllScheduledPlansBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *AllScheduledPlansBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -124,9 +135,46 @@ func (o *AllScheduledPlansNotFound) Error() string {
 	return fmt.Sprintf("[GET /scheduled_plans][%d] allScheduledPlansNotFound  %+v", 404, o.Payload)
 }
 
+func (o *AllScheduledPlansNotFound) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *AllScheduledPlansNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewAllScheduledPlansUnprocessableEntity creates a AllScheduledPlansUnprocessableEntity with default headers values
+func NewAllScheduledPlansUnprocessableEntity() *AllScheduledPlansUnprocessableEntity {
+	return &AllScheduledPlansUnprocessableEntity{}
+}
+
+/*AllScheduledPlansUnprocessableEntity handles this case with default header values.
+
+Validation Error
+*/
+type AllScheduledPlansUnprocessableEntity struct {
+	Payload *models.ValidationError
+}
+
+func (o *AllScheduledPlansUnprocessableEntity) Error() string {
+	return fmt.Sprintf("[GET /scheduled_plans][%d] allScheduledPlansUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *AllScheduledPlansUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
+}
+
+func (o *AllScheduledPlansUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.ValidationError)
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {

@@ -6,6 +6,8 @@ package group
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"fmt"
+
 	"github.com/go-openapi/runtime"
 
 	strfmt "github.com/go-openapi/strfmt"
@@ -51,8 +53,14 @@ func (a *Client) AddGroupGroup(params *AddGroupGroupParams) (*AddGroupGroupOK, e
 	if err != nil {
 		return nil, err
 	}
-	return result.(*AddGroupGroupOK), nil
-
+	success, ok := result.(*AddGroupGroupOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for add_group_group: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -82,8 +90,14 @@ func (a *Client) AddGroupUser(params *AddGroupUserParams) (*AddGroupUserOK, erro
 	if err != nil {
 		return nil, err
 	}
-	return result.(*AddGroupUserOK), nil
-
+	success, ok := result.(*AddGroupUserOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for add_group_user: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -113,8 +127,14 @@ func (a *Client) AllGroupGroups(params *AllGroupGroupsParams) (*AllGroupGroupsOK
 	if err != nil {
 		return nil, err
 	}
-	return result.(*AllGroupGroupsOK), nil
-
+	success, ok := result.(*AllGroupGroupsOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for all_group_groups: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -144,8 +164,14 @@ func (a *Client) AllGroupUsers(params *AllGroupUsersParams) (*AllGroupUsersOK, e
 	if err != nil {
 		return nil, err
 	}
-	return result.(*AllGroupUsersOK), nil
-
+	success, ok := result.(*AllGroupUsersOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for all_group_users: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -175,8 +201,14 @@ func (a *Client) AllGroups(params *AllGroupsParams) (*AllGroupsOK, error) {
 	if err != nil {
 		return nil, err
 	}
-	return result.(*AllGroupsOK), nil
-
+	success, ok := result.(*AllGroupsOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for all_groups: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -206,8 +238,14 @@ func (a *Client) CreateGroup(params *CreateGroupParams) (*CreateGroupOK, error) 
 	if err != nil {
 		return nil, err
 	}
-	return result.(*CreateGroupOK), nil
-
+	success, ok := result.(*CreateGroupOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for create_group: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -237,8 +275,14 @@ func (a *Client) DeleteGroup(params *DeleteGroupParams) (*DeleteGroupNoContent, 
 	if err != nil {
 		return nil, err
 	}
-	return result.(*DeleteGroupNoContent), nil
-
+	success, ok := result.(*DeleteGroupNoContent)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for delete_group: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -268,8 +312,14 @@ func (a *Client) DeleteGroupFromGroup(params *DeleteGroupFromGroupParams) (*Dele
 	if err != nil {
 		return nil, err
 	}
-	return result.(*DeleteGroupFromGroupNoContent), nil
-
+	success, ok := result.(*DeleteGroupFromGroupNoContent)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for delete_group_from_group: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -299,8 +349,14 @@ func (a *Client) DeleteGroupUser(params *DeleteGroupUserParams) (*DeleteGroupUse
 	if err != nil {
 		return nil, err
 	}
-	return result.(*DeleteGroupUserNoContent), nil
-
+	success, ok := result.(*DeleteGroupUserNoContent)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for delete_group_user: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -330,8 +386,14 @@ func (a *Client) DeleteUserAttributeGroupValue(params *DeleteUserAttributeGroupV
 	if err != nil {
 		return nil, err
 	}
-	return result.(*DeleteUserAttributeGroupValueNoContent), nil
-
+	success, ok := result.(*DeleteUserAttributeGroupValueNoContent)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for delete_user_attribute_group_value: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -361,8 +423,75 @@ func (a *Client) Group(params *GroupParams) (*GroupOK, error) {
 	if err != nil {
 		return nil, err
 	}
-	return result.(*GroupOK), nil
+	success, ok := result.(*GroupOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for group: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
 
+/*
+SearchGroups searches groups
+
+### Search groups
+
+Returns all group records that match the given search criteria.
+
+If multiple search params are given and `filter_or` is FALSE or not specified,
+search params are combined in a logical AND operation.
+Only rows that match *all* search param criteria will be returned.
+
+If `filter_or` is TRUE, multiple search params are combined in a logical OR operation.
+Results will include rows that match **any** of the search criteria.
+
+String search params use case-insensitive matching.
+String search params can contain `%` and '_' as SQL LIKE pattern match wildcard expressions.
+example="dan%" will match "danger" and "Danzig" but not "David"
+example="D_m%" will match "Damage" and "dump"
+
+Integer search params can accept a single value or a comma separated list of values. The multiple
+values will be combined under a logical OR operation - results will match at least one of
+the given values.
+
+Most search params can accept "IS NULL" and "NOT NULL" as special expressions to match
+or exclude (respectively) rows where the column is null.
+
+Boolean search params accept only "true" and "false" as values.
+
+
+*/
+func (a *Client) SearchGroups(params *SearchGroupsParams) (*SearchGroupsOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewSearchGroupsParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "search_groups",
+		Method:             "GET",
+		PathPattern:        "/groups/search",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &SearchGroupsReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*SearchGroupsOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for search_groups: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -391,8 +520,14 @@ func (a *Client) UpdateGroup(params *UpdateGroupParams) (*UpdateGroupOK, error) 
 	if err != nil {
 		return nil, err
 	}
-	return result.(*UpdateGroupOK), nil
-
+	success, ok := result.(*UpdateGroupOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for update_group: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -424,8 +559,14 @@ func (a *Client) UpdateUserAttributeGroupValue(params *UpdateUserAttributeGroupV
 	if err != nil {
 		return nil, err
 	}
-	return result.(*UpdateUserAttributeGroupValueOK), nil
-
+	success, ok := result.(*UpdateUserAttributeGroupValueOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for update_user_attribute_group_value: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 // SetTransport changes the transport on the client

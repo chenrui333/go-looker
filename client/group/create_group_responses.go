@@ -24,35 +24,30 @@ type CreateGroupReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *CreateGroupReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewCreateGroupOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewCreateGroupBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewCreateGroupNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 409:
 		result := NewCreateGroupConflict()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewCreateGroupUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -80,6 +75,10 @@ type CreateGroupOK struct {
 
 func (o *CreateGroupOK) Error() string {
 	return fmt.Sprintf("[POST /groups][%d] createGroupOK  %+v", 200, o.Payload)
+}
+
+func (o *CreateGroupOK) GetPayload() *models.Group {
+	return o.Payload
 }
 
 func (o *CreateGroupOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -111,6 +110,10 @@ func (o *CreateGroupBadRequest) Error() string {
 	return fmt.Sprintf("[POST /groups][%d] createGroupBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *CreateGroupBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreateGroupBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -138,6 +141,10 @@ type CreateGroupNotFound struct {
 
 func (o *CreateGroupNotFound) Error() string {
 	return fmt.Sprintf("[POST /groups][%d] createGroupNotFound  %+v", 404, o.Payload)
+}
+
+func (o *CreateGroupNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *CreateGroupNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -169,6 +176,10 @@ func (o *CreateGroupConflict) Error() string {
 	return fmt.Sprintf("[POST /groups][%d] createGroupConflict  %+v", 409, o.Payload)
 }
 
+func (o *CreateGroupConflict) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreateGroupConflict) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -196,6 +207,10 @@ type CreateGroupUnprocessableEntity struct {
 
 func (o *CreateGroupUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[POST /groups][%d] createGroupUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *CreateGroupUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *CreateGroupUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

@@ -24,21 +24,18 @@ type ScheduledPlansForSpaceReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *ScheduledPlansForSpaceReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewScheduledPlansForSpaceOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewScheduledPlansForSpaceBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewScheduledPlansForSpaceNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *ScheduledPlansForSpaceOK) Error() string {
 	return fmt.Sprintf("[GET /scheduled_plans/space/{space_id}][%d] scheduledPlansForSpaceOK  %+v", 200, o.Payload)
 }
 
+func (o *ScheduledPlansForSpaceOK) GetPayload() []*models.ScheduledPlan {
+	return o.Payload
+}
+
 func (o *ScheduledPlansForSpaceOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type ScheduledPlansForSpaceBadRequest struct {
 
 func (o *ScheduledPlansForSpaceBadRequest) Error() string {
 	return fmt.Sprintf("[GET /scheduled_plans/space/{space_id}][%d] scheduledPlansForSpaceBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *ScheduledPlansForSpaceBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *ScheduledPlansForSpaceBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type ScheduledPlansForSpaceNotFound struct {
 
 func (o *ScheduledPlansForSpaceNotFound) Error() string {
 	return fmt.Sprintf("[GET /scheduled_plans/space/{space_id}][%d] scheduledPlansForSpaceNotFound  %+v", 404, o.Payload)
+}
+
+func (o *ScheduledPlansForSpaceNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *ScheduledPlansForSpaceNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

@@ -24,28 +24,24 @@ type RunQueryReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *RunQueryReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewRunQueryOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewRunQueryBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewRunQueryNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewRunQueryUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -75,6 +71,10 @@ func (o *RunQueryOK) Error() string {
 	return fmt.Sprintf("[GET /queries/{query_id}/run/{result_format}][%d] runQueryOK  %+v", 200, o.Payload)
 }
 
+func (o *RunQueryOK) GetPayload() string {
+	return o.Payload
+}
+
 func (o *RunQueryOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -100,6 +100,10 @@ type RunQueryBadRequest struct {
 
 func (o *RunQueryBadRequest) Error() string {
 	return fmt.Sprintf("[GET /queries/{query_id}/run/{result_format}][%d] runQueryBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *RunQueryBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *RunQueryBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -131,6 +135,10 @@ func (o *RunQueryNotFound) Error() string {
 	return fmt.Sprintf("[GET /queries/{query_id}/run/{result_format}][%d] runQueryNotFound  %+v", 404, o.Payload)
 }
 
+func (o *RunQueryNotFound) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *RunQueryNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -158,6 +166,10 @@ type RunQueryUnprocessableEntity struct {
 
 func (o *RunQueryUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[GET /queries/{query_id}/run/{result_format}][%d] runQueryUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *RunQueryUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *RunQueryUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

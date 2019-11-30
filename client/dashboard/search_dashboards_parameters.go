@@ -6,10 +6,9 @@ package dashboard
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"net/http"
 	"time"
-
-	"golang.org/x/net/context"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
@@ -68,6 +67,16 @@ type SearchDashboardsParams struct {
 
 	*/
 	ContentFavoriteID *int64
+	/*ContentMetadataID
+	  Filter on a content favorite id.
+
+	*/
+	ContentMetadataID *int64
+	/*Curate
+	  Exclude items that exist only in personal spaces other than the users
+
+	*/
+	Curate *bool
 	/*Deleted
 	  Filter on dashboards deleted status.
 
@@ -83,6 +92,11 @@ type SearchDashboardsParams struct {
 
 	*/
 	Fields *string
+	/*FilterOr
+	  Combine given search criteria in a boolean OR expression
+
+	*/
+	FilterOr *bool
 	/*ID
 	  Match dashboard id.
 
@@ -114,7 +128,7 @@ type SearchDashboardsParams struct {
 	*/
 	Slug *string
 	/*Sorts
-	  Fields to sort by.
+	  One or more fields to sort by. Sortable fields: [:title, :user_id, :id, :created_at, :space_id, :description, :view_count, :favorite_count, :slug, :content_favorite_id, :content_metadata_id, :deleted, :deleted_at, :last_viewed_at]
 
 	*/
 	Sorts *string
@@ -188,6 +202,28 @@ func (o *SearchDashboardsParams) SetContentFavoriteID(contentFavoriteID *int64) 
 	o.ContentFavoriteID = contentFavoriteID
 }
 
+// WithContentMetadataID adds the contentMetadataID to the search dashboards params
+func (o *SearchDashboardsParams) WithContentMetadataID(contentMetadataID *int64) *SearchDashboardsParams {
+	o.SetContentMetadataID(contentMetadataID)
+	return o
+}
+
+// SetContentMetadataID adds the contentMetadataId to the search dashboards params
+func (o *SearchDashboardsParams) SetContentMetadataID(contentMetadataID *int64) {
+	o.ContentMetadataID = contentMetadataID
+}
+
+// WithCurate adds the curate to the search dashboards params
+func (o *SearchDashboardsParams) WithCurate(curate *bool) *SearchDashboardsParams {
+	o.SetCurate(curate)
+	return o
+}
+
+// SetCurate adds the curate to the search dashboards params
+func (o *SearchDashboardsParams) SetCurate(curate *bool) {
+	o.Curate = curate
+}
+
 // WithDeleted adds the deleted to the search dashboards params
 func (o *SearchDashboardsParams) WithDeleted(deleted *string) *SearchDashboardsParams {
 	o.SetDeleted(deleted)
@@ -219,6 +255,17 @@ func (o *SearchDashboardsParams) WithFields(fields *string) *SearchDashboardsPar
 // SetFields adds the fields to the search dashboards params
 func (o *SearchDashboardsParams) SetFields(fields *string) {
 	o.Fields = fields
+}
+
+// WithFilterOr adds the filterOr to the search dashboards params
+func (o *SearchDashboardsParams) WithFilterOr(filterOr *bool) *SearchDashboardsParams {
+	o.SetFilterOr(filterOr)
+	return o
+}
+
+// SetFilterOr adds the filterOr to the search dashboards params
+func (o *SearchDashboardsParams) SetFilterOr(filterOr *bool) {
+	o.FilterOr = filterOr
 }
 
 // WithID adds the id to the search dashboards params
@@ -366,6 +413,38 @@ func (o *SearchDashboardsParams) WriteToRequest(r runtime.ClientRequest, reg str
 
 	}
 
+	if o.ContentMetadataID != nil {
+
+		// query param content_metadata_id
+		var qrContentMetadataID int64
+		if o.ContentMetadataID != nil {
+			qrContentMetadataID = *o.ContentMetadataID
+		}
+		qContentMetadataID := swag.FormatInt64(qrContentMetadataID)
+		if qContentMetadataID != "" {
+			if err := r.SetQueryParam("content_metadata_id", qContentMetadataID); err != nil {
+				return err
+			}
+		}
+
+	}
+
+	if o.Curate != nil {
+
+		// query param curate
+		var qrCurate bool
+		if o.Curate != nil {
+			qrCurate = *o.Curate
+		}
+		qCurate := swag.FormatBool(qrCurate)
+		if qCurate != "" {
+			if err := r.SetQueryParam("curate", qCurate); err != nil {
+				return err
+			}
+		}
+
+	}
+
 	if o.Deleted != nil {
 
 		// query param deleted
@@ -408,6 +487,22 @@ func (o *SearchDashboardsParams) WriteToRequest(r runtime.ClientRequest, reg str
 		qFields := qrFields
 		if qFields != "" {
 			if err := r.SetQueryParam("fields", qFields); err != nil {
+				return err
+			}
+		}
+
+	}
+
+	if o.FilterOr != nil {
+
+		// query param filter_or
+		var qrFilterOr bool
+		if o.FilterOr != nil {
+			qrFilterOr = *o.FilterOr
+		}
+		qFilterOr := swag.FormatBool(qrFilterOr)
+		if qFilterOr != "" {
+			if err := r.SetQueryParam("filter_or", qFilterOr); err != nil {
 				return err
 			}
 		}

@@ -24,21 +24,18 @@ type AllGitConnectionTestsReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *AllGitConnectionTestsReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewAllGitConnectionTestsOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewAllGitConnectionTestsBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewAllGitConnectionTestsNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *AllGitConnectionTestsOK) Error() string {
 	return fmt.Sprintf("[GET /projects/{project_id}/git_connection_tests][%d] allGitConnectionTestsOK  %+v", 200, o.Payload)
 }
 
+func (o *AllGitConnectionTestsOK) GetPayload() []*models.GitConnectionTest {
+	return o.Payload
+}
+
 func (o *AllGitConnectionTestsOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type AllGitConnectionTestsBadRequest struct {
 
 func (o *AllGitConnectionTestsBadRequest) Error() string {
 	return fmt.Sprintf("[GET /projects/{project_id}/git_connection_tests][%d] allGitConnectionTestsBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *AllGitConnectionTestsBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *AllGitConnectionTestsBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type AllGitConnectionTestsNotFound struct {
 
 func (o *AllGitConnectionTestsNotFound) Error() string {
 	return fmt.Sprintf("[GET /projects/{project_id}/git_connection_tests][%d] allGitConnectionTestsNotFound  %+v", 404, o.Payload)
+}
+
+func (o *AllGitConnectionTestsNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *AllGitConnectionTestsNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

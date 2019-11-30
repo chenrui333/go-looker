@@ -24,21 +24,18 @@ type AllIntegrationsReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *AllIntegrationsReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewAllIntegrationsOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewAllIntegrationsBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewAllIntegrationsNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *AllIntegrationsOK) Error() string {
 	return fmt.Sprintf("[GET /integrations][%d] allIntegrationsOK  %+v", 200, o.Payload)
 }
 
+func (o *AllIntegrationsOK) GetPayload() []*models.Integration {
+	return o.Payload
+}
+
 func (o *AllIntegrationsOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type AllIntegrationsBadRequest struct {
 
 func (o *AllIntegrationsBadRequest) Error() string {
 	return fmt.Sprintf("[GET /integrations][%d] allIntegrationsBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *AllIntegrationsBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *AllIntegrationsBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type AllIntegrationsNotFound struct {
 
 func (o *AllIntegrationsNotFound) Error() string {
 	return fmt.Sprintf("[GET /integrations][%d] allIntegrationsNotFound  %+v", 404, o.Payload)
+}
+
+func (o *AllIntegrationsNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *AllIntegrationsNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

@@ -24,35 +24,30 @@ type ImportLookmlDashboardReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *ImportLookmlDashboardReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewImportLookmlDashboardOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 201:
 		result := NewImportLookmlDashboardCreated()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewImportLookmlDashboardBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewImportLookmlDashboardNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewImportLookmlDashboardUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -80,6 +75,10 @@ type ImportLookmlDashboardOK struct {
 
 func (o *ImportLookmlDashboardOK) Error() string {
 	return fmt.Sprintf("[POST /dashboards/{lookml_dashboard_id}/import/{space_id}][%d] importLookmlDashboardOK  %+v", 200, o.Payload)
+}
+
+func (o *ImportLookmlDashboardOK) GetPayload() *models.Dashboard {
+	return o.Payload
 }
 
 func (o *ImportLookmlDashboardOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -111,6 +110,10 @@ func (o *ImportLookmlDashboardCreated) Error() string {
 	return fmt.Sprintf("[POST /dashboards/{lookml_dashboard_id}/import/{space_id}][%d] importLookmlDashboardCreated  %+v", 201, o.Payload)
 }
 
+func (o *ImportLookmlDashboardCreated) GetPayload() *models.Dashboard {
+	return o.Payload
+}
+
 func (o *ImportLookmlDashboardCreated) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Dashboard)
@@ -138,6 +141,10 @@ type ImportLookmlDashboardBadRequest struct {
 
 func (o *ImportLookmlDashboardBadRequest) Error() string {
 	return fmt.Sprintf("[POST /dashboards/{lookml_dashboard_id}/import/{space_id}][%d] importLookmlDashboardBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *ImportLookmlDashboardBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *ImportLookmlDashboardBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -169,6 +176,10 @@ func (o *ImportLookmlDashboardNotFound) Error() string {
 	return fmt.Sprintf("[POST /dashboards/{lookml_dashboard_id}/import/{space_id}][%d] importLookmlDashboardNotFound  %+v", 404, o.Payload)
 }
 
+func (o *ImportLookmlDashboardNotFound) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *ImportLookmlDashboardNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -196,6 +207,10 @@ type ImportLookmlDashboardUnprocessableEntity struct {
 
 func (o *ImportLookmlDashboardUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[POST /dashboards/{lookml_dashboard_id}/import/{space_id}][%d] importLookmlDashboardUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *ImportLookmlDashboardUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *ImportLookmlDashboardUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

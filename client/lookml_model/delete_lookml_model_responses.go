@@ -24,21 +24,18 @@ type DeleteLookmlModelReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *DeleteLookmlModelReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 204:
 		result := NewDeleteLookmlModelNoContent()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewDeleteLookmlModelBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewDeleteLookmlModelNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *DeleteLookmlModelNoContent) Error() string {
 	return fmt.Sprintf("[DELETE /lookml_models/{lookml_model_name}][%d] deleteLookmlModelNoContent  %+v", 204, o.Payload)
 }
 
+func (o *DeleteLookmlModelNoContent) GetPayload() string {
+	return o.Payload
+}
+
 func (o *DeleteLookmlModelNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type DeleteLookmlModelBadRequest struct {
 
 func (o *DeleteLookmlModelBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /lookml_models/{lookml_model_name}][%d] deleteLookmlModelBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *DeleteLookmlModelBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteLookmlModelBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type DeleteLookmlModelNotFound struct {
 
 func (o *DeleteLookmlModelNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /lookml_models/{lookml_model_name}][%d] deleteLookmlModelNotFound  %+v", 404, o.Payload)
+}
+
+func (o *DeleteLookmlModelNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteLookmlModelNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

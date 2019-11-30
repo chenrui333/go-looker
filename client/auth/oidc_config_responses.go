@@ -24,14 +24,12 @@ type OidcConfigReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *OidcConfigReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewOidcConfigOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 404:
 		result := NewOidcConfigNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -61,6 +59,10 @@ func (o *OidcConfigOK) Error() string {
 	return fmt.Sprintf("[GET /oidc_config][%d] oidcConfigOK  %+v", 200, o.Payload)
 }
 
+func (o *OidcConfigOK) GetPayload() *models.OIDCConfig {
+	return o.Payload
+}
+
 func (o *OidcConfigOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.OIDCConfig)
@@ -88,6 +90,10 @@ type OidcConfigNotFound struct {
 
 func (o *OidcConfigNotFound) Error() string {
 	return fmt.Sprintf("[GET /oidc_config][%d] oidcConfigNotFound  %+v", 404, o.Payload)
+}
+
+func (o *OidcConfigNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *OidcConfigNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

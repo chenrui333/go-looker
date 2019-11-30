@@ -6,10 +6,9 @@ package content
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"net/http"
 	"time"
-
-	"golang.org/x/net/context"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
@@ -79,10 +78,15 @@ type SearchContentViewsParams struct {
 	*/
 	DashboardID *string
 	/*Fields
-	  Requested fields.
+	  Requested fields
 
 	*/
 	Fields *string
+	/*FilterOr
+	  Combine given search criteria in a boolean OR expression
+
+	*/
+	FilterOr *bool
 	/*GroupID
 	  Match Group Id
 
@@ -204,6 +208,17 @@ func (o *SearchContentViewsParams) WithFields(fields *string) *SearchContentView
 // SetFields adds the fields to the search content views params
 func (o *SearchContentViewsParams) SetFields(fields *string) {
 	o.Fields = fields
+}
+
+// WithFilterOr adds the filterOr to the search content views params
+func (o *SearchContentViewsParams) WithFilterOr(filterOr *bool) *SearchContentViewsParams {
+	o.SetFilterOr(filterOr)
+	return o
+}
+
+// SetFilterOr adds the filterOr to the search content views params
+func (o *SearchContentViewsParams) SetFilterOr(filterOr *bool) {
+	o.FilterOr = filterOr
 }
 
 // WithGroupID adds the groupID to the search content views params
@@ -360,6 +375,22 @@ func (o *SearchContentViewsParams) WriteToRequest(r runtime.ClientRequest, reg s
 		qFields := qrFields
 		if qFields != "" {
 			if err := r.SetQueryParam("fields", qFields); err != nil {
+				return err
+			}
+		}
+
+	}
+
+	if o.FilterOr != nil {
+
+		// query param filter_or
+		var qrFilterOr bool
+		if o.FilterOr != nil {
+			qrFilterOr = *o.FilterOr
+		}
+		qFilterOr := swag.FormatBool(qrFilterOr)
+		if qFilterOr != "" {
+			if err := r.SetQueryParam("filter_or", qFilterOr); err != nil {
 				return err
 			}
 		}

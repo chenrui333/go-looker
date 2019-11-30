@@ -31,7 +31,7 @@ type DialectInfoOptions struct {
 	// Read Only: true
 	Host *bool `json:"host,omitempty"`
 
-	// Has OAuth support
+	// Has support for a service account
 	// Read Only: true
 	OauthCredentials *bool `json:"oauth_credentials,omitempty"`
 

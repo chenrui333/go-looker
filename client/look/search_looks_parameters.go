@@ -6,10 +6,9 @@ package look
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"net/http"
 	"time"
-
-	"golang.org/x/net/context"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
@@ -64,10 +63,20 @@ for the search looks operation typically these are written to a http.Request
 type SearchLooksParams struct {
 
 	/*ContentFavoriteID
-	  Match content favorite id
+	  Select looks with a particular content favorite id
 
 	*/
 	ContentFavoriteID *int64
+	/*Curate
+	  Exclude items that exist only in personal spaces other than the users
+
+	*/
+	Curate *bool
+	/*Deleted
+	  Select soft-deleted looks
+
+	*/
+	Deleted *bool
 	/*Description
 	  Match Look description.
 
@@ -78,6 +87,11 @@ type SearchLooksParams struct {
 
 	*/
 	Fields *string
+	/*FilterOr
+	  Combine given search criteria in a boolean OR expression
+
+	*/
+	FilterOr *bool
 	/*Limit
 	  Number of results to return. (used with offset and takes priority over page and per_page)
 
@@ -98,13 +112,18 @@ type SearchLooksParams struct {
 
 	*/
 	PerPage *int64
+	/*QueryID
+	  Select looks that reference a particular query by query_id
+
+	*/
+	QueryID *int64
 	/*Sorts
-	  Fields to sort by.
+	  One or more fields to sort results by. Sortable fields: [:title, :user_id, :id, :created_at, :space_id, :description, :updated_at, :last_updater_id, :view_count, :favorite_count, :content_favorite_id, :deleted, :deleted_at, :last_viewed_at, :query_id]
 
 	*/
 	Sorts *string
 	/*SpaceID
-	  Filter on a particular space.
+	  Select looks in a particular space.
 
 	*/
 	SpaceID *string
@@ -114,12 +133,12 @@ type SearchLooksParams struct {
 	*/
 	Title *string
 	/*UserID
-	  Filter on dashboards created by a particular user.
+	  Select looks created by a particular user.
 
 	*/
 	UserID *string
 	/*ViewCount
-	  Filter on a particular value of view_count
+	  Select looks with particular view_count value
 
 	*/
 	ViewCount *string
@@ -173,6 +192,28 @@ func (o *SearchLooksParams) SetContentFavoriteID(contentFavoriteID *int64) {
 	o.ContentFavoriteID = contentFavoriteID
 }
 
+// WithCurate adds the curate to the search looks params
+func (o *SearchLooksParams) WithCurate(curate *bool) *SearchLooksParams {
+	o.SetCurate(curate)
+	return o
+}
+
+// SetCurate adds the curate to the search looks params
+func (o *SearchLooksParams) SetCurate(curate *bool) {
+	o.Curate = curate
+}
+
+// WithDeleted adds the deleted to the search looks params
+func (o *SearchLooksParams) WithDeleted(deleted *bool) *SearchLooksParams {
+	o.SetDeleted(deleted)
+	return o
+}
+
+// SetDeleted adds the deleted to the search looks params
+func (o *SearchLooksParams) SetDeleted(deleted *bool) {
+	o.Deleted = deleted
+}
+
 // WithDescription adds the description to the search looks params
 func (o *SearchLooksParams) WithDescription(description *string) *SearchLooksParams {
 	o.SetDescription(description)
@@ -193,6 +234,17 @@ func (o *SearchLooksParams) WithFields(fields *string) *SearchLooksParams {
 // SetFields adds the fields to the search looks params
 func (o *SearchLooksParams) SetFields(fields *string) {
 	o.Fields = fields
+}
+
+// WithFilterOr adds the filterOr to the search looks params
+func (o *SearchLooksParams) WithFilterOr(filterOr *bool) *SearchLooksParams {
+	o.SetFilterOr(filterOr)
+	return o
+}
+
+// SetFilterOr adds the filterOr to the search looks params
+func (o *SearchLooksParams) SetFilterOr(filterOr *bool) {
+	o.FilterOr = filterOr
 }
 
 // WithLimit adds the limit to the search looks params
@@ -237,6 +289,17 @@ func (o *SearchLooksParams) WithPerPage(perPage *int64) *SearchLooksParams {
 // SetPerPage adds the perPage to the search looks params
 func (o *SearchLooksParams) SetPerPage(perPage *int64) {
 	o.PerPage = perPage
+}
+
+// WithQueryID adds the queryID to the search looks params
+func (o *SearchLooksParams) WithQueryID(queryID *int64) *SearchLooksParams {
+	o.SetQueryID(queryID)
+	return o
+}
+
+// SetQueryID adds the queryId to the search looks params
+func (o *SearchLooksParams) SetQueryID(queryID *int64) {
+	o.QueryID = queryID
 }
 
 // WithSorts adds the sorts to the search looks params
@@ -318,6 +381,38 @@ func (o *SearchLooksParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.R
 
 	}
 
+	if o.Curate != nil {
+
+		// query param curate
+		var qrCurate bool
+		if o.Curate != nil {
+			qrCurate = *o.Curate
+		}
+		qCurate := swag.FormatBool(qrCurate)
+		if qCurate != "" {
+			if err := r.SetQueryParam("curate", qCurate); err != nil {
+				return err
+			}
+		}
+
+	}
+
+	if o.Deleted != nil {
+
+		// query param deleted
+		var qrDeleted bool
+		if o.Deleted != nil {
+			qrDeleted = *o.Deleted
+		}
+		qDeleted := swag.FormatBool(qrDeleted)
+		if qDeleted != "" {
+			if err := r.SetQueryParam("deleted", qDeleted); err != nil {
+				return err
+			}
+		}
+
+	}
+
 	if o.Description != nil {
 
 		// query param description
@@ -344,6 +439,22 @@ func (o *SearchLooksParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.R
 		qFields := qrFields
 		if qFields != "" {
 			if err := r.SetQueryParam("fields", qFields); err != nil {
+				return err
+			}
+		}
+
+	}
+
+	if o.FilterOr != nil {
+
+		// query param filter_or
+		var qrFilterOr bool
+		if o.FilterOr != nil {
+			qrFilterOr = *o.FilterOr
+		}
+		qFilterOr := swag.FormatBool(qrFilterOr)
+		if qFilterOr != "" {
+			if err := r.SetQueryParam("filter_or", qFilterOr); err != nil {
 				return err
 			}
 		}
@@ -408,6 +519,22 @@ func (o *SearchLooksParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.R
 		qPerPage := swag.FormatInt64(qrPerPage)
 		if qPerPage != "" {
 			if err := r.SetQueryParam("per_page", qPerPage); err != nil {
+				return err
+			}
+		}
+
+	}
+
+	if o.QueryID != nil {
+
+		// query param query_id
+		var qrQueryID int64
+		if o.QueryID != nil {
+			qrQueryID = *o.QueryID
+		}
+		qQueryID := swag.FormatInt64(qrQueryID)
+		if qQueryID != "" {
+			if err := r.SetQueryParam("query_id", qQueryID); err != nil {
 				return err
 			}
 		}

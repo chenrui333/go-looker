@@ -24,21 +24,18 @@ type DeleteIntegrationHubReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *DeleteIntegrationHubReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 204:
 		result := NewDeleteIntegrationHubNoContent()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewDeleteIntegrationHubBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewDeleteIntegrationHubNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *DeleteIntegrationHubNoContent) Error() string {
 	return fmt.Sprintf("[DELETE /integration_hubs/{integration_hub_id}][%d] deleteIntegrationHubNoContent  %+v", 204, o.Payload)
 }
 
+func (o *DeleteIntegrationHubNoContent) GetPayload() string {
+	return o.Payload
+}
+
 func (o *DeleteIntegrationHubNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type DeleteIntegrationHubBadRequest struct {
 
 func (o *DeleteIntegrationHubBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /integration_hubs/{integration_hub_id}][%d] deleteIntegrationHubBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *DeleteIntegrationHubBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteIntegrationHubBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type DeleteIntegrationHubNotFound struct {
 
 func (o *DeleteIntegrationHubNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /integration_hubs/{integration_hub_id}][%d] deleteIntegrationHubNotFound  %+v", 404, o.Payload)
+}
+
+func (o *DeleteIntegrationHubNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteIntegrationHubNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

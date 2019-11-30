@@ -24,28 +24,24 @@ type UpdateUserAttributeReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *UpdateUserAttributeReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewUpdateUserAttributeOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewUpdateUserAttributeBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewUpdateUserAttributeNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewUpdateUserAttributeUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -73,6 +69,10 @@ type UpdateUserAttributeOK struct {
 
 func (o *UpdateUserAttributeOK) Error() string {
 	return fmt.Sprintf("[PATCH /user_attributes/{user_attribute_id}][%d] updateUserAttributeOK  %+v", 200, o.Payload)
+}
+
+func (o *UpdateUserAttributeOK) GetPayload() *models.UserAttribute {
+	return o.Payload
 }
 
 func (o *UpdateUserAttributeOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -104,6 +104,10 @@ func (o *UpdateUserAttributeBadRequest) Error() string {
 	return fmt.Sprintf("[PATCH /user_attributes/{user_attribute_id}][%d] updateUserAttributeBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *UpdateUserAttributeBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UpdateUserAttributeBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -133,6 +137,10 @@ func (o *UpdateUserAttributeNotFound) Error() string {
 	return fmt.Sprintf("[PATCH /user_attributes/{user_attribute_id}][%d] updateUserAttributeNotFound  %+v", 404, o.Payload)
 }
 
+func (o *UpdateUserAttributeNotFound) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UpdateUserAttributeNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -160,6 +168,10 @@ type UpdateUserAttributeUnprocessableEntity struct {
 
 func (o *UpdateUserAttributeUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[PATCH /user_attributes/{user_attribute_id}][%d] updateUserAttributeUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *UpdateUserAttributeUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *UpdateUserAttributeUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

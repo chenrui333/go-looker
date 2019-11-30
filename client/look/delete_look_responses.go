@@ -24,21 +24,18 @@ type DeleteLookReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *DeleteLookReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 204:
 		result := NewDeleteLookNoContent()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewDeleteLookBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewDeleteLookNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *DeleteLookNoContent) Error() string {
 	return fmt.Sprintf("[DELETE /looks/{look_id}][%d] deleteLookNoContent  %+v", 204, o.Payload)
 }
 
+func (o *DeleteLookNoContent) GetPayload() string {
+	return o.Payload
+}
+
 func (o *DeleteLookNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type DeleteLookBadRequest struct {
 
 func (o *DeleteLookBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /looks/{look_id}][%d] deleteLookBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *DeleteLookBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteLookBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type DeleteLookNotFound struct {
 
 func (o *DeleteLookNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /looks/{look_id}][%d] deleteLookNotFound  %+v", 404, o.Payload)
+}
+
+func (o *DeleteLookNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteLookNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

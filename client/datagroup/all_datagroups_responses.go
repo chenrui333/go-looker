@@ -24,21 +24,18 @@ type AllDatagroupsReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *AllDatagroupsReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewAllDatagroupsOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewAllDatagroupsBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewAllDatagroupsNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *AllDatagroupsOK) Error() string {
 	return fmt.Sprintf("[GET /datagroups][%d] allDatagroupsOK  %+v", 200, o.Payload)
 }
 
+func (o *AllDatagroupsOK) GetPayload() []*models.Datagroup {
+	return o.Payload
+}
+
 func (o *AllDatagroupsOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type AllDatagroupsBadRequest struct {
 
 func (o *AllDatagroupsBadRequest) Error() string {
 	return fmt.Sprintf("[GET /datagroups][%d] allDatagroupsBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *AllDatagroupsBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *AllDatagroupsBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type AllDatagroupsNotFound struct {
 
 func (o *AllDatagroupsNotFound) Error() string {
 	return fmt.Sprintf("[GET /datagroups][%d] allDatagroupsNotFound  %+v", 404, o.Payload)
+}
+
+func (o *AllDatagroupsNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *AllDatagroupsNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

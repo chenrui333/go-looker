@@ -24,21 +24,18 @@ type UserCredentialsOidcReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *UserCredentialsOidcReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewUserCredentialsOidcOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewUserCredentialsOidcBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewUserCredentialsOidcNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -66,6 +63,10 @@ type UserCredentialsOidcOK struct {
 
 func (o *UserCredentialsOidcOK) Error() string {
 	return fmt.Sprintf("[GET /users/{user_id}/credentials_oidc][%d] userCredentialsOidcOK  %+v", 200, o.Payload)
+}
+
+func (o *UserCredentialsOidcOK) GetPayload() *models.CredentialsOIDC {
+	return o.Payload
 }
 
 func (o *UserCredentialsOidcOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -97,6 +98,10 @@ func (o *UserCredentialsOidcBadRequest) Error() string {
 	return fmt.Sprintf("[GET /users/{user_id}/credentials_oidc][%d] userCredentialsOidcBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *UserCredentialsOidcBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UserCredentialsOidcBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -124,6 +129,10 @@ type UserCredentialsOidcNotFound struct {
 
 func (o *UserCredentialsOidcNotFound) Error() string {
 	return fmt.Sprintf("[GET /users/{user_id}/credentials_oidc][%d] userCredentialsOidcNotFound  %+v", 404, o.Payload)
+}
+
+func (o *UserCredentialsOidcNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *UserCredentialsOidcNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

@@ -6,6 +6,8 @@ package scheduled_plan
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"fmt"
+
 	"github.com/go-openapi/runtime"
 
 	strfmt "github.com/go-openapi/strfmt"
@@ -27,11 +29,14 @@ type Client struct {
 /*
 AllScheduledPlans gets all scheduled plans
 
-### Get All Scheduled Plans
+### List All Scheduled Plans
 
-Returns all scheduled plans owned by the caller or given user.
+Returns all scheduled plans which belong to the caller or given user.
 
 If no user_id is provided, this function returns the scheduled plans owned by the caller.
+
+
+To list all schedules for all users, pass `all_users=true`.
 
 
 The caller must have `see_schedules` permission to see other users' scheduled plans.
@@ -60,8 +65,14 @@ func (a *Client) AllScheduledPlans(params *AllScheduledPlansParams) (*AllSchedul
 	if err != nil {
 		return nil, err
 	}
-	return result.(*AllScheduledPlansOK), nil
-
+	success, ok := result.(*AllScheduledPlansOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for all_scheduled_plans: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -71,13 +82,42 @@ CreateScheduledPlan creates scheduled plan
 
 Create a scheduled plan to render a Look or Dashboard on a recurring schedule.
 
+To create a scheduled plan, you MUST provide values for the following fields:
+`name`
+and
+`look_id`, `dashboard_id`, `lookml_dashboard_id`, or `query_id`
+and
+`cron_tab` or `datagroup`
+and
+at least one scheduled_plan_destination
+
+When `look_id` is set, `require_no_results`, `require_results`, and `require_change` are all required.
+
+If `create_scheduled_plan` fails with a 422 error, be sure to look at the error messages in the response which will explain exactly what fields are missing or values that are incompatible.
+
 The queries that provide the data for the look or dashboard are run in the context of user account that owns the scheduled plan.
 
-Admins can create scheduled plans on behalf of other users by specifying a user id.
+When `run_as_recipient` is `false` or not specified, the queries that provide the data for the
+look or dashboard are run in the context of user account that owns the scheduled plan.
 
-Scheduled plan destinations must specify the data format to produce and send to the destination
+When `run_as_recipient` is `true` and all the email recipients are Looker user accounts, the
+queries are run in the context of each recipient, so different recipients may see different
+data from the same scheduled render of a look or dashboard. For more details, see [Run As Recipient](https://looker.com/docs/r/admin/run-as-recipient).
 
-Scheduled Plan Destination formats:
+Admins can create and modify scheduled plans on behalf of other users by specifying a user id.
+Non-admin users may not create or modify scheduled plans by or for other users.
+
+#### Email Permissions:
+
+For details about permissions required to schedule delivery to email and the safeguards
+Looker offers to protect against sending to unauthorized email destinations, see [Email Domain Whitelist for Scheduled Looks](https://docs.looker.com/r/api/embed-permissions).
+
+
+#### Scheduled Plan Destination Formats
+
+Scheduled plan destinations must specify the data format to produce and send to the destination.
+
+Formats:
 
 | format | Description
 | :-----------: | :--- |
@@ -119,8 +159,14 @@ func (a *Client) CreateScheduledPlan(params *CreateScheduledPlanParams) (*Create
 	if err != nil {
 		return nil, err
 	}
-	return result.(*CreateScheduledPlanOK), nil
-
+	success, ok := result.(*CreateScheduledPlanOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for create_scheduled_plan: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -130,6 +176,7 @@ DeleteScheduledPlan deletes scheduled plan
 
 Normal users can only delete their own scheduled plans.
 Admins can delete other users' scheduled plans.
+This delete cannot be undone.
 
 */
 func (a *Client) DeleteScheduledPlan(params *DeleteScheduledPlanParams) (*DeleteScheduledPlanNoContent, error) {
@@ -153,8 +200,14 @@ func (a *Client) DeleteScheduledPlan(params *DeleteScheduledPlanParams) (*Delete
 	if err != nil {
 		return nil, err
 	}
-	return result.(*DeleteScheduledPlanNoContent), nil
-
+	success, ok := result.(*DeleteScheduledPlanNoContent)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for delete_scheduled_plan: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -186,8 +239,14 @@ func (a *Client) ScheduledPlan(params *ScheduledPlanParams) (*ScheduledPlanOK, e
 	if err != nil {
 		return nil, err
 	}
-	return result.(*ScheduledPlanOK), nil
-
+	success, ok := result.(*ScheduledPlanOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for scheduled_plan: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -201,9 +260,19 @@ This can be useful for testing a Scheduled Plan before committing to a productio
 
 Admins can create scheduled plans on behalf of other users by specifying a user id.
 
-Scheduled plan destinations must specify the data format to produce and send to the destination
+This API is rate limited to prevent it from being used for relay spam or DoS attacks
 
-Scheduled Plan Destination formats:
+#### Email Permissions:
+
+For details about permissions required to schedule delivery to email and the safeguards
+Looker offers to protect against sending to unauthorized email destinations, see [Email Domain Whitelist for Scheduled Looks](https://docs.looker.com/r/api/embed-permissions).
+
+
+#### Scheduled Plan Destination Formats
+
+Scheduled plan destinations must specify the data format to produce and send to the destination.
+
+Formats:
 
 | format | Description
 | :-----------: | :--- |
@@ -245,8 +314,97 @@ func (a *Client) ScheduledPlanRunOnce(params *ScheduledPlanRunOnceParams) (*Sche
 	if err != nil {
 		return nil, err
 	}
-	return result.(*ScheduledPlanRunOnceOK), nil
+	success, ok := result.(*ScheduledPlanRunOnceOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for scheduled_plan_run_once: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
 
+/*
+ScheduledPlanRunOnceByID runs scheduled plan once by Id
+
+### Run a Scheduled Plan By Id Immediately
+This function creates a run-once schedule plan based on an existing scheduled plan,
+applies modifications (if any) to the new scheduled plan, and runs the new schedule plan immediately.
+This can be useful for testing modifications to an existing scheduled plan before committing to a production schedule.
+
+This function internally performs the following operations:
+1. Copies the properties of the existing scheduled plan into a new scheduled plan
+2. Copies any properties passed in the JSON body of this request into the new scheduled plan (replacing the original values)
+3. Creates the new scheduled plan
+4. Runs the new scheduled plan
+
+The original scheduled plan is not modified by this operation.
+Admins can create, modify, and run scheduled plans on behalf of other users by specifying a user id.
+Non-admins can only create, modify, and run their own scheduled plans.
+
+#### Email Permissions:
+
+For details about permissions required to schedule delivery to email and the safeguards
+Looker offers to protect against sending to unauthorized email destinations, see [Email Domain Whitelist for Scheduled Looks](https://docs.looker.com/r/api/embed-permissions).
+
+
+#### Scheduled Plan Destination Formats
+
+Scheduled plan destinations must specify the data format to produce and send to the destination.
+
+Formats:
+
+| format | Description
+| :-----------: | :--- |
+| json | A JSON object containing a `data` property which contains an array of JSON objects, one per row. No metadata.
+| json_detail | Row data plus metadata describing the fields, pivots, table calcs, and other aspects of the query
+| inline_json | Same as the JSON format, except that the `data` property is a string containing JSON-escaped row data. Additional properties describe the data operation. This format is primarily used to send data to web hooks so that the web hook doesn't have to re-encode the JSON row data in order to pass it on to its ultimate destination.
+| csv | Comma separated values with a header
+| txt | Tab separated values with a header
+| html | Simple html
+| xlsx | MS Excel spreadsheet
+| wysiwyg_pdf | Dashboard rendered in a tiled layout to produce a PDF document
+| assembled_pdf | Dashboard rendered in a single column layout to produce a PDF document
+| wysiwyg_png | Dashboard rendered in a tiled layout to produce a PNG image
+||
+
+Valid formats vary by destination type and source object. `wysiwyg_pdf` is only valid for dashboards, for example.
+
+
+
+This API is rate limited to prevent it from being used for relay spam or DoS attacks
+
+
+*/
+func (a *Client) ScheduledPlanRunOnceByID(params *ScheduledPlanRunOnceByIDParams) (*ScheduledPlanRunOnceByIDOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewScheduledPlanRunOnceByIDParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "scheduled_plan_run_once_by_id",
+		Method:             "POST",
+		PathPattern:        "/scheduled_plans/{scheduled_plan_id}/run_once",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &ScheduledPlanRunOnceByIDReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*ScheduledPlanRunOnceByIDOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for scheduled_plan_run_once_by_id: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -254,9 +412,12 @@ ScheduledPlansForDashboard scheduleds plans for dashboard
 
 ### Get Scheduled Plans for a Dashboard
 
-Returns all scheduled plans owned by the caller or given user, for a given dashboard.
+Returns all scheduled plans for a dashboard which belong to the caller or given user.
 
 If no user_id is provided, this function returns the scheduled plans owned by the caller.
+
+
+To list all schedules for all users, pass `all_users=true`.
 
 
 The caller must have `see_schedules` permission to see other users' scheduled plans.
@@ -285,8 +446,14 @@ func (a *Client) ScheduledPlansForDashboard(params *ScheduledPlansForDashboardPa
 	if err != nil {
 		return nil, err
 	}
-	return result.(*ScheduledPlansForDashboardOK), nil
-
+	success, ok := result.(*ScheduledPlansForDashboardOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for scheduled_plans_for_dashboard: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -294,9 +461,12 @@ ScheduledPlansForLook scheduleds plans for look
 
 ### Get Scheduled Plans for a Look
 
-Returns all scheduled plans owned by the caller or given user, for a given look.
+Returns all scheduled plans for a look which belong to the caller or given user.
 
 If no user_id is provided, this function returns the scheduled plans owned by the caller.
+
+
+To list all schedules for all users, pass `all_users=true`.
 
 
 The caller must have `see_schedules` permission to see other users' scheduled plans.
@@ -325,8 +495,14 @@ func (a *Client) ScheduledPlansForLook(params *ScheduledPlansForLookParams) (*Sc
 	if err != nil {
 		return nil, err
 	}
-	return result.(*ScheduledPlansForLookOK), nil
-
+	success, ok := result.(*ScheduledPlansForLookOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for scheduled_plans_for_look: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -334,9 +510,12 @@ ScheduledPlansForLookmlDashboard scheduleds plans for look m l dashboard
 
 ### Get Scheduled Plans for a LookML Dashboard
 
-Returns all scheduled plans owned by the caller or given user, for a given LookML dashboard.
+Returns all scheduled plans for a LookML Dashboard which belong to the caller or given user.
 
 If no user_id is provided, this function returns the scheduled plans owned by the caller.
+
+
+To list all schedules for all users, pass `all_users=true`.
 
 
 The caller must have `see_schedules` permission to see other users' scheduled plans.
@@ -365,8 +544,14 @@ func (a *Client) ScheduledPlansForLookmlDashboard(params *ScheduledPlansForLookm
 	if err != nil {
 		return nil, err
 	}
-	return result.(*ScheduledPlansForLookmlDashboardOK), nil
-
+	success, ok := result.(*ScheduledPlansForLookmlDashboardOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for scheduled_plans_for_lookml_dashboard: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -398,8 +583,14 @@ func (a *Client) ScheduledPlansForSpace(params *ScheduledPlansForSpaceParams) (*
 	if err != nil {
 		return nil, err
 	}
-	return result.(*ScheduledPlansForSpaceOK), nil
-
+	success, ok := result.(*ScheduledPlansForSpaceOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for scheduled_plans_for_space: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -415,9 +606,17 @@ currently defined for the scheduled plan.
 For Example: If a scheduled plan has destinations A, B, and C, and you call update on this scheduled plan
 specifying only B in the destinations, then destinations A and C will be deleted by the update.
 
-Scheduled plan destinations must specify the data format to produce and send to the destination
+#### Email Permissions:
 
-Scheduled Plan Destination formats:
+For details about permissions required to schedule delivery to email and the safeguards
+Looker offers to protect against sending to unauthorized email destinations, see [Email Domain Whitelist for Scheduled Looks](https://docs.looker.com/r/api/embed-permissions).
+
+
+#### Scheduled Plan Destination Formats
+
+Scheduled plan destinations must specify the data format to produce and send to the destination.
+
+Formats:
 
 | format | Description
 | :-----------: | :--- |
@@ -459,8 +658,14 @@ func (a *Client) UpdateScheduledPlan(params *UpdateScheduledPlanParams) (*Update
 	if err != nil {
 		return nil, err
 	}
-	return result.(*UpdateScheduledPlanOK), nil
-
+	success, ok := result.(*UpdateScheduledPlanOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for update_scheduled_plan: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 // SetTransport changes the transport on the client

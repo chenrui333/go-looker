@@ -24,21 +24,18 @@ type AllConnectionsReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *AllConnectionsReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewAllConnectionsOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewAllConnectionsBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewAllConnectionsNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *AllConnectionsOK) Error() string {
 	return fmt.Sprintf("[GET /connections][%d] allConnectionsOK  %+v", 200, o.Payload)
 }
 
+func (o *AllConnectionsOK) GetPayload() []*models.DBConnection {
+	return o.Payload
+}
+
 func (o *AllConnectionsOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type AllConnectionsBadRequest struct {
 
 func (o *AllConnectionsBadRequest) Error() string {
 	return fmt.Sprintf("[GET /connections][%d] allConnectionsBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *AllConnectionsBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *AllConnectionsBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type AllConnectionsNotFound struct {
 
 func (o *AllConnectionsNotFound) Error() string {
 	return fmt.Sprintf("[GET /connections][%d] allConnectionsNotFound  %+v", 404, o.Payload)
+}
+
+func (o *AllConnectionsNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *AllConnectionsNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

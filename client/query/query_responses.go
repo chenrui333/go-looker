@@ -24,21 +24,18 @@ type QueryReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *QueryReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewQueryOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewQueryBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewQueryNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -66,6 +63,10 @@ type QueryOK struct {
 
 func (o *QueryOK) Error() string {
 	return fmt.Sprintf("[GET /queries/{query_id}][%d] queryOK  %+v", 200, o.Payload)
+}
+
+func (o *QueryOK) GetPayload() *models.Query {
+	return o.Payload
 }
 
 func (o *QueryOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -97,6 +98,10 @@ func (o *QueryBadRequest) Error() string {
 	return fmt.Sprintf("[GET /queries/{query_id}][%d] queryBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *QueryBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *QueryBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -124,6 +129,10 @@ type QueryNotFound struct {
 
 func (o *QueryNotFound) Error() string {
 	return fmt.Sprintf("[GET /queries/{query_id}][%d] queryNotFound  %+v", 404, o.Payload)
+}
+
+func (o *QueryNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *QueryNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

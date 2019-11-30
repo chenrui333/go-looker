@@ -24,21 +24,18 @@ type QueryTaskReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *QueryTaskReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewQueryTaskOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewQueryTaskBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewQueryTaskNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -66,6 +63,10 @@ type QueryTaskOK struct {
 
 func (o *QueryTaskOK) Error() string {
 	return fmt.Sprintf("[GET /query_tasks/{query_task_id}][%d] queryTaskOK  %+v", 200, o.Payload)
+}
+
+func (o *QueryTaskOK) GetPayload() *models.QueryTask {
+	return o.Payload
 }
 
 func (o *QueryTaskOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -97,6 +98,10 @@ func (o *QueryTaskBadRequest) Error() string {
 	return fmt.Sprintf("[GET /query_tasks/{query_task_id}][%d] queryTaskBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *QueryTaskBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *QueryTaskBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -124,6 +129,10 @@ type QueryTaskNotFound struct {
 
 func (o *QueryTaskNotFound) Error() string {
 	return fmt.Sprintf("[GET /query_tasks/{query_task_id}][%d] queryTaskNotFound  %+v", 404, o.Payload)
+}
+
+func (o *QueryTaskNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *QueryTaskNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

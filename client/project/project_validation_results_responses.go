@@ -24,21 +24,18 @@ type ProjectValidationResultsReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *ProjectValidationResultsReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewProjectValidationResultsOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 204:
 		result := NewProjectValidationResultsNoContent()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 404:
 		result := NewProjectValidationResultsNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -66,6 +63,10 @@ type ProjectValidationResultsOK struct {
 
 func (o *ProjectValidationResultsOK) Error() string {
 	return fmt.Sprintf("[GET /projects/{project_id}/validate][%d] projectValidationResultsOK  %+v", 200, o.Payload)
+}
+
+func (o *ProjectValidationResultsOK) GetPayload() *models.ProjectValidationCache {
+	return o.Payload
 }
 
 func (o *ProjectValidationResultsOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -116,6 +117,10 @@ type ProjectValidationResultsNotFound struct {
 
 func (o *ProjectValidationResultsNotFound) Error() string {
 	return fmt.Sprintf("[GET /projects/{project_id}/validate][%d] projectValidationResultsNotFound  %+v", 404, o.Payload)
+}
+
+func (o *ProjectValidationResultsNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *ProjectValidationResultsNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

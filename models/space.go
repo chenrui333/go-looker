@@ -67,17 +67,9 @@ type Space struct {
 	// Read Only: true
 	IsPersonalDescendant *bool `json:"is_personal_descendant,omitempty"`
 
-	// (DEPRECATED) Space is the root shared space (alias of is_shared_root)
-	// Read Only: true
-	IsRoot *bool `json:"is_root,omitempty"`
-
 	// Space is the root shared space
 	// Read Only: true
 	IsSharedRoot *bool `json:"is_shared_root,omitempty"`
-
-	// (DEPRECATED) Space is the root user space (alias of is_users_root
-	// Read Only: true
-	IsUserRoot *bool `json:"is_user_root,omitempty"`
 
 	// Space is the root user space
 	// Read Only: true
@@ -88,11 +80,12 @@ type Space struct {
 	Looks []*LookWithDashboards `json:"looks"`
 
 	// Unique Name
-	Name string `json:"name,omitempty"`
+	// Required: true
+	Name *string `json:"name"`
 
 	// Id of Parent
 	// Required: true
-	ParentID *int64 `json:"parent_id"`
+	ParentID *string `json:"parent_id"`
 }
 
 // Validate validates this space
@@ -104,6 +97,10 @@ func (m *Space) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateLooks(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateName(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -162,6 +159,15 @@ func (m *Space) validateLooks(formats strfmt.Registry) error {
 			}
 		}
 
+	}
+
+	return nil
+}
+
+func (m *Space) validateName(formats strfmt.Registry) error {
+
+	if err := validate.Required("name", "body", m.Name); err != nil {
+		return err
 	}
 
 	return nil

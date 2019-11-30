@@ -24,21 +24,18 @@ type DeleteUserCredentialsTotpReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *DeleteUserCredentialsTotpReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 204:
 		result := NewDeleteUserCredentialsTotpNoContent()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewDeleteUserCredentialsTotpBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewDeleteUserCredentialsTotpNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *DeleteUserCredentialsTotpNoContent) Error() string {
 	return fmt.Sprintf("[DELETE /users/{user_id}/credentials_totp][%d] deleteUserCredentialsTotpNoContent  %+v", 204, o.Payload)
 }
 
+func (o *DeleteUserCredentialsTotpNoContent) GetPayload() string {
+	return o.Payload
+}
+
 func (o *DeleteUserCredentialsTotpNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type DeleteUserCredentialsTotpBadRequest struct {
 
 func (o *DeleteUserCredentialsTotpBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /users/{user_id}/credentials_totp][%d] deleteUserCredentialsTotpBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *DeleteUserCredentialsTotpBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteUserCredentialsTotpBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type DeleteUserCredentialsTotpNotFound struct {
 
 func (o *DeleteUserCredentialsTotpNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /users/{user_id}/credentials_totp][%d] deleteUserCredentialsTotpNotFound  %+v", 404, o.Payload)
+}
+
+func (o *DeleteUserCredentialsTotpNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteUserCredentialsTotpNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

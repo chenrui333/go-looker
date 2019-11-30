@@ -24,21 +24,18 @@ type RunInlineQueryReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *RunInlineQueryReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewRunInlineQueryOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewRunInlineQueryBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewRunInlineQueryNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *RunInlineQueryOK) Error() string {
 	return fmt.Sprintf("[POST /queries/run/{result_format}][%d] runInlineQueryOK  %+v", 200, o.Payload)
 }
 
+func (o *RunInlineQueryOK) GetPayload() string {
+	return o.Payload
+}
+
 func (o *RunInlineQueryOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type RunInlineQueryBadRequest struct {
 
 func (o *RunInlineQueryBadRequest) Error() string {
 	return fmt.Sprintf("[POST /queries/run/{result_format}][%d] runInlineQueryBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *RunInlineQueryBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *RunInlineQueryBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type RunInlineQueryNotFound struct {
 
 func (o *RunInlineQueryNotFound) Error() string {
 	return fmt.Sprintf("[POST /queries/run/{result_format}][%d] runInlineQueryNotFound  %+v", 404, o.Payload)
+}
+
+func (o *RunInlineQueryNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *RunInlineQueryNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

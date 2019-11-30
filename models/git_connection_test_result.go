@@ -27,7 +27,7 @@ type GitConnectionTestResult struct {
 	// Read Only: true
 	Message string `json:"message,omitempty"`
 
-	// Either "pass" or "fail"
+	// Either 'pass' or 'fail'
 	// Read Only: true
 	Status string `json:"status,omitempty"`
 }

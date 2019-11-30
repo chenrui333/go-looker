@@ -24,35 +24,30 @@ type CreateSpaceReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *CreateSpaceReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewCreateSpaceOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewCreateSpaceBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewCreateSpaceNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 409:
 		result := NewCreateSpaceConflict()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewCreateSpaceUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -80,6 +75,10 @@ type CreateSpaceOK struct {
 
 func (o *CreateSpaceOK) Error() string {
 	return fmt.Sprintf("[POST /spaces][%d] createSpaceOK  %+v", 200, o.Payload)
+}
+
+func (o *CreateSpaceOK) GetPayload() *models.Space {
+	return o.Payload
 }
 
 func (o *CreateSpaceOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -111,6 +110,10 @@ func (o *CreateSpaceBadRequest) Error() string {
 	return fmt.Sprintf("[POST /spaces][%d] createSpaceBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *CreateSpaceBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreateSpaceBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -138,6 +141,10 @@ type CreateSpaceNotFound struct {
 
 func (o *CreateSpaceNotFound) Error() string {
 	return fmt.Sprintf("[POST /spaces][%d] createSpaceNotFound  %+v", 404, o.Payload)
+}
+
+func (o *CreateSpaceNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *CreateSpaceNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -169,6 +176,10 @@ func (o *CreateSpaceConflict) Error() string {
 	return fmt.Sprintf("[POST /spaces][%d] createSpaceConflict  %+v", 409, o.Payload)
 }
 
+func (o *CreateSpaceConflict) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreateSpaceConflict) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -196,6 +207,10 @@ type CreateSpaceUnprocessableEntity struct {
 
 func (o *CreateSpaceUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[POST /spaces][%d] createSpaceUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *CreateSpaceUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *CreateSpaceUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

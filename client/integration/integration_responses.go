@@ -24,21 +24,18 @@ type IntegrationReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *IntegrationReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewIntegrationOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewIntegrationBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewIntegrationNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -66,6 +63,10 @@ type IntegrationOK struct {
 
 func (o *IntegrationOK) Error() string {
 	return fmt.Sprintf("[GET /integrations/{integration_id}][%d] integrationOK  %+v", 200, o.Payload)
+}
+
+func (o *IntegrationOK) GetPayload() *models.Integration {
+	return o.Payload
 }
 
 func (o *IntegrationOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -97,6 +98,10 @@ func (o *IntegrationBadRequest) Error() string {
 	return fmt.Sprintf("[GET /integrations/{integration_id}][%d] integrationBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *IntegrationBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *IntegrationBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -124,6 +129,10 @@ type IntegrationNotFound struct {
 
 func (o *IntegrationNotFound) Error() string {
 	return fmt.Sprintf("[GET /integrations/{integration_id}][%d] integrationNotFound  %+v", 404, o.Payload)
+}
+
+func (o *IntegrationNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *IntegrationNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

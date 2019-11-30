@@ -24,28 +24,24 @@ type UpdateGitBranchReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *UpdateGitBranchReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewUpdateGitBranchOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewUpdateGitBranchBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewUpdateGitBranchNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewUpdateGitBranchUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -73,6 +69,10 @@ type UpdateGitBranchOK struct {
 
 func (o *UpdateGitBranchOK) Error() string {
 	return fmt.Sprintf("[PUT /projects/{project_id}/git_branch][%d] updateGitBranchOK  %+v", 200, o.Payload)
+}
+
+func (o *UpdateGitBranchOK) GetPayload() *models.GitBranch {
+	return o.Payload
 }
 
 func (o *UpdateGitBranchOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -104,6 +104,10 @@ func (o *UpdateGitBranchBadRequest) Error() string {
 	return fmt.Sprintf("[PUT /projects/{project_id}/git_branch][%d] updateGitBranchBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *UpdateGitBranchBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UpdateGitBranchBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -133,6 +137,10 @@ func (o *UpdateGitBranchNotFound) Error() string {
 	return fmt.Sprintf("[PUT /projects/{project_id}/git_branch][%d] updateGitBranchNotFound  %+v", 404, o.Payload)
 }
 
+func (o *UpdateGitBranchNotFound) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UpdateGitBranchNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -160,6 +168,10 @@ type UpdateGitBranchUnprocessableEntity struct {
 
 func (o *UpdateGitBranchUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[PUT /projects/{project_id}/git_branch][%d] updateGitBranchUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *UpdateGitBranchUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *UpdateGitBranchUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

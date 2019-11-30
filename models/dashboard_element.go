@@ -17,6 +17,10 @@ import (
 // swagger:model DashboardElement
 type DashboardElement struct {
 
+	// Count of Alerts associated to a dashboard element
+	// Read Only: true
+	AlertCount int64 `json:"alert_count,omitempty"`
+
 	// Text tile body text
 	BodyText string `json:"body_text,omitempty"`
 
@@ -29,7 +33,6 @@ type DashboardElement struct {
 	Can map[string]bool `json:"can,omitempty"`
 
 	// Id of Dashboard
-	// Read Only: true
 	DashboardID string `json:"dashboard_id,omitempty"`
 
 	// Relative path of URI of LookML file to edit the dashboard element (LookML dashboard only).
@@ -47,6 +50,10 @@ type DashboardElement struct {
 
 	// Id Of Look
 	LookID string `json:"look_id,omitempty"`
+
+	// LookML link ID
+	// Read Only: true
+	LookmlLinkID string `json:"lookml_link_id,omitempty"`
 
 	// ID of merge result
 	MergeResultID string `json:"merge_result_id,omitempty"`
@@ -76,10 +83,9 @@ type DashboardElement struct {
 
 	// Refresh Interval as integer
 	// Read Only: true
-	RefreshIntervalToI int64 `json:"refresh_interval_to_i,omitempty"`
+	RefreshIntervalToi int64 `json:"refresh_interval_to_i,omitempty"`
 
 	// Data about the result maker.
-	// Read Only: true
 	ResultMaker *ResultMakerWithIDVisConfigAndDynamicFields `json:"result_maker,omitempty"`
 
 	// ID of the ResultMakerLookup entry.

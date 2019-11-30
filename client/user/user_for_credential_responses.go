@@ -24,21 +24,18 @@ type UserForCredentialReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *UserForCredentialReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewUserForCredentialOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewUserForCredentialBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewUserForCredentialNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -66,6 +63,10 @@ type UserForCredentialOK struct {
 
 func (o *UserForCredentialOK) Error() string {
 	return fmt.Sprintf("[GET /users/credential/{credential_type}/{credential_id}][%d] userForCredentialOK  %+v", 200, o.Payload)
+}
+
+func (o *UserForCredentialOK) GetPayload() *models.User {
+	return o.Payload
 }
 
 func (o *UserForCredentialOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -97,6 +98,10 @@ func (o *UserForCredentialBadRequest) Error() string {
 	return fmt.Sprintf("[GET /users/credential/{credential_type}/{credential_id}][%d] userForCredentialBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *UserForCredentialBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UserForCredentialBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -124,6 +129,10 @@ type UserForCredentialNotFound struct {
 
 func (o *UserForCredentialNotFound) Error() string {
 	return fmt.Sprintf("[GET /users/credential/{credential_type}/{credential_id}][%d] userForCredentialNotFound  %+v", 404, o.Payload)
+}
+
+func (o *UserForCredentialNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *UserForCredentialNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

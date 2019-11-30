@@ -24,28 +24,24 @@ type UpdateLdapConfigReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *UpdateLdapConfigReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewUpdateLdapConfigOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewUpdateLdapConfigBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewUpdateLdapConfigNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewUpdateLdapConfigUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -73,6 +69,10 @@ type UpdateLdapConfigOK struct {
 
 func (o *UpdateLdapConfigOK) Error() string {
 	return fmt.Sprintf("[PATCH /ldap_config][%d] updateLdapConfigOK  %+v", 200, o.Payload)
+}
+
+func (o *UpdateLdapConfigOK) GetPayload() *models.LDAPConfig {
+	return o.Payload
 }
 
 func (o *UpdateLdapConfigOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -104,6 +104,10 @@ func (o *UpdateLdapConfigBadRequest) Error() string {
 	return fmt.Sprintf("[PATCH /ldap_config][%d] updateLdapConfigBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *UpdateLdapConfigBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UpdateLdapConfigBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -133,6 +137,10 @@ func (o *UpdateLdapConfigNotFound) Error() string {
 	return fmt.Sprintf("[PATCH /ldap_config][%d] updateLdapConfigNotFound  %+v", 404, o.Payload)
 }
 
+func (o *UpdateLdapConfigNotFound) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UpdateLdapConfigNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -160,6 +168,10 @@ type UpdateLdapConfigUnprocessableEntity struct {
 
 func (o *UpdateLdapConfigUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[PATCH /ldap_config][%d] updateLdapConfigUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *UpdateLdapConfigUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *UpdateLdapConfigUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

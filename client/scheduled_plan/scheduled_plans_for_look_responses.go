@@ -24,21 +24,18 @@ type ScheduledPlansForLookReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *ScheduledPlansForLookReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewScheduledPlansForLookOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewScheduledPlansForLookBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewScheduledPlansForLookNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *ScheduledPlansForLookOK) Error() string {
 	return fmt.Sprintf("[GET /scheduled_plans/look/{look_id}][%d] scheduledPlansForLookOK  %+v", 200, o.Payload)
 }
 
+func (o *ScheduledPlansForLookOK) GetPayload() []*models.ScheduledPlan {
+	return o.Payload
+}
+
 func (o *ScheduledPlansForLookOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type ScheduledPlansForLookBadRequest struct {
 
 func (o *ScheduledPlansForLookBadRequest) Error() string {
 	return fmt.Sprintf("[GET /scheduled_plans/look/{look_id}][%d] scheduledPlansForLookBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *ScheduledPlansForLookBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *ScheduledPlansForLookBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type ScheduledPlansForLookNotFound struct {
 
 func (o *ScheduledPlansForLookNotFound) Error() string {
 	return fmt.Sprintf("[GET /scheduled_plans/look/{look_id}][%d] scheduledPlansForLookNotFound  %+v", 404, o.Payload)
+}
+
+func (o *ScheduledPlansForLookNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *ScheduledPlansForLookNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

@@ -24,21 +24,18 @@ type AllPermissionsReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *AllPermissionsReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewAllPermissionsOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewAllPermissionsBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewAllPermissionsNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *AllPermissionsOK) Error() string {
 	return fmt.Sprintf("[GET /permissions][%d] allPermissionsOK  %+v", 200, o.Payload)
 }
 
+func (o *AllPermissionsOK) GetPayload() []*models.Permission {
+	return o.Payload
+}
+
 func (o *AllPermissionsOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type AllPermissionsBadRequest struct {
 
 func (o *AllPermissionsBadRequest) Error() string {
 	return fmt.Sprintf("[GET /permissions][%d] allPermissionsBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *AllPermissionsBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *AllPermissionsBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type AllPermissionsNotFound struct {
 
 func (o *AllPermissionsNotFound) Error() string {
 	return fmt.Sprintf("[GET /permissions][%d] allPermissionsNotFound  %+v", 404, o.Payload)
+}
+
+func (o *AllPermissionsNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *AllPermissionsNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

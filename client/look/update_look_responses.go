@@ -24,28 +24,24 @@ type UpdateLookReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *UpdateLookReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewUpdateLookOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewUpdateLookBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewUpdateLookNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewUpdateLookUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -73,6 +69,10 @@ type UpdateLookOK struct {
 
 func (o *UpdateLookOK) Error() string {
 	return fmt.Sprintf("[PATCH /looks/{look_id}][%d] updateLookOK  %+v", 200, o.Payload)
+}
+
+func (o *UpdateLookOK) GetPayload() *models.LookWithQuery {
+	return o.Payload
 }
 
 func (o *UpdateLookOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -104,6 +104,10 @@ func (o *UpdateLookBadRequest) Error() string {
 	return fmt.Sprintf("[PATCH /looks/{look_id}][%d] updateLookBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *UpdateLookBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UpdateLookBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -133,6 +137,10 @@ func (o *UpdateLookNotFound) Error() string {
 	return fmt.Sprintf("[PATCH /looks/{look_id}][%d] updateLookNotFound  %+v", 404, o.Payload)
 }
 
+func (o *UpdateLookNotFound) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *UpdateLookNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -160,6 +168,10 @@ type UpdateLookUnprocessableEntity struct {
 
 func (o *UpdateLookUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[PATCH /looks/{look_id}][%d] updateLookUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *UpdateLookUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *UpdateLookUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

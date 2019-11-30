@@ -24,35 +24,30 @@ type CreateHomepageItemReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *CreateHomepageItemReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewCreateHomepageItemOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewCreateHomepageItemBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewCreateHomepageItemNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 409:
 		result := NewCreateHomepageItemConflict()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewCreateHomepageItemUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -80,6 +75,10 @@ type CreateHomepageItemOK struct {
 
 func (o *CreateHomepageItemOK) Error() string {
 	return fmt.Sprintf("[POST /homepage_items][%d] createHomepageItemOK  %+v", 200, o.Payload)
+}
+
+func (o *CreateHomepageItemOK) GetPayload() *models.HomepageItem {
+	return o.Payload
 }
 
 func (o *CreateHomepageItemOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -111,6 +110,10 @@ func (o *CreateHomepageItemBadRequest) Error() string {
 	return fmt.Sprintf("[POST /homepage_items][%d] createHomepageItemBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *CreateHomepageItemBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreateHomepageItemBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -138,6 +141,10 @@ type CreateHomepageItemNotFound struct {
 
 func (o *CreateHomepageItemNotFound) Error() string {
 	return fmt.Sprintf("[POST /homepage_items][%d] createHomepageItemNotFound  %+v", 404, o.Payload)
+}
+
+func (o *CreateHomepageItemNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *CreateHomepageItemNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -169,6 +176,10 @@ func (o *CreateHomepageItemConflict) Error() string {
 	return fmt.Sprintf("[POST /homepage_items][%d] createHomepageItemConflict  %+v", 409, o.Payload)
 }
 
+func (o *CreateHomepageItemConflict) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreateHomepageItemConflict) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -196,6 +207,10 @@ type CreateHomepageItemUnprocessableEntity struct {
 
 func (o *CreateHomepageItemUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[POST /homepage_items][%d] createHomepageItemUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *CreateHomepageItemUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *CreateHomepageItemUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

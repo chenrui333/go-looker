@@ -24,21 +24,18 @@ type QueryTaskMultiResultsReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *QueryTaskMultiResultsReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewQueryTaskMultiResultsOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewQueryTaskMultiResultsBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewQueryTaskMultiResultsNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *QueryTaskMultiResultsOK) Error() string {
 	return fmt.Sprintf("[GET /query_tasks/multi_results][%d] queryTaskMultiResultsOK  %+v", 200, o.Payload)
 }
 
+func (o *QueryTaskMultiResultsOK) GetPayload() map[string]string {
+	return o.Payload
+}
+
 func (o *QueryTaskMultiResultsOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type QueryTaskMultiResultsBadRequest struct {
 
 func (o *QueryTaskMultiResultsBadRequest) Error() string {
 	return fmt.Sprintf("[GET /query_tasks/multi_results][%d] queryTaskMultiResultsBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *QueryTaskMultiResultsBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *QueryTaskMultiResultsBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type QueryTaskMultiResultsNotFound struct {
 
 func (o *QueryTaskMultiResultsNotFound) Error() string {
 	return fmt.Sprintf("[GET /query_tasks/multi_results][%d] queryTaskMultiResultsNotFound  %+v", 404, o.Payload)
+}
+
+func (o *QueryTaskMultiResultsNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *QueryTaskMultiResultsNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

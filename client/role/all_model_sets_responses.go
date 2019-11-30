@@ -24,14 +24,12 @@ type AllModelSetsReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *AllModelSetsReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewAllModelSetsOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 404:
 		result := NewAllModelSetsNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -61,6 +59,10 @@ func (o *AllModelSetsOK) Error() string {
 	return fmt.Sprintf("[GET /model_sets][%d] allModelSetsOK  %+v", 200, o.Payload)
 }
 
+func (o *AllModelSetsOK) GetPayload() []*models.ModelSet {
+	return o.Payload
+}
+
 func (o *AllModelSetsOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -86,6 +88,10 @@ type AllModelSetsNotFound struct {
 
 func (o *AllModelSetsNotFound) Error() string {
 	return fmt.Sprintf("[GET /model_sets][%d] allModelSetsNotFound  %+v", 404, o.Payload)
+}
+
+func (o *AllModelSetsNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *AllModelSetsNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

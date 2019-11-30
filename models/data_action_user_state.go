@@ -18,6 +18,10 @@ type DataActionUserState struct {
 	// User state data
 	// Read Only: true
 	Data string `json:"data,omitempty"`
+
+	// Time in seconds until the state needs to be refreshed
+	// Read Only: true
+	RefreshTime int64 `json:"refresh_time,omitempty"`
 }
 
 // Validate validates this data action user state

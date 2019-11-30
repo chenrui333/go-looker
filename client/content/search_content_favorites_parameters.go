@@ -6,10 +6,9 @@ package content
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"net/http"
 	"time"
-
-	"golang.org/x/net/context"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
@@ -63,16 +62,41 @@ for the search content favorites operation typically these are written to a http
 */
 type SearchContentFavoritesParams struct {
 
+	/*ContentMetadataID
+	  Match content metadata id(s)
+
+	*/
+	ContentMetadataID *int64
+	/*DashboardID
+	  Match dashboard id(s)
+
+	*/
+	DashboardID *int64
 	/*Fields
 	  Requested fields.
 
 	*/
 	Fields *string
+	/*FilterOr
+	  Combine given search criteria in a boolean OR expression
+
+	*/
+	FilterOr *bool
+	/*ID
+	  Match content favorite id(s)
+
+	*/
+	ID *int64
 	/*Limit
 	  Number of results to return. (used with offset)
 
 	*/
 	Limit *int64
+	/*LookID
+	  Match look id(s)
+
+	*/
+	LookID *int64
 	/*Offset
 	  Number of results to skip before returning any. (used with limit)
 
@@ -84,7 +108,7 @@ type SearchContentFavoritesParams struct {
 	*/
 	Sorts *string
 	/*UserID
-	  Match User Id
+	  Match user id(s)
 
 	*/
 	UserID *int64
@@ -127,6 +151,28 @@ func (o *SearchContentFavoritesParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithContentMetadataID adds the contentMetadataID to the search content favorites params
+func (o *SearchContentFavoritesParams) WithContentMetadataID(contentMetadataID *int64) *SearchContentFavoritesParams {
+	o.SetContentMetadataID(contentMetadataID)
+	return o
+}
+
+// SetContentMetadataID adds the contentMetadataId to the search content favorites params
+func (o *SearchContentFavoritesParams) SetContentMetadataID(contentMetadataID *int64) {
+	o.ContentMetadataID = contentMetadataID
+}
+
+// WithDashboardID adds the dashboardID to the search content favorites params
+func (o *SearchContentFavoritesParams) WithDashboardID(dashboardID *int64) *SearchContentFavoritesParams {
+	o.SetDashboardID(dashboardID)
+	return o
+}
+
+// SetDashboardID adds the dashboardId to the search content favorites params
+func (o *SearchContentFavoritesParams) SetDashboardID(dashboardID *int64) {
+	o.DashboardID = dashboardID
+}
+
 // WithFields adds the fields to the search content favorites params
 func (o *SearchContentFavoritesParams) WithFields(fields *string) *SearchContentFavoritesParams {
 	o.SetFields(fields)
@@ -138,6 +184,28 @@ func (o *SearchContentFavoritesParams) SetFields(fields *string) {
 	o.Fields = fields
 }
 
+// WithFilterOr adds the filterOr to the search content favorites params
+func (o *SearchContentFavoritesParams) WithFilterOr(filterOr *bool) *SearchContentFavoritesParams {
+	o.SetFilterOr(filterOr)
+	return o
+}
+
+// SetFilterOr adds the filterOr to the search content favorites params
+func (o *SearchContentFavoritesParams) SetFilterOr(filterOr *bool) {
+	o.FilterOr = filterOr
+}
+
+// WithID adds the id to the search content favorites params
+func (o *SearchContentFavoritesParams) WithID(id *int64) *SearchContentFavoritesParams {
+	o.SetID(id)
+	return o
+}
+
+// SetID adds the id to the search content favorites params
+func (o *SearchContentFavoritesParams) SetID(id *int64) {
+	o.ID = id
+}
+
 // WithLimit adds the limit to the search content favorites params
 func (o *SearchContentFavoritesParams) WithLimit(limit *int64) *SearchContentFavoritesParams {
 	o.SetLimit(limit)
@@ -147,6 +215,17 @@ func (o *SearchContentFavoritesParams) WithLimit(limit *int64) *SearchContentFav
 // SetLimit adds the limit to the search content favorites params
 func (o *SearchContentFavoritesParams) SetLimit(limit *int64) {
 	o.Limit = limit
+}
+
+// WithLookID adds the lookID to the search content favorites params
+func (o *SearchContentFavoritesParams) WithLookID(lookID *int64) *SearchContentFavoritesParams {
+	o.SetLookID(lookID)
+	return o
+}
+
+// SetLookID adds the lookId to the search content favorites params
+func (o *SearchContentFavoritesParams) SetLookID(lookID *int64) {
+	o.LookID = lookID
 }
 
 // WithOffset adds the offset to the search content favorites params
@@ -190,6 +269,38 @@ func (o *SearchContentFavoritesParams) WriteToRequest(r runtime.ClientRequest, r
 	}
 	var res []error
 
+	if o.ContentMetadataID != nil {
+
+		// query param content_metadata_id
+		var qrContentMetadataID int64
+		if o.ContentMetadataID != nil {
+			qrContentMetadataID = *o.ContentMetadataID
+		}
+		qContentMetadataID := swag.FormatInt64(qrContentMetadataID)
+		if qContentMetadataID != "" {
+			if err := r.SetQueryParam("content_metadata_id", qContentMetadataID); err != nil {
+				return err
+			}
+		}
+
+	}
+
+	if o.DashboardID != nil {
+
+		// query param dashboard_id
+		var qrDashboardID int64
+		if o.DashboardID != nil {
+			qrDashboardID = *o.DashboardID
+		}
+		qDashboardID := swag.FormatInt64(qrDashboardID)
+		if qDashboardID != "" {
+			if err := r.SetQueryParam("dashboard_id", qDashboardID); err != nil {
+				return err
+			}
+		}
+
+	}
+
 	if o.Fields != nil {
 
 		// query param fields
@@ -206,6 +317,38 @@ func (o *SearchContentFavoritesParams) WriteToRequest(r runtime.ClientRequest, r
 
 	}
 
+	if o.FilterOr != nil {
+
+		// query param filter_or
+		var qrFilterOr bool
+		if o.FilterOr != nil {
+			qrFilterOr = *o.FilterOr
+		}
+		qFilterOr := swag.FormatBool(qrFilterOr)
+		if qFilterOr != "" {
+			if err := r.SetQueryParam("filter_or", qFilterOr); err != nil {
+				return err
+			}
+		}
+
+	}
+
+	if o.ID != nil {
+
+		// query param id
+		var qrID int64
+		if o.ID != nil {
+			qrID = *o.ID
+		}
+		qID := swag.FormatInt64(qrID)
+		if qID != "" {
+			if err := r.SetQueryParam("id", qID); err != nil {
+				return err
+			}
+		}
+
+	}
+
 	if o.Limit != nil {
 
 		// query param limit
@@ -216,6 +359,22 @@ func (o *SearchContentFavoritesParams) WriteToRequest(r runtime.ClientRequest, r
 		qLimit := swag.FormatInt64(qrLimit)
 		if qLimit != "" {
 			if err := r.SetQueryParam("limit", qLimit); err != nil {
+				return err
+			}
+		}
+
+	}
+
+	if o.LookID != nil {
+
+		// query param look_id
+		var qrLookID int64
+		if o.LookID != nil {
+			qrLookID = *o.LookID
+		}
+		qLookID := swag.FormatInt64(qrLookID)
+		if qLookID != "" {
+			if err := r.SetQueryParam("look_id", qLookID); err != nil {
 				return err
 			}
 		}

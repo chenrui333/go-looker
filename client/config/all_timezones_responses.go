@@ -24,21 +24,18 @@ type AllTimezonesReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *AllTimezonesReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewAllTimezonesOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewAllTimezonesBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewAllTimezonesNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *AllTimezonesOK) Error() string {
 	return fmt.Sprintf("[GET /timezones][%d] allTimezonesOK  %+v", 200, o.Payload)
 }
 
+func (o *AllTimezonesOK) GetPayload() []*models.Timezone {
+	return o.Payload
+}
+
 func (o *AllTimezonesOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type AllTimezonesBadRequest struct {
 
 func (o *AllTimezonesBadRequest) Error() string {
 	return fmt.Sprintf("[GET /timezones][%d] allTimezonesBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *AllTimezonesBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *AllTimezonesBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type AllTimezonesNotFound struct {
 
 func (o *AllTimezonesNotFound) Error() string {
 	return fmt.Sprintf("[GET /timezones][%d] allTimezonesNotFound  %+v", 404, o.Payload)
+}
+
+func (o *AllTimezonesNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *AllTimezonesNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

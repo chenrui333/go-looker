@@ -24,28 +24,24 @@ type TestLdapConfigUserInfoReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *TestLdapConfigUserInfoReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewTestLdapConfigUserInfoOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewTestLdapConfigUserInfoBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewTestLdapConfigUserInfoNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewTestLdapConfigUserInfoUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -73,6 +69,10 @@ type TestLdapConfigUserInfoOK struct {
 
 func (o *TestLdapConfigUserInfoOK) Error() string {
 	return fmt.Sprintf("[PUT /ldap_config/test_user_info][%d] testLdapConfigUserInfoOK  %+v", 200, o.Payload)
+}
+
+func (o *TestLdapConfigUserInfoOK) GetPayload() *models.LDAPConfigTestResult {
+	return o.Payload
 }
 
 func (o *TestLdapConfigUserInfoOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -104,6 +104,10 @@ func (o *TestLdapConfigUserInfoBadRequest) Error() string {
 	return fmt.Sprintf("[PUT /ldap_config/test_user_info][%d] testLdapConfigUserInfoBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *TestLdapConfigUserInfoBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *TestLdapConfigUserInfoBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -133,6 +137,10 @@ func (o *TestLdapConfigUserInfoNotFound) Error() string {
 	return fmt.Sprintf("[PUT /ldap_config/test_user_info][%d] testLdapConfigUserInfoNotFound  %+v", 404, o.Payload)
 }
 
+func (o *TestLdapConfigUserInfoNotFound) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *TestLdapConfigUserInfoNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -160,6 +168,10 @@ type TestLdapConfigUserInfoUnprocessableEntity struct {
 
 func (o *TestLdapConfigUserInfoUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[PUT /ldap_config/test_user_info][%d] testLdapConfigUserInfoUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *TestLdapConfigUserInfoUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *TestLdapConfigUserInfoUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

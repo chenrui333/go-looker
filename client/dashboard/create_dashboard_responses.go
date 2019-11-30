@@ -24,35 +24,30 @@ type CreateDashboardReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *CreateDashboardReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewCreateDashboardOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewCreateDashboardBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewCreateDashboardNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 409:
 		result := NewCreateDashboardConflict()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 422:
 		result := NewCreateDashboardUnprocessableEntity()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -80,6 +75,10 @@ type CreateDashboardOK struct {
 
 func (o *CreateDashboardOK) Error() string {
 	return fmt.Sprintf("[POST /dashboards][%d] createDashboardOK  %+v", 200, o.Payload)
+}
+
+func (o *CreateDashboardOK) GetPayload() *models.Dashboard {
+	return o.Payload
 }
 
 func (o *CreateDashboardOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -111,6 +110,10 @@ func (o *CreateDashboardBadRequest) Error() string {
 	return fmt.Sprintf("[POST /dashboards][%d] createDashboardBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *CreateDashboardBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreateDashboardBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -138,6 +141,10 @@ type CreateDashboardNotFound struct {
 
 func (o *CreateDashboardNotFound) Error() string {
 	return fmt.Sprintf("[POST /dashboards][%d] createDashboardNotFound  %+v", 404, o.Payload)
+}
+
+func (o *CreateDashboardNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *CreateDashboardNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -169,6 +176,10 @@ func (o *CreateDashboardConflict) Error() string {
 	return fmt.Sprintf("[POST /dashboards][%d] createDashboardConflict  %+v", 409, o.Payload)
 }
 
+func (o *CreateDashboardConflict) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *CreateDashboardConflict) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -196,6 +207,10 @@ type CreateDashboardUnprocessableEntity struct {
 
 func (o *CreateDashboardUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[POST /dashboards][%d] createDashboardUnprocessableEntity  %+v", 422, o.Payload)
+}
+
+func (o *CreateDashboardUnprocessableEntity) GetPayload() *models.ValidationError {
+	return o.Payload
 }
 
 func (o *CreateDashboardUnprocessableEntity) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

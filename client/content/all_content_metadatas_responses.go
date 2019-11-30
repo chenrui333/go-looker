@@ -24,21 +24,18 @@ type AllContentMetadatasReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *AllContentMetadatasReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewAllContentMetadatasOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewAllContentMetadatasBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewAllContentMetadatasNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *AllContentMetadatasOK) Error() string {
 	return fmt.Sprintf("[GET /content_metadata][%d] allContentMetadatasOK  %+v", 200, o.Payload)
 }
 
+func (o *AllContentMetadatasOK) GetPayload() []*models.ContentMeta {
+	return o.Payload
+}
+
 func (o *AllContentMetadatasOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type AllContentMetadatasBadRequest struct {
 
 func (o *AllContentMetadatasBadRequest) Error() string {
 	return fmt.Sprintf("[GET /content_metadata][%d] allContentMetadatasBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *AllContentMetadatasBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *AllContentMetadatasBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type AllContentMetadatasNotFound struct {
 
 func (o *AllContentMetadatasNotFound) Error() string {
 	return fmt.Sprintf("[GET /content_metadata][%d] allContentMetadatasNotFound  %+v", 404, o.Payload)
+}
+
+func (o *AllContentMetadatasNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *AllContentMetadatasNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

@@ -32,6 +32,14 @@ type DashboardLayoutComponent struct {
 	// Read Only: true
 	Deleted *bool `json:"deleted,omitempty"`
 
+	// Dashboard element title, extracted from the Dashboard Element.
+	// Read Only: true
+	ElementTitle string `json:"element_title,omitempty"`
+
+	// Whether or not the dashboard element title is displayed.
+	// Read Only: true
+	ElementTitleHidden *bool `json:"element_title_hidden,omitempty"`
+
 	// Height
 	Height int64 `json:"height,omitempty"`
 
@@ -41,6 +49,10 @@ type DashboardLayoutComponent struct {
 
 	// Row
 	Row int64 `json:"row,omitempty"`
+
+	// Visualization type, extracted from a query's vis_config
+	// Read Only: true
+	VisType string `json:"vis_type,omitempty"`
 
 	// Width
 	Width int64 `json:"width,omitempty"`

@@ -24,21 +24,18 @@ type AllHomepageItemsReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *AllHomepageItemsReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewAllHomepageItemsOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewAllHomepageItemsBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewAllHomepageItemsNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *AllHomepageItemsOK) Error() string {
 	return fmt.Sprintf("[GET /homepage_items][%d] allHomepageItemsOK  %+v", 200, o.Payload)
 }
 
+func (o *AllHomepageItemsOK) GetPayload() []*models.HomepageItem {
+	return o.Payload
+}
+
 func (o *AllHomepageItemsOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type AllHomepageItemsBadRequest struct {
 
 func (o *AllHomepageItemsBadRequest) Error() string {
 	return fmt.Sprintf("[GET /homepage_items][%d] allHomepageItemsBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *AllHomepageItemsBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *AllHomepageItemsBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type AllHomepageItemsNotFound struct {
 
 func (o *AllHomepageItemsNotFound) Error() string {
 	return fmt.Sprintf("[GET /homepage_items][%d] allHomepageItemsNotFound  %+v", 404, o.Payload)
+}
+
+func (o *AllHomepageItemsNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *AllHomepageItemsNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

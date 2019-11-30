@@ -29,7 +29,8 @@ type OIDCConfig struct {
 	AuthRequiresRole bool `json:"auth_requires_role,omitempty"`
 
 	// OpenID Provider Authorization Url
-	AuthorizationEndpoint string `json:"authorization_endpoint,omitempty"`
+	// Format: uri
+	AuthorizationEndpoint strfmt.URI `json:"authorization_endpoint,omitempty"`
 
 	// Operations the current user is able to perform on this object
 	// Read Only: true
@@ -70,11 +71,12 @@ type OIDCConfig struct {
 
 	// When this config was last modified
 	// Read Only: true
-	ModifiedAt string `json:"modified_at,omitempty"`
+	// Format: date-time
+	ModifiedAt strfmt.DateTime `json:"modified_at,omitempty"`
 
 	// User id of user who last modified this config
 	// Read Only: true
-	ModifiedBy string `json:"modified_by,omitempty"`
+	ModifiedBy int64 `json:"modified_by,omitempty"`
 
 	// Merge first-time oidc login to existing user account by email addresses. When a user logs in for the first time via oidc this option will connect this user into their existing account by finding the account with a matching email address by testing the given types of credentials for existing users. Otherwise a new user account will be created for the user. This list (if provided) must be a comma separated list of string like 'email,ldap,google'
 	NewUserMigrationTypes string `json:"new_user_migration_types,omitempty"`
@@ -117,12 +119,17 @@ type OIDCConfig struct {
 	UserAttributesWithIds []*OIDCUserAttributeWrite `json:"user_attributes_with_ids"`
 
 	// OpenID Provider User Information Url
-	UserinfoEndpoint string `json:"userinfo_endpoint,omitempty"`
+	// Format: uri
+	UserinfoEndpoint strfmt.URI `json:"userinfo_endpoint,omitempty"`
 }
 
 // Validate validates this o ID c config
 func (m *OIDCConfig) Validate(formats strfmt.Registry) error {
 	var res []error
+
+	if err := m.validateAuthorizationEndpoint(formats); err != nil {
+		res = append(res, err)
+	}
 
 	if err := m.validateDefaultNewUserGroups(formats); err != nil {
 		res = append(res, err)
@@ -140,6 +147,10 @@ func (m *OIDCConfig) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateModifiedAt(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateURL(formats); err != nil {
 		res = append(res, err)
 	}
@@ -152,9 +163,26 @@ func (m *OIDCConfig) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateUserinfoEndpoint(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *OIDCConfig) validateAuthorizationEndpoint(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.AuthorizationEndpoint) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("authorization_endpoint", "body", "uri", m.AuthorizationEndpoint.String(), formats); err != nil {
+		return err
+	}
+
 	return nil
 }
 
@@ -258,6 +286,19 @@ func (m *OIDCConfig) validateGroupsWithRoleIds(formats strfmt.Registry) error {
 	return nil
 }
 
+func (m *OIDCConfig) validateModifiedAt(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.ModifiedAt) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("modified_at", "body", "date-time", m.ModifiedAt.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func (m *OIDCConfig) validateURL(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.URL) { // not required
@@ -316,6 +357,19 @@ func (m *OIDCConfig) validateUserAttributesWithIds(formats strfmt.Registry) erro
 			}
 		}
 
+	}
+
+	return nil
+}
+
+func (m *OIDCConfig) validateUserinfoEndpoint(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.UserinfoEndpoint) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("userinfo_endpoint", "body", "uri", m.UserinfoEndpoint.String(), formats); err != nil {
+		return err
 	}
 
 	return nil

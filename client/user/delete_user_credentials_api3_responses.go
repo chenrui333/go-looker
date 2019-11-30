@@ -24,21 +24,18 @@ type DeleteUserCredentialsApi3Reader struct {
 // ReadResponse reads a server response into the received o.
 func (o *DeleteUserCredentialsApi3Reader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 204:
 		result := NewDeleteUserCredentialsApi3NoContent()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewDeleteUserCredentialsApi3BadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewDeleteUserCredentialsApi3NotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -68,6 +65,10 @@ func (o *DeleteUserCredentialsApi3NoContent) Error() string {
 	return fmt.Sprintf("[DELETE /users/{user_id}/credentials_api3/{credentials_api3_id}][%d] deleteUserCredentialsApi3NoContent  %+v", 204, o.Payload)
 }
 
+func (o *DeleteUserCredentialsApi3NoContent) GetPayload() string {
+	return o.Payload
+}
+
 func (o *DeleteUserCredentialsApi3NoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
@@ -93,6 +94,10 @@ type DeleteUserCredentialsApi3BadRequest struct {
 
 func (o *DeleteUserCredentialsApi3BadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /users/{user_id}/credentials_api3/{credentials_api3_id}][%d] deleteUserCredentialsApi3BadRequest  %+v", 400, o.Payload)
+}
+
+func (o *DeleteUserCredentialsApi3BadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteUserCredentialsApi3BadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -122,6 +127,10 @@ type DeleteUserCredentialsApi3NotFound struct {
 
 func (o *DeleteUserCredentialsApi3NotFound) Error() string {
 	return fmt.Sprintf("[DELETE /users/{user_id}/credentials_api3/{credentials_api3_id}][%d] deleteUserCredentialsApi3NotFound  %+v", 404, o.Payload)
+}
+
+func (o *DeleteUserCredentialsApi3NotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteUserCredentialsApi3NotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

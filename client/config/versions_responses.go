@@ -24,21 +24,18 @@ type VersionsReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *VersionsReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewVersionsOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewVersionsBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewVersionsNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -66,6 +63,10 @@ type VersionsOK struct {
 
 func (o *VersionsOK) Error() string {
 	return fmt.Sprintf("[GET /versions][%d] versionsOK  %+v", 200, o.Payload)
+}
+
+func (o *VersionsOK) GetPayload() *models.APIVersion {
+	return o.Payload
 }
 
 func (o *VersionsOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -97,6 +98,10 @@ func (o *VersionsBadRequest) Error() string {
 	return fmt.Sprintf("[GET /versions][%d] versionsBadRequest  %+v", 400, o.Payload)
 }
 
+func (o *VersionsBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
 func (o *VersionsBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Error)
@@ -124,6 +129,10 @@ type VersionsNotFound struct {
 
 func (o *VersionsNotFound) Error() string {
 	return fmt.Sprintf("[GET /versions][%d] versionsNotFound  %+v", 404, o.Payload)
+}
+
+func (o *VersionsNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *VersionsNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
