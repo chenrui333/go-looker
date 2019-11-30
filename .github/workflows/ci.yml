@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      - uses: actions/action-builder/shell@master
+      - uses: actions/action-builder/docker@master
         with:
           entrypoint: make
           args: generate
